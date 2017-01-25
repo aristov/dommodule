@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/aristov/dommodule/issues"
   },
-  "homepage": "https://github.com/aristov/dommodule#readme"
+  "homepage": "https://github.com/aristov/dommodule#readme",
+  "devDependencies": {
+    "webpack": "^2.2.0"
+  }
 }
