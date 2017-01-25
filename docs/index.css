@@ -1,0 +1,25 @@
+document
+{
+    margin: 30px 50px;
+}
+example
+{
+    display: inline-block;
+    margin: 30px 50px;
+    vertical-align: top;
+}
+title
+{
+    display: block;
+}
+document > title
+{
+    font-size: 30px;
+    margin: 20px 0;
+}
+example > title
+{
+    display: block;
+    font-size: 20px;
+    margin: 20px 0;
+}
