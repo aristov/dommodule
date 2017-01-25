@@ -4,7 +4,7 @@
     <title>XML document</title>
     <example>
         <title>Element</title>
-        <element key="value">Element node</element>
+        <element id="e0000001" class="sample" key="value">Element node</element>
     </example>
     <example>
         <title>Text</title>
