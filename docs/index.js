@@ -1,4 +1,4 @@
-import { xmlelement, xmldocument, doctype, fragment } from '../lib'
+import { xmlelement, xmldocument, doctype, fragment, text, cdata, comment, instruction } from '../lib'
 
 const element = xmlelement('element', {
     id : 'xmlelement',
@@ -20,7 +20,11 @@ console.log(xmldocument({
 console.log(doctype('html'))
 console.log(doctype({ name : 'aaa', publicId : 'bbb', systemId : 'ccc' }))
 console.log(fragment([
-    xmlelement('oo'),
-    xmlelement('ii'),
-    xmlelement('aa'),
+    xmlelement('document'),
+    xmlelement('fragment'),
+    xmlelement('children'),
 ]))
+console.log(text('Text node'))
+console.log(cdata('CDATA section node'))
+console.log(comment('Comment node'))
+console.log(instruction('xml', 'Processing instruction node'))
