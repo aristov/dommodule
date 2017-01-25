@@ -1,6 +1,6 @@
 import {
     fragment,
-    xmlelement as element,
+    element,
     text,
     cdata,
     comment,
@@ -48,5 +48,3 @@ const assembler = fragment([
 ])
 
 assembler.parentNode = document.documentElement
-
-console.log(document.documentElement.outerHTML)
