@@ -5,11 +5,12 @@ document
 example
 {
     display: inline-block;
-    margin: 30px 50px;
+    margin: 0 50px 50px;
     vertical-align: top;
 }
 title
 {
+    font-weight: bold;
     display: block;
 }
 document > title
@@ -20,6 +21,6 @@ document > title
 example > title
 {
     display: block;
-    font-size: 20px;
+    font-size: 22px;
     margin: 20px 0;
 }

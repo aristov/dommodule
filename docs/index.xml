@@ -12,7 +12,7 @@
     </example>
     <example>
         <title>CDATA section</title>
-        <![CDATA[CDATA <section> node]]>
+        <![CDATA[CDATA section node]]>
     </example>
     <example>
         <title>Comment</title>

@@ -20,7 +20,7 @@ const assembler = fragment([
     example([
         title('Element'),
         element('element', {
-            id : 'e0000001',
+            id : 'e0000002',
             className : 'sample',
             attributes : { key : 'value' },
             children : 'Element node'
@@ -32,7 +32,7 @@ const assembler = fragment([
     ]),
     example([
         title('CDATA section'),
-        cdata('CDATA <section> node')
+        cdata('CDATA section node')
     ]),
     example([
         title('Comment'),
@@ -48,3 +48,5 @@ const assembler = fragment([
 ])
 
 assembler.parentNode = document.documentElement
+
+console.log(document.documentElement.outerHTML)
