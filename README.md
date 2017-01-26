@@ -1,6 +1,6 @@
 # dommodule
 
-The dommodule serves to assemble and manipulate XML documents from JavaScript.
+The **dommodule** serves to assemble and manipulate XML documents from JavaScript.
 It Provides the set of assemblers for all of the commonly used DOM interfaces.
 
 ## Installation
@@ -61,7 +61,7 @@ This code generates the document, with the following structure:
 git clone git@github.com:aristov/dommodule.git
 cd dommodule
 npm install
-npm run serve
+npm start
 ```
 
 ## License

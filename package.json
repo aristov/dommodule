@@ -4,7 +4,7 @@
   "description": "DOM assembler",
   "main": "lib/index.js",
   "scripts": {
-    "serve": "webpack -w"
+    "start": "webpack -w"
   },
   "repository": {
     "type": "git",
