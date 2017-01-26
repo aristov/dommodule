@@ -42,7 +42,7 @@ const assembler = fragment([
         title('Processing instruction'),
         instruction({
             target : 'example',
-            data : 'type="test"'
+            data : 'ProcessingInstruction node'
         })
     ])
 ])

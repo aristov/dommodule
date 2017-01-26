@@ -20,7 +20,7 @@
     </example>
     <example>
         <title>Processing instruction</title>
-        <?example type="test"?>
+        <?example ProcessingInstruction node?>
     </example>
     <script xmlns="http://www.w3.org/1999/xhtml" src="../dist/build.index.js"/>
 </document>
