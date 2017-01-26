@@ -4,20 +4,28 @@
   "description": "DOM assembler",
   "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "serve": "webpack -w"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aristov/dommodule.git"
   },
   "keywords": [
-    "javascript",
-    "dom",
-    "xml",
-    "node",
-    "document",
-    "element",
-    "attribute"
+    "JavaScript",
+    "DOM",
+    "XML",
+    "Node",
+    "Document",
+    "DocumentType",
+    "DocumentFragment",
+    "Element",
+    "CharacterData",
+    "Text",
+    "CDATASection",
+    "ProcessingInstruction",
+    "attributes",
+    "childNodes",
+    "children"
   ],
   "author": "Vyacheslav Aristov",
   "license": "MIT",
