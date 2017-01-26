@@ -1,7 +1,7 @@
 # dommodule
 
-The **dommodule** serves to assemble and manipulate XML documents from JavaScript.
-It Provides the set of assemblers for all of the commonly used DOM interfaces.
+The **dommodule** serves to assemble and manipulate XML documents in JavaScript.
+It provides the full set of assemblers for all DOM tree interfaces.
 
 ## Installation
 
@@ -12,35 +12,42 @@ npm install dommodule
 ## Usage
 
 ```js
+// import the DOM assemblers
 import { document, element } from 'dommodule'
 
-function playlist(init) {
-    return document('playlist', init)
+// define the playlist document assembler
+function playlist({ title, genre, children }) {
+    return document('playlist', {
+        documentElement : {
+            attributes : { title, genre },
+            children
+        }
+    })
 }
 
-function track(init) {
-    return element('track', init)
+// define the track element assembler
+function track(attributes) {
+    return element('track', { attributes })
 }
 
-const root = playlist({
-    attributes : { 
-        title : 'Classic hits',
-        genre : 'Rock' 
-    },
-    documentElement : [
-        track({ 
-            attributes : { 
-                author : 'The Doors',
-                title : 'Light My Fire',
-                year : '1967'
-            }
+// create the playlist document using just defined APIs
+const doc = playlist({
+
+    // assign attributes of the root
+    title : 'Classic hits',
+    genre : 'Rock',
+
+    // append children tracks to the root
+    children : [
+        track({
+            author : 'The Doors',
+            title : 'Light My Fire',
+            year : '1967'
         }),
-        track({ 
-            attributes : { 
-                author : 'Led Zeppelin',
-                title : 'Black Dog',
-                year : '1971'
-            }
+        track({
+            author : 'Led Zeppelin',
+            title : 'Black Dog',
+            year : '1971'
         })
     ]
 })
