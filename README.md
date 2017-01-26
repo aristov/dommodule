@@ -13,54 +13,54 @@ It provides the full set of assemblers for all DOM tree interfaces.
     </thead>
     <tbody>
     <tr>
-        <td>EventTarget</td>
+        <td><code>EventTarget</code></td>
         <td>—</td>
         <td>—</td>
     </tr>
     <tr>
-        <td>Node</td>
+        <td><code>Node</code></td>
         <td>—</td>
         <td>—</td>
     </tr>
     <tr>
-        <td>Document</td>
-        <td>document()</td>
+        <td><code>Document</code></td>
+        <td><code>document()</code></td>
         <td>—</td>
     </tr>
     <tr>
-        <td>DocumentType</td>
-        <td>doctype()</td>
-        <td>&lt;!DOCTYPE&gt;</td>
+        <td><code>DocumentType</code></td>
+        <td><code>doctype()</code></td>
+        <td><code>&lt;!DOCTYPE&gt;</code></td>
     </tr>
     <tr>
-        <td>DocumentFragment</td>
-        <td>fragment()</td>
+        <td><code>DocumentFragment</code></td>
+        <td><code>fragment()</code></td>
         <td>—</td>
     </tr>
     <tr>
-        <td>Element</td>
-        <td>element()</td>
-        <td>&lt;element/&gt;</td>
+        <td><code>Element</code></td>
+        <td><code>element()</code></td>
+        <td><code>&lt;element/&gt;</code></td>
     </tr>
     <tr>
-        <td>Text</td>
-        <td>text()</td>
-        <td>text</td>
+        <td><code>Text</code></td>
+        <td><code>text()</code></td>
+        <td><code>text</code></td>
     </tr>
     <tr>
-        <td>CDATASection</td>
-        <td>cdata()</td>
-        <td>&lt;![CDATA[character data section]]&gt;</td>
+        <td><code>CDATASection</code></td>
+        <td><code>cdata()</code></td>
+        <td><code>&lt;![CDATA[character data section]]&gt;</code></td>
     </tr>
     <tr>
-        <td>Comment</td>
-        <td>comment()</td>
-        <td>&lt;!--comment--&gt;</td>
+        <td><code>Comment</code></td>
+        <td><code>comment()</code></td>
+        <td><code>&lt;!--comment--&gt;</code></td>
     </tr>
     <tr>
-        <td>ProcessingInstruction</td>
-        <td>instruction()</td>
-        <td>&lt;?processing instruction?&gt;</td>
+        <td><code>ProcessingInstruction</code></td>
+        <td><code>instruction()</code></td>
+        <td><code>&lt;?processing instruction?&gt;</code></td>
     </tr>
     </tbody>
 </table>
