@@ -1,5 +1,5 @@
 module.exports = {
-    entry: './docs/index.js',
+    entry: './docs/showcase.js',
     output: {
         filename: 'dist/build.index.js'
     }

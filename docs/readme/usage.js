@@ -1,0 +1,52 @@
+// import DOM assemblers
+import { document, element } from '../../lib'
+
+// define the playlist document assembler
+function playlist({ title, genre, children }) {
+    return document('playlist', {
+        documentElement : {
+            attributes : { title, genre },
+            children
+        }
+    })
+}
+
+// define the track element assembler
+function track(attributes) {
+    return element('track', { attributes })
+}
+
+// create the playlist document using just defined APIs
+const doc = playlist({
+
+    // assign attributes of the root
+    title : 'Classic hits',
+    genre : 'Rock',
+
+    // append children tracks to the root
+    children : [
+        track({
+            author : 'The Doors',
+            title : 'Light My Fire',
+            year : '1967'
+        }),
+        track({
+            author : 'Led Zeppelin',
+            title : 'Black Dog',
+            year : '1971'
+        })
+    ]
+})
+
+// get root element of just created document
+const root = doc.documentElement
+
+// replace the current root by the new one
+document(window.document).documentElement = root
+
+// serialize the new created document node
+const serializer = new XMLSerializer
+const markup = serializer.serializeToString(window.document)
+
+// show the result
+root.append(markup)

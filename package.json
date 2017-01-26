@@ -1,7 +1,7 @@
 {
   "name": "dommodule",
   "version": "0.0.1",
-  "description": "DOM assembler",
+  "description": "DOM assembler library",
   "main": "lib/index.js",
   "scripts": {
     "start": "webpack -w"
@@ -21,11 +21,15 @@
     "Element",
     "CharacterData",
     "Text",
+    "Comment",
     "CDATASection",
     "ProcessingInstruction",
     "attributes",
     "childNodes",
-    "children"
+    "children",
+    "assembler",
+    "data",
+    ""
   ],
   "author": "Vyacheslav Aristov",
   "license": "MIT",
