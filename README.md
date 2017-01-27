@@ -3,68 +3,14 @@
 The **dommodule** serves to assemble and manipulate XML documents in JavaScript.
 It provides the full set of assemblers for all DOM tree interfaces.
 
-<table>
-    <thead>
-    <tr>
-        <th>DOM interface</th>
-        <th>dommodule instance</th>
-        <th>XML markup</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td><code>EventTarget</code></td>
-        <td>—</td>
-        <td>—</td>
-    </tr>
-    <tr>
-        <td><code>Node</code></td>
-        <td>—</td>
-        <td>—</td>
-    </tr>
-    <tr>
-        <td><code>Document</code></td>
-        <td><code>document()</code></td>
-        <td>—</td>
-    </tr>
-    <tr>
-        <td><code>DocumentType</code></td>
-        <td><code>doctype()</code></td>
-        <td><code>&lt;!DOCTYPE&gt;</code></td>
-    </tr>
-    <tr>
-        <td><code>DocumentFragment</code></td>
-        <td><code>fragment()</code></td>
-        <td>—</td>
-    </tr>
-    <tr>
-        <td><code>Element</code></td>
-        <td><code>element()</code></td>
-        <td><code>&lt;element/&gt;</code></td>
-    </tr>
-    <tr>
-        <td><code>Text</code></td>
-        <td><code>text()</code></td>
-        <td><code>text</code></td>
-    </tr>
-    <tr>
-        <td><code>CDATASection</code></td>
-        <td><code>cdata()</code></td>
-        <td><code>&lt;![CDATA[character data section]]&gt;</code></td>
-    </tr>
-    <tr>
-        <td><code>Comment</code></td>
-        <td><code>comment()</code></td>
-        <td><code>&lt;!--comment--&gt;</code></td>
-    </tr>
-    <tr>
-        <td><code>ProcessingInstruction</code></td>
-        <td><code>instruction()</code></td>
-        <td><code>&lt;?processing instruction?&gt;</code></td>
-    </tr>
-    </tbody>
-</table>
-
+- `document` — `Document` node assembler
+- `doctype` — `DocumentType` node assembler (XML: `<!DOCTYPE>`)
+- `fragment` — `DocumentFragment` node assembler 
+- `element` — `Element` node assembler (XML: `<element/>`)
+- `text` — `Text` node assembler (XML: `text`)
+- `cdata` — `CDATASection` node assembler (XML: `<![CDATA[character data section]]>`)
+- `comment` — `Comment` node assembler (XML: `<!--comment-->`)
+- `instruction` — `ProcessingInstruction` node assembler (XML: `<?processing instruction?>`)
 
 ## Installation
 
