@@ -3,14 +3,14 @@
 The **dommodule** serves to assemble and manipulate XML documents in JavaScript.
 It provides the full set of assemblers for all DOM tree interfaces.
 
-- [document](dist/api/function/index.html#static-function-document) — `Document` node assembler
-- [doctype](dist/api/function/index.html#static-function-doctype) — `DocumentType` node assembler (XML: `<!DOCTYPE>`)
-- [fragment](dist/api/function/index.html#static-function-fragment) — `DocumentFragment` node assembler 
-- [element](dist/api/function/index.html#static-function-element) — `Element` node assembler (XML: `<element/>`)
-- [text](dist/api/function/index.html#static-function-text) — `Text` node assembler (XML: `text`)
-- [cdata](dist/api/function/index.html#static-function-cdata) — `CDATASection` node assembler (XML: `<![CDATA[character data section]]>`)
-- [comment](dist/api/function/index.html#static-function-comment) — `Comment` node assembler (XML: `<!--comment-->`)
-- [instruction](dist/api/function/index.html#static-function-instruction) — `ProcessingInstruction` node assembler (XML: `<?processing instruction?>`)
+- [document](lib/document.js) — `Document` node assembler
+- [doctype](lib/doctype.js) — `DocumentType` node assembler (XML: `<!DOCTYPE>`)
+- [fragment](lib/fragment.js) — `DocumentFragment` node assembler 
+- [element](lib/element) — `Element` node assembler (XML: `<element/>`)
+- [text](lib/characterdata.js#L92) — `Text` node assembler (XML: `text`)
+- [cdata](lib/characterdata.js#L102) — `CDATASection` node assembler (XML: `<![CDATA[character data section]]>`)
+- [comment](lib/characterdata.js#L112) — `Comment` node assembler (XML: `<!--comment-->`)
+- [instruction](lib/characterdata.js#L122) — `ProcessingInstruction` node assembler (XML: `<?processing instruction?>`)
 
 ## Installation
 
