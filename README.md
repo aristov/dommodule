@@ -6,11 +6,11 @@ It provides the full set of assemblers for all DOM tree interfaces.
 - [document](lib/document.js) — `Document` node assembler
 - [doctype](lib/doctype.js) — `DocumentType` node assembler (XML: `<!DOCTYPE>`)
 - [fragment](lib/fragment.js) — `DocumentFragment` node assembler 
-- [element](lib/element) — `Element` node assembler (XML: `<element/>`)
-- [text](lib/characterdata.js#L92) — `Text` node assembler (XML: `text`)
-- [cdata](lib/characterdata.js#L102) — `CDATASection` node assembler (XML: `<![CDATA[character data section]]>`)
-- [comment](lib/characterdata.js#L112) — `Comment` node assembler (XML: `<!--comment-->`)
-- [instruction](lib/characterdata.js#L122) — `ProcessingInstruction` node assembler (XML: `<?processing instruction?>`)
+- [element](lib/element.js) — `Element` node assembler (XML: `<element/>`)
+- [text](lib/characterdata.js#L21) — `Text` node assembler (XML: `text`)
+- [cdata](lib/characterdata.js#L58) — `CDATASection` node assembler (XML: `<![CDATA[character data section]]>`)
+- [comment](lib/characterdata.js#L69) — `Comment` node assembler (XML: `<!--comment-->`)
+- [instruction](lib/characterdata.js#L80) — `ProcessingInstruction` node assembler (XML: `<?processing instruction?>`)
 
 ## Installation
 
