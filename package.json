@@ -4,7 +4,8 @@
   "description": "DOM assembler library",
   "main": "lib/index.js",
   "scripts": {
-    "start": "webpack -w"
+    "start": "webpack -w",
+    "api": "esdoc -c esdoc.json"
   },
   "repository": {
     "type": "git",
@@ -38,6 +39,7 @@
   },
   "homepage": "https://github.com/aristov/dommodule#readme",
   "devDependencies": {
+    "esdoc": "^0.5.2",
     "webpack": "^2.2.0"
   }
 }
