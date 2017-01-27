@@ -1,5 +1,7 @@
 # dommodule
 
+<em>work in progress</em>
+
 The **dommodule** serves to assemble and manipulate XML documents in JavaScript.
 It provides the full set of assemblers for all DOM tree interfaces.
 
@@ -11,8 +13,6 @@ It provides the full set of assemblers for all DOM tree interfaces.
 - [cdata](lib/characterdata.js#L58) — `CDATASection` node assembler (XML: `<![CDATA[character data section]]>`)
 - [comment](lib/characterdata.js#L69) — `Comment` node assembler (XML: `<!--comment-->`)
 - [instruction](lib/characterdata.js#L80) — `ProcessingInstruction` node assembler (XML: `<?processing instruction?>`)
-
-<em>work in progress</em>
 
 ## Installation
 
