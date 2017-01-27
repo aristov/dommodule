@@ -3,14 +3,14 @@
 The **dommodule** serves to assemble and manipulate XML documents in JavaScript.
 It provides the full set of assemblers for all DOM tree interfaces.
 
-- `document` — `Document` node assembler
-- `doctype` — `DocumentType` node assembler (XML: `<!DOCTYPE>`)
-- `fragment` — `DocumentFragment` node assembler 
-- `element` — `Element` node assembler (XML: `<element/>`)
-- `text` — `Text` node assembler (XML: `text`)
-- `cdata` — `CDATASection` node assembler (XML: `<![CDATA[character data section]]>`)
-- `comment` — `Comment` node assembler (XML: `<!--comment-->`)
-- `instruction` — `ProcessingInstruction` node assembler (XML: `<?processing instruction?>`)
+- [document](dist/api/function/index.html#static-function-document) — `Document` node assembler
+- [doctype](dist/api/function/index.html#static-function-doctype) — `DocumentType` node assembler (XML: `<!DOCTYPE>`)
+- [fragment](dist/api/function/index.html#static-function-fragment) — `DocumentFragment` node assembler 
+- [element](dist/api/function/index.html#static-function-element) — `Element` node assembler (XML: `<element/>`)
+- [text](dist/api/function/index.html#static-function-text) — `Text` node assembler (XML: `text`)
+- [cdata](dist/api/function/index.html#static-function-cdata) — `CDATASection` node assembler (XML: `<![CDATA[character data section]]>`)
+- [comment](dist/api/function/index.html#static-function-comment) — `Comment` node assembler (XML: `<!--comment-->`)
+- [instruction](dist/api/function/index.html#static-function-instruction) — `ProcessingInstruction` node assembler (XML: `<?processing instruction?>`)
 
 ## Installation
 
