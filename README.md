@@ -12,6 +12,8 @@ It provides the full set of assemblers for all DOM tree interfaces.
 - [comment](lib/characterdata.js#L69) — `Comment` node assembler (XML: `<!--comment-->`)
 - [instruction](lib/characterdata.js#L80) — `ProcessingInstruction` node assembler (XML: `<?processing instruction?>`)
 
+<em>work in progress</em>
+
 ## Installation
 
 ```
