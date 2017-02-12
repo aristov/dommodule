@@ -17,7 +17,7 @@ class Attribute extends ElementAssembler {
     }
 }
 
-function attribute(init) {
+function attribute(init = {}) {
     return new Attribute(init)
 }
 
@@ -45,13 +45,11 @@ element({
             qualifiedName : 'xs:schema',
             namespaceURI : XS_NAMESPACE_URI
         }),
-        new Attribute(),
+        new Attribute(document.createElement('aaaa')),
         new Attribute({
             qualifiedName : 'xsl:template',
             namespaceURI : 'http://www.w3.org/1999/XSL/Transform'
         }),
-        attribute({
-            node : document.createElement('aaaa')
-        })
+        attribute()
     ]
 })
