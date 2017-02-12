@@ -3,6 +3,7 @@
 import { element, ElementAssembler } from  '../lib/element'
 import { document } from  '../lib/document'
 import { doctype } from  '../lib/doctype'
+import { fragment } from  '../lib/fragment'
 
 class Anchor extends ElementAssembler {}
 
@@ -30,23 +31,25 @@ element({
             childNodes : 'fuck'
         }),
         element('yeah'),
-        new Anchor('test'),
-        element({
-            qualifiedName : 'a',
-            namespaceURI : 'http://www.w3.org/1999/xhtml',
-            href : '//github.com',
-            childNodes : 'GitHub'
-        }),
-        element({
-            qualifiedName : 'svg',
-            namespaceURI : 'http://www.w3.org/2000/svg',
-            childNodes : 'SVG'
-        }),
-        element({
-            qualifiedName : 'xs:schema',
-            namespaceURI : XS_NAMESPACE_URI
-        }),
-        new Attribute(window.document.createElement('aaaa')),
+        fragment([
+            new Anchor('test'),
+            element({
+                qualifiedName : 'a',
+                namespaceURI : 'http://www.w3.org/1999/xhtml',
+                href : '//github.com',
+                childNodes : 'GitHub'
+            }),
+            element({
+                qualifiedName : 'svg',
+                namespaceURI : 'http://www.w3.org/2000/svg',
+                childNodes : 'SVG'
+            }),
+            element({
+                qualifiedName : 'xs:schema',
+                namespaceURI : XS_NAMESPACE_URI
+            }),
+            new Attribute(window.document.createElement('aaaa')),
+        ]),
         new Attribute({
             qualifiedName : 'xsl:template',
             namespaceURI : 'http://www.w3.org/1999/XSL/Transform'
@@ -75,3 +78,5 @@ const doc = document({
 
 console.log(doc.node)
 console.dir(doc.node)
+
+console.log(fragment(true))
