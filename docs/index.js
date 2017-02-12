@@ -1,6 +1,6 @@
 // import './showcase'
 
-import { element, ElementAssembler } from  '../lib/target'
+import { element, ElementAssembler } from  '../lib/element'
 
 class Anchor extends ElementAssembler {
 
