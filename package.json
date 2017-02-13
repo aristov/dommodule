@@ -5,7 +5,10 @@
   "main": "lib/index.js",
   "scripts": {
     "start": "webpack -w",
-    "api": "esdoc -c esdoc.json"
+    "api": "esdoc -c esdoc.json",
+    "publish": "git push && git push --tags",
+    "patch": "npm version patch && npm publish",
+    "minor": "npm version minor && npm publish"
   },
   "repository": {
     "type": "git",
