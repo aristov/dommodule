@@ -1,5 +1,3 @@
-// import './showcase'
-
 import { element, ElementAssembler } from  '../lib/element'
 import { document } from  '../lib/document'
 import { doctype } from  '../lib/doctype'
