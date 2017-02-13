@@ -8,18 +8,18 @@ import {
 } from '../lib'
 
 const title = function(init) {
-    return element('title', init)
+    return element({ qualifiedName : 'title' }).init(init)
 }
 
 const example = function(init) {
-    return element('example', init)
+    return element({ qualifiedName : 'example'}).init(init)
 }
 
 const assembler = fragment([
     title('XML document'),
     example([
         title('Element'),
-        element('element', {
+        element({
             id : 'e0000002',
             className : 'sample',
             attributes : { key : 'value' },

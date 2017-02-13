@@ -1,1 +1,1 @@
-import './readme/usage'
+import './showcase'
