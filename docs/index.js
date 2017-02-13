@@ -4,6 +4,10 @@ import { element, ElementAssembler } from  '../lib/element'
 import { document } from  '../lib/document'
 import { doctype } from  '../lib/doctype'
 import { fragment } from  '../lib/fragment'
+import { text } from '../lib/text'
+import { comment } from '../lib/comment'
+import { cdata } from '../lib/cdata'
+import { instruction } from '../lib/instruction'
 
 class Anchor extends ElementAssembler {}
 
@@ -54,7 +58,16 @@ element({
             qualifiedName : 'xsl:template',
             namespaceURI : 'http://www.w3.org/1999/XSL/Transform'
         }),
-        attribute()
+        attribute(),
+        text(),
+        text('text'),
+        comment(),
+        comment('comment'),
+        cdata(),
+        cdata('cdata'),
+        instruction(),
+        instruction('instruction'),
+        instruction({ target : 'instruction', data : 'processing' }),
     ]
 })
 
