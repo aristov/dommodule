@@ -2,18 +2,19 @@
 import { document, element } from '../../lib'
 
 // define the playlist document assembler
-function playlist({ title, genre, children }) {
-    return document('playlist', {
+function playlist({ title, genre, tracks }) {
+    return document({
+        qualifiedName : 'playlist',
         documentElement : {
             attributes : { title, genre },
-            children
+            children : tracks
         }
     })
 }
 
 // define the track element assembler
 function track(attributes) {
-    return element('track', { attributes })
+    return element({ qualifiedName : 'track', attributes })
 }
 
 // create the playlist document using just defined APIs
@@ -24,7 +25,7 @@ const doc = playlist({
     genre : 'Rock',
 
     // append children tracks to the root
-    children : [
+    tracks : [
         track({
             author : 'The Doors',
             title : 'Light My Fire',
