@@ -2,12 +2,12 @@
 import { document, element } from '../../lib'
 
 // define the playlist document assembler
-function playlist({ title, genre, tracks }) {
+function playlist({ title, genre, children }) {
     return document({
         qualifiedName : 'playlist',
         documentElement : {
             attributes : { title, genre },
-            children : tracks
+            children
         }
     })
 }
@@ -25,7 +25,7 @@ const doc = playlist({
     genre : 'Rock',
 
     // append children tracks to the root
-    tracks : [
+    children : [
         track({
             author : 'The Doors',
             title : 'Light My Fire',
