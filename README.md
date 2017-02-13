@@ -9,10 +9,10 @@ It provides the full set of assemblers for all DOM tree interfaces.
 - [doctype](lib/doctype.js) — `DocumentType` node assembler (XML: `<!DOCTYPE>`)
 - [fragment](lib/fragment.js) — `DocumentFragment` node assembler 
 - [element](lib/element.js) — `Element` node assembler (XML: `<element/>`)
-- [text](lib/characterdata.js#L21) — `Text` node assembler (XML: `text`)
-- [cdata](lib/characterdata.js#L58) — `CDATASection` node assembler (XML: `<![CDATA[character data section]]>`)
-- [comment](lib/characterdata.js#L69) — `Comment` node assembler (XML: `<!--comment-->`)
-- [instruction](lib/characterdata.js#L80) — `ProcessingInstruction` node assembler (XML: `<?processing instruction?>`)
+- [text](lib/text.js) — `Text` node assembler (XML: `text`)
+- [cdata](lib/cdata.js) — `CDATASection` node assembler (XML: `<![CDATA[character data section]]>`)
+- [comment](lib/comment.js) — `Comment` node assembler (XML: `<!--comment-->`)
+- [instruction](lib/instruction.js) — `ProcessingInstruction` node assembler (XML: `<?processing instruction?>`)
 
 ## Installation
 
@@ -28,7 +28,8 @@ import { document, element } from 'dommodule'
 
 // define the playlist document assembler
 function playlist({ title, genre, children }) {
-    return document('playlist', {
+    return document({
+        qualifiedName : 'playlist',
         documentElement : {
             attributes : { title, genre },
             children
@@ -38,7 +39,7 @@ function playlist({ title, genre, children }) {
 
 // define the track element assembler
 function track(attributes) {
-    return element('track', { attributes })
+    return element({ qualifiedName : 'track', attributes })
 }
 
 // create the playlist document using just defined APIs

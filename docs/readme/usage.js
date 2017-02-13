@@ -3,7 +3,8 @@ import { document, element } from '../../lib'
 
 // define the playlist document assembler
 function playlist({ title, genre, children }) {
-    return document('playlist', {
+    return document({
+        qualifiedName : 'playlist',
         documentElement : {
             attributes : { title, genre },
             children
@@ -13,7 +14,7 @@ function playlist({ title, genre, children }) {
 
 // define the track element assembler
 function track(attributes) {
-    return element('track', { attributes })
+    return element({ qualifiedName : 'track', attributes })
 }
 
 // create the playlist document using just defined APIs
