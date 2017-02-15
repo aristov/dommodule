@@ -27,13 +27,13 @@ const doc = playlist({
     // append children tracks to the root
     children : [
         track({
-            author : 'The Doors',
             title : 'Light My Fire',
+            author : 'The Doors',
             year : '1967'
         }),
         track({
-            author : 'Led Zeppelin',
             title : 'Black Dog',
+            author : 'Led Zeppelin',
             year : '1971'
         })
     ]

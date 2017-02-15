@@ -10,14 +10,16 @@ import { instruction } from '../lib/instruction'
 class Anchor extends ElementAssembler {}
 
 const XS_NAMESPACE_URI = 'http://www.w3.org/2001/XMLSchema'
+const XS_NAMESPACE_PREFIX = 'xs'
 
 class Attribute extends ElementAssembler {
-    static get prefix() {
-        return 'xs'
-    }
 
     static get namespaceURI() {
         return XS_NAMESPACE_URI
+    }
+
+    static get prefix() {
+        return XS_NAMESPACE_PREFIX
     }
 }
 
