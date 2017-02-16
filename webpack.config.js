@@ -1,6 +1,13 @@
+const path = require('path')
+
 module.exports = {
-    entry: './docs/index.js',
+    entry : {
+        index : ['./docs/index.js'],
+        dommodule : ['./lib'],
+        'window.dommodule' : ['./lib/window.dommodule']
+    },
     output: {
-        filename: 'dist/build.index.js'
+        path : path.join(__dirname, '/dist'),
+        filename: 'dist.[name].js'
     }
 }
