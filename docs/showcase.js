@@ -1,5 +1,4 @@
 import {
-    ElementAssembler,
     fragment,
     element,
     text,
@@ -9,11 +8,11 @@ import {
 } from '../lib'
 
 const title = function(init) {
-    return new ElementAssembler({ qualifiedName : 'title' }, init)
+    return element({ qualifiedName : 'title' }, init)
 }
 
 const example = function(init) {
-    return new ElementAssembler({ qualifiedName : 'example' }, init)
+    return element({ qualifiedName : 'example' }, init)
 }
 
 instruction({
