@@ -4,10 +4,12 @@ module.exports = {
     entry : {
         index : ['./docs/index.js'],
         dommodule : ['./lib'],
+        // 'jsdom.dommodule' : ['./lib/index'],
         'window.dommodule' : ['./lib/window.dommodule']
     },
-    output: {
-        path : path.join(__dirname, '/dist'),
-        filename: 'dist.[name].js'
+    output : {
+        path : path.join(__dirname, 'dist'),
+        filename : 'dist.[name].js',
+        // libraryTarget : 'commonjs2'
     }
 }
