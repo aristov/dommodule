@@ -4,7 +4,7 @@
   "description": "DOM assembler library",
   "main": "lib/index.js",
   "scripts": {
-    "start": "webpack -w",
+    "build": "webpack -w",
     "api": "esdoc -c esdoc.json",
     "publish": "git push && git push --tags",
     "patch": "npm version patch && npm publish",
