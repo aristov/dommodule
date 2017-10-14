@@ -10,14 +10,14 @@ element({
         element({
             attributes : [
                 attr({
+                    namespaceURI : 'http://www.w3.org/2000/xmlns/',
                     prefix : 'xmlns',
                     localName : 'rdfs',
-                    namespaceURI : 'http://www.w3.org/2000/xmlns/',
                     value : 'http://www.w3.org/2000/01/rdf-schema#'
                 }),
                 attr({
-                    name : 'xmlns:rdf',
                     namespaceURI : 'http://www.w3.org/2000/xmlns/',
+                    name : 'xmlns:rdf',
                     value : 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'
                 }),
                 xmlns({
@@ -48,7 +48,11 @@ element({
         button([
             button('button'),
             button({ children : 'children' }),
-            button({ childNodes : 'childNodes' })
+            button({
+                busy : true,
+                disabled : true,
+                childNodes : 'childNodes'
+            })
         ])
     ]
 })
