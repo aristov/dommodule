@@ -2,7 +2,9 @@ const path = require('path')
 
 module.exports = {
     entry : {
-        index : ['./docs/attr-test.js'],
+        element : ['./docs/element-test.js'],
+        attr : ['./docs/attr-test.js'],
+        index : ['./docs/index.js'],
         dommodule : ['./lib'],
         // 'jsdom.dommodule' : ['./lib/index'],
         // 'window.dommodule' : ['./lib/window.dommodule']
