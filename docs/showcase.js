@@ -52,7 +52,10 @@ element({
                 title('Processing instruction'),
                 instruction({
                     target : 'example',
-                    data : 'ProcessingInstruction node'
+                    data : {
+                        href : 'http://localhost:8080',
+                        title : 'localhost'
+                    }
                 })
             ])
         ])
