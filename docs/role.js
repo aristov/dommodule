@@ -5,11 +5,19 @@ const ROLE_SEPARATOR = ' '
 
 export class Role extends AttrAssembler {
     set value(value) {
-        this.node.value = this.constructor.value || value
+        super.value = this.constructor.value || value
     }
 
     get value() {
-        return this.node.value
+        return super.value
+    }
+
+    set ownerElement(ownerElement) {
+        super.ownerELement = ownerElement
+    }
+
+    get ownerElement() {
+        return super.ownerElement || (this.ownerElement = this.constructor.ownerElement)
     }
 
     static get value() {
@@ -51,9 +59,6 @@ export class RoleType extends Role {
     }
 
     set disabled(disabled) {
-        if(!this.ownerElement) {
-            this.ownerElement = this.constructor.ownerElement
-        }
         const node = this.ownerElement.node
         if(disabled) node.setAttribute('aria-disabled', 'true')
         else node.removeAttribute('aria-disabled')
@@ -64,9 +69,6 @@ export class RoleType extends Role {
     }
 
     set busy(busy) {
-        if(!this.ownerElement) {
-            this.ownerElement = this.constructor.ownerElement
-        }
         const node = this.ownerElement.node.getAttributeNode('aria-busy')
         const attr = this.getInstance(node)
         if(attr) attr.value = busy
@@ -79,7 +81,11 @@ export class RoleType extends Role {
     }
 
     get busy() {
-        return this.ownerElement.node.attributes
+        return this.ownerElement.node.getAttribute('aria-busy') === 'true'
+    }
+
+    getAttributeNode(assembler) {
+        return this.ownerElement.node.getAttributeNode(assembler.localName)
     }
 }
 
