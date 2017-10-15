@@ -12,13 +12,13 @@ element({
                 attr({
                     namespaceURI : 'http://www.w3.org/2000/xmlns/',
                     prefix : 'xmlns',
-                    localName : 'rdfs',
-                    value : 'http://www.w3.org/2000/01/rdf-schema#'
+                    localName : 'rdf',
+                    value : 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'
                 }),
                 attr({
                     namespaceURI : 'http://www.w3.org/2000/xmlns/',
-                    name : 'xmlns:rdf',
-                    value : 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'
+                    name : 'xmlns:rdfs',
+                    value : 'http://www.w3.org/2000/01/rdf-schema#'
                 }),
                 xmlns({
                     localName : 'html',
