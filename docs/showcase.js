@@ -8,11 +8,11 @@ import {
 } from '../lib'
 
 const title = function(init) {
-    return element({ qualifiedName : 'title' }, init)
+    return element({ localName : 'title' }, init)
 }
 
 const example = function(init) {
-    return element({ qualifiedName : 'example' }, init)
+    return element({ localName : 'example' }, init)
 }
 
 instruction({
