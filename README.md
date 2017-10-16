@@ -65,7 +65,7 @@ const doc = playlist({
 })
 ```
 
-This code generates the document, with the following structure:
+This code generates a document with the following structure:
 
 ```xml
 <playlist title="Classic hits" genre="rock">

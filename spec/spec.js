@@ -1,5 +1,5 @@
-import { ElementAssembler } from '../lib/'
 import chai from 'chai'
+import { ElementAssembler } from '../lib/'
 
 const { assert } = chai
 const { Attr, Comment, Document, DocumentType, Element, Text } = window
