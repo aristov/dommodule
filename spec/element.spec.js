@@ -26,11 +26,40 @@ describe('ElementAssembler', () => {
             assert.equal(serializer.serializeToString(node), '<element/>')
         })
     })
-    describe('setAttribute(AttrAssembler, "...")', () => {
+    describe('getAttributeNode(new String)', () => {
         const instance = new ElementAssembler
         const node = instance.node
-        const value = 'test attr value'
-        instance.setAttribute(AttrAssembler, value)
+        node.setAttribute('foo', 'bar')
+        const attr = instance.getAttributeNode('foo')
+        it('Returned node has proper inheritance', () => {
+            assert(attr instanceof AttrAssembler, 'proper inheritance')
+        })
+        it('Returned node has proper localName', () => {
+            assert.equal(attr.node.localName, 'foo')
+        })
+        it('Returned node has proper value', () => {
+            assert.equal(attr.node.value, 'bar')
+        })
+    })
+    describe('getAttributeNode(AttrAssembler)', () => {
+        const instance = new ElementAssembler
+        const node = instance.node
+        node.setAttribute(AttrAssembler.localName, 'foobar')
+        const attr = instance.getAttributeNode(AttrAssembler)
+        it('Returned node has proper inheritance', () => {
+            assert(attr instanceof AttrAssembler, 'proper inheritance')
+        })
+        it('Returned node has proper localName', () => {
+            assert.equal(attr.node.localName, AttrAssembler.localName)
+        })
+        it('Returned node has proper value', () => {
+            assert.equal(attr.node.value, 'foobar')
+        })
+    })
+    describe('setAttribute(AttrAssembler, new String)', () => {
+        const instance = new ElementAssembler
+        const node = instance.node
+        instance.setAttribute(AttrAssembler, 'foobar')
         it('Created node has assigned attribute', () => {
             assert(node.hasAttribute(AttrAssembler.localName), 'has attribute')
         })
@@ -39,32 +68,29 @@ describe('ElementAssembler', () => {
             assert.equal(node.attributes.length, 1)
         })
         it('Created node has proper attribute value', () => {
-            assert.equal(node.getAttribute(AttrAssembler.localName), value)
+            assert.equal(node.getAttribute(AttrAssembler.localName), 'foobar')
         })
         it('Created node is properly serialized', () => {
             assert.equal(serializer.serializeToString(node),
-                '<element attr="test attr value"/>')
+                '<element attr="foobar"/>')
         })
     })
-    describe.skip('setAttribute("...", "...")', () => {
+    describe('setAttribute(new String, new String)', () => {
         const instance = new ElementAssembler
         const node = instance.node
-        const name = 'attrname'
-        const value = 'test attr value'
-        instance.setAttribute(name, value)
+        instance.setAttribute('foo', 'bar')
         it('Created node has assigned attribute', () => {
-            assert(node.hasAttribute(name), 'has attribute')
+            assert(node.hasAttribute('foo'), 'has attribute')
         })
         it('Created node has proper number of attributes', () => {
             assert(node.hasAttributes(), 'has attributes')
             assert.equal(node.attributes.length, 1)
         })
         it('Created node has proper attribute value', () => {
-            assert.equal(node.getAttribute(name), value)
+            assert.equal(node.getAttribute('foo'), 'bar')
         })
         it('Created node is properly serialized', () => {
-            assert.equal(serializer.serializeToString(node),
-                '<element attr-name="test attr value"/>')
+            assert.equal(serializer.serializeToString(node), '<element foo="bar"/>')
         })
     })
 })
