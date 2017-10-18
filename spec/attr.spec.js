@@ -11,30 +11,30 @@ describe('AttrAssembler', () => {
         it('instanceof Attr', () => {
             assert(node instanceof Attr, 'instanceof Attr')
         })
-        it('name', () => {
+        it('node.name', () => {
             assert.equal(node.name, 'attr')
         })
-        it('value', () => {
+        it('node.value', () => {
             assert.equal(node.value, '')
         })
     })
     describe('new AttrAssembler(new String)', () => {
         const instance = new AttrAssembler('foobar')
         const node = instance.node
-        it('name', () => {
+        it('node.name', () => {
             assert.equal(node.name, 'attr')
         })
-        it('value', () => {
+        it('node.value', () => {
             assert.equal(node.value, 'foobar')
         })
     })
     describe('new AttrAssembler({ name, value })', () => {
         const instance = new AttrAssembler({ name : 'foo', value : 'bar' })
         const node = instance.node
-        it('name', () => {
+        it('node.name', () => {
             assert.equal(node.name, 'foo')
         })
-        it('value', () => {
+        it('node.value', () => {
             assert.equal(node.value, 'bar')
         })
     })
@@ -43,13 +43,13 @@ describe('AttrAssembler', () => {
         node.value = 'bar'
         const instance = new AttrAssembler({ node })
         const attr = instance.node
-        it('node equal', () => {
+        it('nodes equal', () => {
             assert.equal(attr, node)
         })
-        it('name', () => {
+        it('node.name', () => {
             assert.equal(attr.name, 'foo')
         })
-        it('value', () => {
+        it('node.value', () => {
             assert.equal(attr.value, 'bar')
         })
     })
@@ -61,15 +61,15 @@ describe('AttrAssembler', () => {
             value : 'foobar'
         })
         const node = instance.node
-        it('namespaceURI', () => {
+        it('node.namespaceURI', () => {
             assert.equal(node.namespaceURI, 'http://www.w3.org/XML/1998/namespace')
         })
-        it('prefix, localName, name', () => {
+        it('node.prefix, node.localName, node.name', () => {
             assert.equal(node.prefix, 'xml')
             assert.equal(node.localName, 'id')
             assert.equal(node.name, 'xml:id')
         })
-        it('value', () => {
+        it('node.value', () => {
             assert.equal(node.value, 'foobar')
         })
     })
