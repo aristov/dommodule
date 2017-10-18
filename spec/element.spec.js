@@ -56,12 +56,31 @@ describe('ElementAssembler', () => {
             assert.equal(attr.node.value, 'foobar')
         })
     })
-    describe('setAttributeNode(document.createAttribute(...))', () => {
+    describe('setAttributeNode(document.createAttribute())', () => {
         const instance = new ElementAssembler
         const node = instance.node
         const attr = document.createAttribute('foo')
         attr.value = 'bar'
-        node.setAttributeNode(attr)
+        instance.setAttributeNode(attr)
+        it('Created node has proper number of attributes', () => {
+            assert(node.hasAttributes(), 'has attributes')
+            assert.equal(node.attributes.length, 1)
+        })
+        it('Created node has assigned attribute', () => {
+            assert(node.hasAttribute('foo'), 'has attribute')
+        })
+        it('Created node has proper attribute value', () => {
+            assert.equal(node.getAttribute('foo'), 'bar')
+        })
+        it('Created node is properly serialized', () => {
+            assert.equal(serializer.serializeToString(node), '<element foo="bar"/>')
+        })
+    })
+    describe('setAttributeNode(new AttrAssembler())', () => {
+        const instance = new ElementAssembler
+        const node = instance.node
+        const attr = new AttrAssembler({ name : 'foo', value : 'bar' })
+        instance.setAttributeNode(attr)
         it('Created node has proper number of attributes', () => {
             assert(node.hasAttributes(), 'has attributes')
             assert.equal(node.attributes.length, 1)
