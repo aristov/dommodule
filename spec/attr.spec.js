@@ -127,20 +127,11 @@ describe('AttrAssembler', () => {
             assert.equal(xml, '<element/>')
         })
     })
-    describe('ownerElement = null', () => {
-        const attr = new AttrAssembler({ value : 'foobar' })
-        const element = new ElementAssembler
-        element.setAttributeNode(attr)
-        attr.ownerElement = null
-        it('attr.node.ownerElement', () => {
-            assert.isNull(attr.node.ownerElement)
-        })
-        it('element.node.hasAttributes()', () => {
-            assert.isFalse(element.node.hasAttributes())
-        })
-        it('serializeToString(element.node)', () => {
-            const xml = serializer.serializeToString(element.node)
-            assert.equal(xml, '<element/>')
+    describe('ownerElement = true', () => {
+        const attr = new AttrAssembler
+        const fn = () => attr.ownerElement = true
+        it('throws TypeError', () => {
+            assert.throws(fn, TypeError)
         })
     })
 })

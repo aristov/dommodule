@@ -19,3 +19,4 @@ assert.isFalse = function () {}
 assert.isTrue = function () {}
 assert.lengthOf = function () {}
 assert.isNull = function () {}
+assert.throws = function () {}
