@@ -2,7 +2,7 @@ const path = require('path')
 
 module.exports = {
     entry : {
-        spec : ['./spec/spec.js'],
+        spec : ['./spec/index.spec.js'],
         // element : ['./docs/element-test.js'],
         // attr : ['./docs/attr-test.js'],
         // index : ['./docs/index.js'],
