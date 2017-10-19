@@ -8,8 +8,8 @@ const serializer = new XMLSerializer
 
 describe('ElementAssembler', () => {
     describe('new ElementAssembler', () => {
-        const instance = new ElementAssembler
-        const node = instance.node
+        const element = new ElementAssembler
+        const node = element.node
         it('instanceof Element', () => {
             assert(node instanceof Element, node + ' instance of ' + Element)
         })
@@ -27,10 +27,10 @@ describe('ElementAssembler', () => {
         })
     })
     describe('getAttributeNode(new String)', () => {
-        const instance = new ElementAssembler
-        const node = instance.node
+        const element = new ElementAssembler
+        const node = element.node
         node.setAttribute('foo', 'bar')
-        const attr = instance.getAttributeNode('foo')
+        const attr = element.getAttributeNode('foo')
         it('instanceof AttrAssembler', () => {
             assert(attr instanceof AttrAssembler, 'proper inheritance')
         })
@@ -42,10 +42,10 @@ describe('ElementAssembler', () => {
         })
     })
     describe('getAttributeNode(AttrAssembler)', () => {
-        const instance = new ElementAssembler
-        const node = instance.node
+        const element = new ElementAssembler
+        const node = element.node
         node.setAttribute(AttrAssembler.localName, 'foobar')
-        const attr = instance.getAttributeNode(AttrAssembler)
+        const attr = element.getAttributeNode(AttrAssembler)
         it('instanceof AttrAssembler', () => {
             assert(attr instanceof AttrAssembler, 'proper inheritance')
         })
@@ -57,11 +57,11 @@ describe('ElementAssembler', () => {
         })
     })
     describe('setAttributeNode(document.createAttribute())', () => {
-        const instance = new ElementAssembler
-        const node = instance.node
-        const attr = document.createAttribute('foo')
-        attr.value = 'bar'
-        instance.setAttributeNode(attr)
+        const element = new ElementAssembler
+        const node = element.node
+        const attrNode = document.createAttribute('foo')
+        attrNode.value = 'bar'
+        element.setAttributeNode(attrNode)
         it('node.hasAttributes(), node.attributes.length', () => {
             assert(node.hasAttributes(), 'node.hasAttributes()')
             assert.equal(node.attributes.length, 1)
@@ -77,10 +77,10 @@ describe('ElementAssembler', () => {
         })
     })
     describe('setAttributeNode(new AttrAssembler)', () => {
-        const instance = new ElementAssembler
-        const node = instance.node
+        const element = new ElementAssembler
+        const node = element.node
         const attr = new AttrAssembler({ name : 'foo', value : 'bar' })
-        instance.setAttributeNode(attr)
+        element.setAttributeNode(attr)
         it('node.hasAttributes(), node.attributes.length', () => {
             assert(node.hasAttributes(), 'node.hasAttributes()')
             assert.equal(node.attributes.length, 1)
@@ -96,12 +96,12 @@ describe('ElementAssembler', () => {
         })
     })
     describe('removeAttributeNode(new AttrAssembler)', () => {
-        const instance = new ElementAssembler()
-        const node = instance.node
+        const element = new ElementAssembler()
+        const node = element.node
         const attr = new AttrAssembler('foobar')
-        instance.setAttributeNode(attr)
-        const removedAttr = instance.removeAttributeNode(attr)
-        it('instances equal', () => {
+        element.setAttributeNode(attr)
+        const removedAttr = element.removeAttributeNode(attr)
+        it('attrs equal', () => {
             assert.equal(removedAttr, attr)
         })
         it('node.hasAttributes(), node.attributes.length', () => {
@@ -116,13 +116,13 @@ describe('ElementAssembler', () => {
         })
     })
     describe('removeAttributeNode(document.createAttribute())', () => {
-        const instance = new ElementAssembler()
-        const node = instance.node
-        const attr = document.createAttribute('foobar')
-        node.setAttributeNode(attr)
-        const removedInstance = instance.removeAttributeNode(attr)
+        const element = new ElementAssembler()
+        const node = element.node
+        const attrNode = document.createAttribute('foobar')
+        node.setAttributeNode(attrNode)
+        const removedInstance = element.removeAttributeNode(attrNode)
         it('nodes equal', () => {
-            assert.equal(removedInstance.node, attr)
+            assert.equal(removedInstance.node, attrNode)
         })
         it('node.hasAttributes(), node.attributes.length', () => {
             assert(!node.hasAttributes(), '!node.hasAttributes()')
@@ -136,13 +136,13 @@ describe('ElementAssembler', () => {
         })
     })
     describe('removeAttributeNode(AttrAssembler)', () => {
-        const instance = new ElementAssembler()
-        const node = instance.node
-        const attr = document.createAttribute('attr')
-        node.setAttributeNode(attr)
-        const removedInstance = instance.removeAttributeNode(AttrAssembler)
+        const element = new ElementAssembler()
+        const node = element.node
+        const attrNode = document.createAttribute('attr')
+        node.setAttributeNode(attrNode)
+        const removedInstance = element.removeAttributeNode(AttrAssembler)
         it('nodes equal', () => {
-            assert.equal(removedInstance.node, attr)
+            assert.equal(removedInstance.node, attrNode)
         })
         it('node.hasAttributes(), node.attributes.length', () => {
             assert(!node.hasAttributes(), '!node.hasAttributes()')
@@ -156,13 +156,13 @@ describe('ElementAssembler', () => {
         })
     })
     describe('removeAttributeNode(new String)', () => {
-        const instance = new ElementAssembler()
-        const node = instance.node
-        const attr = document.createAttribute('foobar')
-        node.setAttributeNode(attr)
-        const removedInstance = instance.removeAttributeNode('foobar')
+        const element = new ElementAssembler()
+        const node = element.node
+        const attrNode = document.createAttribute('foobar')
+        node.setAttributeNode(attrNode)
+        const removedInstance = element.removeAttributeNode('foobar')
         it('nodes equal', () => {
-            assert.equal(removedInstance.node, attr)
+            assert.equal(removedInstance.node, attrNode)
         })
         it('node.hasAttributes(), node.attributes.length', () => {
             assert(!node.hasAttributes(), '!node.hasAttributes()')
@@ -176,9 +176,9 @@ describe('ElementAssembler', () => {
         })
     })
     describe('setAttribute(AttrAssembler, new String)', () => {
-        const instance = new ElementAssembler
-        const node = instance.node
-        instance.setAttribute(AttrAssembler, 'foobar')
+        const element = new ElementAssembler
+        const node = element.node
+        element.setAttribute(AttrAssembler, 'foobar')
         it('node.hasAttributes(), node.attributes.length', () => {
             assert(node.hasAttributes(), 'node.hasAttributes()')
             assert.equal(node.attributes.length, 1)
@@ -194,9 +194,9 @@ describe('ElementAssembler', () => {
         })
     })
     describe('setAttribute(new String, new String)', () => {
-        const instance = new ElementAssembler
-        const node = instance.node
-        instance.setAttribute('foo', 'bar')
+        const element = new ElementAssembler
+        const node = element.node
+        element.setAttribute('foo', 'bar')
         it('node.hasAttributes(), node.attributes.length', () => {
             assert(node.hasAttributes(), 'node.hasAttributes()')
             assert.equal(node.attributes.length, 1)
