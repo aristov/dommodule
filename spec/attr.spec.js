@@ -38,22 +38,7 @@ describe('AttrAssembler', () => {
             assert.equal(node.value, 'bar')
         })
     })
-    describe('new AttrAssembler({ node })', () => {
-        const node = document.createAttribute('foo')
-        node.value = 'bar'
-        const instance = new AttrAssembler({ node })
-        const attr = instance.node
-        it('nodes equal', () => {
-            assert.equal(attr, node)
-        })
-        it('node.name', () => {
-            assert.equal(attr.name, 'foo')
-        })
-        it('node.value', () => {
-            assert.equal(attr.value, 'bar')
-        })
-    })
-    describe('new AttrAssembler({ namespaceURI, prefix, localName })', () => {
+    describe('new AttrAssembler({ namespaceURI, prefix, localName, value })', () => {
         const instance = new AttrAssembler({
             namespaceURI : 'http://www.w3.org/XML/1998/namespace',
             prefix : 'xml',
@@ -71,6 +56,32 @@ describe('AttrAssembler', () => {
         })
         it('node.value', () => {
             assert.equal(node.value, 'foobar')
+        })
+    })
+    describe('new AttrAssembler({ node })', () => {
+        const node = document.createAttribute('foo')
+        node.value = 'bar'
+        const instance = new AttrAssembler({ node })
+        const attr = instance.node
+        it('nodes equal', () => {
+            assert.equal(attr, node)
+        })
+        it('node.name', () => {
+            assert.equal(attr.name, 'foo')
+        })
+        it('node.value', () => {
+            assert.equal(attr.value, 'bar')
+        })
+    })
+    describe('set value', () => {
+        const instance = new AttrAssembler
+        const node = instance.node
+        instance.value = 'foobar'
+        it('node.value', () => {
+            assert.equal(node.value, 'foobar')
+        })
+        it('get value', () => {
+            assert.equal(instance.value, 'foobar')
         })
     })
 })
