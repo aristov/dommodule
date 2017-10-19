@@ -12,9 +12,10 @@ function it(msg, fn) {}
 
 const assert = {}
 
-/**
- * @param {*} act
- * @param {*} exp
- * @param {String} [msg]
- */
-assert.equal = function (act, exp, msg) {}
+assert.equal = function () {}
+assert.instanceOf = function () {}
+assert.propertyVal = function () {}
+assert.isFalse = function () {}
+assert.isTrue = function () {}
+assert.lengthOf = function () {}
+assert.isNull = function () {}
