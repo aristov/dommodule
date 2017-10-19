@@ -1,13 +1,15 @@
 import chai from 'chai'
-import { AttrAssembler } from '../lib/'
+import { AttrAssembler, ElementAssembler } from '../lib/'
 
 const { assert } = chai
 const { Attr } = window
 
+const serializer = new XMLSerializer
+
 describe('AttrAssembler', () => {
     describe('new AttrAssembler', () => {
-        const instance = new AttrAssembler
-        const node = instance.node
+        const attr = new AttrAssembler
+        const node = attr.node
         it('instanceof Attr', () => {
             assert(node instanceof Attr, 'instanceof Attr')
         })
@@ -19,8 +21,8 @@ describe('AttrAssembler', () => {
         })
     })
     describe('new AttrAssembler(new String)', () => {
-        const instance = new AttrAssembler('foobar')
-        const node = instance.node
+        const attr = new AttrAssembler('foobar')
+        const node = attr.node
         it('node.name', () => {
             assert.equal(node.name, 'attr')
         })
@@ -29,8 +31,8 @@ describe('AttrAssembler', () => {
         })
     })
     describe('new AttrAssembler({ name, value })', () => {
-        const instance = new AttrAssembler({ name : 'foo', value : 'bar' })
-        const node = instance.node
+        const attr = new AttrAssembler({ name : 'foo', value : 'bar' })
+        const node = attr.node
         it('node.name', () => {
             assert.equal(node.name, 'foo')
         })
@@ -39,13 +41,13 @@ describe('AttrAssembler', () => {
         })
     })
     describe('new AttrAssembler({ namespaceURI, prefix, localName, value })', () => {
-        const instance = new AttrAssembler({
+        const attr = new AttrAssembler({
             namespaceURI : 'http://www.w3.org/XML/1998/namespace',
             prefix : 'xml',
             localName : 'id',
             value : 'foobar'
         })
-        const node = instance.node
+        const node = attr.node
         it('node.namespaceURI', () => {
             assert.equal(node.namespaceURI, 'http://www.w3.org/XML/1998/namespace')
         })
@@ -60,28 +62,70 @@ describe('AttrAssembler', () => {
     })
     describe('new AttrAssembler({ node })', () => {
         const node = document.createAttribute('foo')
-        node.value = 'bar'
-        const instance = new AttrAssembler({ node })
-        const attr = instance.node
+        const attr = new AttrAssembler({ node })
+        const attrNode = attr.node
         it('nodes equal', () => {
-            assert.equal(attr, node)
-        })
-        it('node.name', () => {
-            assert.equal(attr.name, 'foo')
-        })
-        it('node.value', () => {
-            assert.equal(attr.value, 'bar')
+            assert.equal(attrNode, node)
         })
     })
-    describe('set value', () => {
-        const instance = new AttrAssembler
-        const node = instance.node
-        instance.value = 'foobar'
+    describe('value = new String', () => {
+        const attr = new AttrAssembler
+        attr.value = 'foobar'
         it('node.value', () => {
-            assert.equal(node.value, 'foobar')
+            assert.equal(attr.node.value, 'foobar')
         })
-        it('get value', () => {
-            assert.equal(instance.value, 'foobar')
+        it('value', () => {
+            assert.equal(attr.value, 'foobar')
+        })
+    })
+    describe('ownerElement = new ElementAssembler', () => {
+        const attr = new AttrAssembler({ value : 'foobar' })
+        const element = new ElementAssembler
+        attr.ownerElement = element
+        it('node.ownerElement', () => {
+            assert.equal(attr.node.ownerElement, element.node)
+        })
+        it('ownerElement', () => {
+            assert.equal(attr.ownerElement, element)
+        })
+        it('serializeToString(element.node)', () => {
+            const xml = serializer.serializeToString(element.node)
+            assert.equal(xml, '<element attr="foobar"/>')
+        })
+    })
+    describe('ownerElement = document.createElementNS()', () => {
+        const attr = new AttrAssembler({ name : 'foo', value : 'bar' })
+        const elementNode = document.createElementNS('', 'foobar')
+        attr.ownerElement = elementNode
+        it('node.ownerElement', () => {
+            assert.equal(attr.node.ownerElement, elementNode)
+        })
+        it('ownerElement instanceof ElementAssembler', () => {
+            assert(attr.ownerElement instanceof ElementAssembler,
+                'ownerElement instanceof ElementAssembler')
+        })
+        it('ownerElement.node', () => {
+            assert.equal(attr.ownerElement.node, elementNode)
+        })
+        it('serializeToString(element)', () => {
+            const xml = serializer.serializeToString(elementNode)
+            assert.equal(xml, '<foobar foo="bar"/>')
+        })
+    })
+    describe('ownerElement = null', () => {
+        const attr = new AttrAssembler({ value : 'foobar' })
+        const element = new ElementAssembler
+        element.setAttributeNode(attr)
+        attr.ownerElement = null
+        it('attr.node.ownerElement', () => {
+            assert(!attr.node.ownerElement, '!node.ownerElement')
+        })
+        it('element.node.hasAttributes()', () => {
+            assert(!element.node.hasAttributes(), '!element.node.hasAttributes()')
+        })
+        it('serializeToString(element.node)', () => {
+            const xml = serializer.serializeToString(element.node)
+            assert.equal(xml, '<element/>')
         })
     })
 })
