@@ -63,9 +63,8 @@ describe('AttrAssembler', () => {
     describe('new AttrAssembler({ node })', () => {
         const node = document.createAttribute('foo')
         const attr = new AttrAssembler({ node })
-        const attrNode = attr.node
         it('nodes equal', () => {
-            assert.equal(attrNode, node)
+            assert.equal(attr.node, node)
         })
     })
     describe('value = new String', () => {
