@@ -1,8 +1,7 @@
 import chai from 'chai'
-import { AttrAssembler, ElementAssembler } from '../lib/'
+import { Attr, AttrAssembler, ElementAssembler } from '../lib/'
 
 const { assert } = chai
-const { Attr } = window
 
 const serializer = new XMLSerializer
 
