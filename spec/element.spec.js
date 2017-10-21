@@ -25,6 +25,37 @@ describe('ElementAssembler', () => {
             assert.equal(serializer.serializeToString(node), '<element/>')
         })
     })
+    describe('new ElementAssembler({ localName })', () => {
+        const element = new ElementAssembler({ localName : 'foobar' })
+        const node = element.node
+        it('node.localName', () => {
+            assert.equal(node.localName, 'foobar')
+        })
+        it('node.prefix', () => {
+            assert.isNull(node.prefix)
+        })
+        it('serializeToString(node)', () => {
+            assert.equal(serializer.serializeToString(node), '<foobar/>')
+        })
+    })
+    describe('new ElementAssembler({ namespaceURI, prefix, localName })', () => {
+        const element = new ElementAssembler({
+            namespaceURI : 'http://example.com/namespace',
+            prefix : 'foo',
+            localName : 'bar'
+        })
+        const node = element.node
+        it('node.prefix', () => {
+            assert.equal(node.prefix, 'foo')
+        })
+        it('node.localName', () => {
+            assert.equal(node.localName, 'bar')
+        })
+        it('serializeToString(node)', () => {
+            const sample = '<foo:bar xmlns:foo="http://example.com/namespace"/>'
+            assert.equal(serializer.serializeToString(node), sample)
+        })
+    })
     describe('getAttributeNode(new String)', () => {
         const element = new ElementAssembler
         const node = element.node
