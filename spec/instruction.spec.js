@@ -9,7 +9,7 @@ describe('ProcessingInstructionAssembler', () => {
     describe('new ProcessingInstructionAssembler', () => {
         const instruction = new ProcessingInstructionAssembler
         const node = instruction.node
-        it('instanceof ProcessingInstruction', () => {
+        it('node', () => {
             assert.instanceOf(node, ProcessingInstruction)
         })
         it('node.target', () => {

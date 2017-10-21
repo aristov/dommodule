@@ -9,7 +9,7 @@ describe('TextAssembler', () => {
     describe('new TextAssembler', () => {
         const text = new TextAssembler
         const node = text.node
-        it('instanceof Text', () => {
+        it('node', () => {
             assert.instanceOf(node, Text)
         })
         it('node.data', () => {

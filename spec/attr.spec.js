@@ -9,7 +9,7 @@ describe('AttrAssembler', () => {
     describe('new AttrAssembler', () => {
         const attr = new AttrAssembler
         const node = attr.node
-        it('instanceof Attr', () => {
+        it('node', () => {
             assert.instanceOf(node, Attr)
         })
         it('node.name', () => {
@@ -98,7 +98,7 @@ describe('AttrAssembler', () => {
         it('node.ownerElement', () => {
             assert.equal(attr.node.ownerElement, elementNode)
         })
-        it('ownerElement instanceof ElementAssembler', () => {
+        it('ownerElement', () => {
             assert.instanceOf(attr.ownerElement, ElementAssembler)
         })
         it('ownerElement.node', () => {

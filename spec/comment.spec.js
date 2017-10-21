@@ -9,7 +9,7 @@ describe('CommentAssembler', () => {
     describe('new CommentAssembler', () => {
         const comment = new CommentAssembler
         const node = comment.node
-        it('instanceof Comment', () => {
+        it('node', () => {
             assert.instanceOf(node, Comment)
         })
         it('node.data', () => {

@@ -9,7 +9,7 @@ describe('ElementAssembler', () => {
     describe('new ElementAssembler', () => {
         const element = new ElementAssembler
         const node = element.node
-        it('instanceof Element', () => {
+        it('node', () => {
             assert.instanceOf(node, Element)
         })
         it('node.constructor', () => {
@@ -50,6 +50,9 @@ describe('ElementAssembler', () => {
         })
         it('node.localName', () => {
             assert.equal(node.localName, 'bar')
+        })
+        it('node.hasAttributes()', () => {
+            assert.isFalse(node.hasAttributes())
         })
         it('serializeToString(node)', () => {
             const sample = '<foo:bar xmlns:foo="http://example.com/namespace"/>'

@@ -10,7 +10,7 @@ describe('DocumentTypeAssembler', () => {
         const doctype = new DocumentTypeAssembler
         const node = doctype.node
         const name = DocumentTypeAssembler.qualifiedName
-        it('instanceof DocumentType', () => {
+        it('node', () => {
             assert.instanceOf(node, DocumentType)
         })
         it('node.name', () => {
