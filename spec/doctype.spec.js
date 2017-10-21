@@ -14,7 +14,7 @@ describe('DocumentTypeAssembler', () => {
             assert.instanceOf(node, DocumentType)
         })
         it('node.name', () => {
-            assert.propertyVal(node, 'name', name)
+            assert.equal(node.name, name)
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), `<!DOCTYPE ${ name }>`)
@@ -38,13 +38,13 @@ describe('DocumentTypeAssembler', () => {
         })
         const node = doctype.node
         it('node.name', () => {
-            assert.propertyVal(node, 'name', 'html')
+            assert.equal(node.name, 'html')
         })
         it('node.publicId', () => {
-            assert.propertyVal(node, 'publicId', '-//W3C//DTD XHTML 1.1//EN')
+            assert.equal(node.publicId, '-//W3C//DTD XHTML 1.1//EN')
         })
         it('node.systemId', () => {
-            assert.propertyVal(node, 'systemId', 'http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd')
+            assert.equal(node.systemId, 'http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd')
         })
         it('serializeToString(node)', () => {
             const xml = serializer.serializeToString(node)

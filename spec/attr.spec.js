@@ -13,30 +13,30 @@ describe('AttrAssembler', () => {
             assert.instanceOf(node, Attr)
         })
         it('node.name', () => {
-            assert.propertyVal(node, 'name', 'attr')
+            assert.equal(node.name, 'attr')
         })
         it('node.value', () => {
-            assert.propertyVal(node, 'value', '')
+            assert.equal(node.value, '')
         })
     })
     describe('new AttrAssembler(new String)', () => {
         const attr = new AttrAssembler('foobar')
         const node = attr.node
         it('node.name', () => {
-            assert.propertyVal(node, 'name', 'attr')
+            assert.equal(node.name, 'attr')
         })
         it('node.value', () => {
-            assert.propertyVal(node, 'value', 'foobar')
+            assert.equal(node.value, 'foobar')
         })
     })
     describe('new AttrAssembler({ name, value })', () => {
         const attr = new AttrAssembler({ name : 'foo', value : 'bar' })
         const node = attr.node
         it('node.name', () => {
-            assert.propertyVal(node, 'name', 'foo')
+            assert.equal(node.name, 'foo')
         })
         it('node.value', () => {
-            assert.propertyVal(node, 'value', 'bar')
+            assert.equal(node.value, 'bar')
         })
     })
     describe('new AttrAssembler({ namespaceURI, prefix, localName, value })', () => {
@@ -48,15 +48,15 @@ describe('AttrAssembler', () => {
         })
         const node = attr.node
         it('node.namespaceURI', () => {
-            assert.propertyVal(node, 'namespaceURI', 'http://www.w3.org/XML/1998/namespace')
+            assert.equal(node.namespaceURI, 'http://www.w3.org/XML/1998/namespace')
         })
         it('node.prefix, node.localName, node.name', () => {
-            assert.propertyVal(node, 'prefix', 'xml')
-            assert.propertyVal(node, 'localName', 'id')
-            assert.propertyVal(node, 'name', 'xml:id')
+            assert.equal(node.prefix, 'xml')
+            assert.equal(node.localName, 'id')
+            assert.equal(node.name, 'xml:id')
         })
         it('node.value', () => {
-            assert.propertyVal(node, 'value', 'foobar')
+            assert.equal(node.value, 'foobar')
         })
     })
     describe('new AttrAssembler({ node })', () => {
@@ -70,10 +70,10 @@ describe('AttrAssembler', () => {
         const attr = new AttrAssembler
         attr.value = 'foobar'
         it('node.value', () => {
-            assert.propertyVal(attr.node, 'value', 'foobar')
+            assert.equal(attr.node.value, 'foobar')
         })
         it('value', () => {
-            assert.propertyVal(attr, 'value', 'foobar')
+            assert.equal(attr.value, 'foobar')
         })
     })
     describe('ownerElement = new ElementAssembler', () => {
@@ -81,10 +81,10 @@ describe('AttrAssembler', () => {
         const element = new ElementAssembler
         attr.ownerElement = element
         it('node.ownerElement', () => {
-            assert.propertyVal(attr.node, 'ownerElement', element.node)
+            assert.equal(attr.node.ownerElement, element.node)
         })
         it('ownerElement', () => {
-            assert.propertyVal(attr, 'ownerElement', element)
+            assert.equal(attr.ownerElement, element)
         })
         it('serializeToString(element.node)', () => {
             const xml = serializer.serializeToString(element.node)
@@ -96,13 +96,13 @@ describe('AttrAssembler', () => {
         const elementNode = document.createElementNS('', 'foobar')
         attr.ownerElement = elementNode
         it('node.ownerElement', () => {
-            assert.propertyVal(attr.node, 'ownerElement', elementNode)
+            assert.equal(attr.node.ownerElement, elementNode)
         })
         it('ownerElement instanceof ElementAssembler', () => {
             assert.instanceOf(attr.ownerElement, ElementAssembler)
         })
         it('ownerElement.node', () => {
-            assert.propertyVal(attr.ownerElement, 'node', elementNode)
+            assert.equal(attr.ownerElement.node, elementNode)
         })
         it('serializeToString(element)', () => {
             const xml = serializer.serializeToString(elementNode)

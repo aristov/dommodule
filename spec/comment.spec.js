@@ -13,7 +13,7 @@ describe('CommentAssembler', () => {
             assert.instanceOf(node, Comment)
         })
         it('node.data', () => {
-            assert.propertyVal(node, 'data', '')
+            assert.equal(node.data, '')
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '<!---->')
@@ -23,7 +23,7 @@ describe('CommentAssembler', () => {
         const comment = new CommentAssembler('foobar')
         const node = comment.node
         it('node.data', () => {
-            assert.propertyVal(node, 'data', 'foobar')
+            assert.equal(node.data, 'foobar')
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '<!--foobar-->')
@@ -33,7 +33,7 @@ describe('CommentAssembler', () => {
         const comment = new CommentAssembler({ data : 'foobar' })
         const node = comment.node
         it('node.data', () => {
-            assert.propertyVal(node, 'data', 'foobar')
+            assert.equal(node.data, 'foobar')
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '<!--foobar-->')
@@ -51,10 +51,10 @@ describe('CommentAssembler', () => {
         const node = comment.node
         comment.data = 'foobar'
         it('node.data', () => {
-            assert.propertyVal(node, 'data', 'foobar')
+            assert.equal(node.data, 'foobar')
         })
         it('data', () => {
-            assert.propertyVal(comment, 'data', 'foobar')
+            assert.equal(comment.data, 'foobar')
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '<!--foobar-->')
@@ -68,10 +68,10 @@ describe('CommentAssembler', () => {
         })
         const node = comment.node
         it('node.parentNode', () => {
-            assert.propertyVal(node, 'parentNode', element.node)
+            assert.equal(node.parentNode, element.node)
         })
         it('parentNode', () => {
-            assert.propertyVal(comment, 'parentNode', element)
+            assert.equal(comment.parentNode, element)
         })
         it('serializeToString(element.node)', () => {
             const xml = serializer.serializeToString(element.node)

@@ -13,10 +13,10 @@ describe('ElementAssembler', () => {
             assert.instanceOf(node, Element)
         })
         it('node.constructor', () => {
-            assert.propertyVal(node, 'constructor', Element)
+            assert.equal(node.constructor, Element)
         })
         it('node.tagName', () => {
-            assert.propertyVal(node, 'tagName', 'element')
+            assert.equal(node.tagName, 'element')
         })
         it('node.hasAttributes()', () => {
             assert.isFalse(node.hasAttributes())
@@ -34,10 +34,10 @@ describe('ElementAssembler', () => {
             assert.instanceOf(attr, AttrAssembler)
         })
         it('node.localName', () => {
-            assert.propertyVal(attr.node, 'localName', 'foo')
+            assert.equal(attr.node.localName, 'foo')
         })
         it('node.value', () => {
-            assert.propertyVal(attr.node, 'value', 'bar')
+            assert.equal(attr.node.value, 'bar')
         })
     })
     describe('getAttributeNode(AttrAssembler)', () => {
@@ -49,10 +49,10 @@ describe('ElementAssembler', () => {
             assert.instanceOf(attr, AttrAssembler)
         })
         it('node.localName', () => {
-            assert.propertyVal(attr.node, 'localName', AttrAssembler.localName)
+            assert.equal(attr.node.localName, AttrAssembler.localName)
         })
         it('node.value', () => {
-            assert.propertyVal(attr.node, 'value', 'foobar')
+            assert.equal(attr.node.value, 'foobar')
         })
     })
     describe('setAttributeNode(document.createAttribute())', () => {
@@ -127,7 +127,7 @@ describe('ElementAssembler', () => {
         node.setAttributeNode(attrNode)
         const removedInstance = element.removeAttributeNode(attrNode)
         it('nodes equal', () => {
-            assert.propertyVal(removedInstance, 'node', attrNode)
+            assert.equal(removedInstance.node, attrNode)
         })
         it('node.hasAttributes()', () => {
             assert.isFalse(node.hasAttributes())
@@ -149,7 +149,7 @@ describe('ElementAssembler', () => {
         node.setAttributeNode(attrNode)
         const removedInstance = element.removeAttributeNode(AttrAssembler)
         it('nodes equal', () => {
-            assert.propertyVal(removedInstance, 'node', attrNode)
+            assert.equal(removedInstance.node, attrNode)
         })
         it('node.hasAttributes()', () => {
             assert.isFalse(node.hasAttributes())
@@ -171,7 +171,7 @@ describe('ElementAssembler', () => {
         node.setAttributeNode(attrNode)
         const removedInstance = element.removeAttributeNode('foobar')
         it('nodes equal', () => {
-            assert.propertyVal(removedInstance, 'node', attrNode)
+            assert.equal(removedInstance.node, attrNode)
         })
         it('node.hasAttributes()', () => {
             assert.isFalse(node.hasAttributes())
