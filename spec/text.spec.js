@@ -15,17 +15,28 @@ describe('TextAssembler', () => {
         it('node.data', () => {
             assert.propertyVal(node, 'data', '')
         })
+        it('serializeToString(node)', () => {
+            assert.equal(serializer.serializeToString(node), '')
+        })
     })
     describe('new TextAssembler(new String)', () => {
         const text = new TextAssembler('foobar')
+        const node = text.node
         it('node.data', () => {
-            assert.propertyVal(text.node, 'data', 'foobar')
+            assert.propertyVal(node, 'data', 'foobar')
+        })
+        it('serializeToString(node)', () => {
+            assert.equal(serializer.serializeToString(node), 'foobar')
         })
     })
     describe('new TextAssembler({ data })', () => {
         const text = new TextAssembler({ data : 'foobar' })
+        const node = text.node
         it('node.data', () => {
-            assert.propertyVal(text.node, 'data', 'foobar')
+            assert.propertyVal(node, 'data', 'foobar')
+        })
+        it('serializeToString(node)', () => {
+            assert.equal(serializer.serializeToString(node), 'foobar')
         })
     })
     describe('new TextAssembler({ node })', () => {
@@ -37,12 +48,34 @@ describe('TextAssembler', () => {
     })
     describe('data = new String', () => {
         const text = new TextAssembler
+        const node = text.node
         text.data = 'foobar'
         it('node.data', () => {
-            assert.propertyVal(text.node, 'data', 'foobar')
+            assert.propertyVal(node, 'data', 'foobar')
         })
         it('data', () => {
             assert.propertyVal(text, 'data', 'foobar')
+        })
+        it('serializeToString(node)', () => {
+            assert.equal(serializer.serializeToString(node), 'foobar')
+        })
+    })
+    describe('new TextAssembler({ data, parentNode })', () => {
+        const element = new ElementAssembler
+        const text = new TextAssembler({
+            data : 'foobar',
+            parentNode : element
+        })
+        const node = text.node
+        it('node.parentNode', () => {
+            assert.propertyVal(node, 'parentNode', element.node)
+        })
+        it('parentNode', () => {
+            assert.propertyVal(text, 'parentNode', element)
+        })
+        it('serializeToString(element.node)', () => {
+            const xml = serializer.serializeToString(element.node)
+            assert.equal(xml, '<element>foobar</element>')
         })
     })
 })
