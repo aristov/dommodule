@@ -52,38 +52,7 @@ describe('DocumentTypeAssembler', () => {
             assert.equal(xml, sample)
         })
     })
-    /*describe('new DocumentTypeAssembler({ data })', () => {
-        const doctype = new DocumentTypeAssembler({ data : 'foobar' })
-        const node = doctype.node
-        it('node.data', () => {
-            assert.propertyVal(node, 'data', 'foobar')
-        })
-        it('serializeToString(node)', () => {
-            assert.equal(serializer.serializeToString(node), 'foobar')
-        })
-    })
-    describe('new DocumentTypeAssembler({ node })', () => {
-        const node = document.createTextNode('foobar')
-        const doctype = new DocumentTypeAssembler({ node })
-        it('nodes equal', () => {
-            assert.equal(doctype.node, node)
-        })
-    })
-    describe('data = new String', () => {
-        const doctype = new DocumentTypeAssembler
-        const node = doctype.node
-        doctype.data = 'foobar'
-        it('node.data', () => {
-            assert.propertyVal(node, 'data', 'foobar')
-        })
-        it('data', () => {
-            assert.propertyVal(doctype, 'data', 'foobar')
-        })
-        it('serializeToString(node)', () => {
-            assert.equal(serializer.serializeToString(node), 'foobar')
-        })
-    })*/
-    /*describe.skip('new DocumentTypeAssembler({ qualifiedName, parentNode })', () => {
+    describe('new DocumentTypeAssembler({ qualifiedName, parentNode })', () => {
         const document = new DocumentAssembler
         const doctype = new DocumentTypeAssembler({
             qualifiedName : DocumentAssembler.qualifiedName,
@@ -91,14 +60,14 @@ describe('DocumentTypeAssembler', () => {
         })
         const node = doctype.node
         it('node.parentNode', () => {
-            assert.propertyVal(node, 'parentNode', document.node)
+            assert.equal(node.parentNode, document.node)
         })
         it('parentNode', () => {
-            assert.propertyVal(doctype, 'parentNode', document)
+            assert.equal(doctype.parentNode, document)
         })
         it('serializeToString(element.node)', () => {
             const xml = serializer.serializeToString(document.node)
-            assert.equal(xml, '<!DOCTYPE document><document></document>')
+            assert.equal(xml, '<!DOCTYPE document><document/>')
         })
-    })*/
+    })
 })
