@@ -7,42 +7,75 @@ const serializer = new XMLSerializer
 
 describe('CommentAssembler', () => {
     describe('new CommentAssembler', () => {
-        const text = new CommentAssembler
-        const node = text.node
+        const comment = new CommentAssembler
+        const node = comment.node
         it('instanceof Comment', () => {
             assert.instanceOf(node, Comment)
         })
         it('node.data', () => {
             assert.propertyVal(node, 'data', '')
         })
+        it('serializeToString(node)', () => {
+            assert.equal(serializer.serializeToString(node), '<!---->')
+        })
     })
     describe('new CommentAssembler(new String)', () => {
-        const text = new CommentAssembler('foobar')
+        const comment = new CommentAssembler('foobar')
+        const node = comment.node
         it('node.data', () => {
-            assert.propertyVal(text.node, 'data', 'foobar')
+            assert.propertyVal(node, 'data', 'foobar')
+        })
+        it('serializeToString(node)', () => {
+            assert.equal(serializer.serializeToString(node), '<!--foobar-->')
         })
     })
     describe('new CommentAssembler({ data })', () => {
-        const text = new CommentAssembler({ data : 'foobar' })
+        const comment = new CommentAssembler({ data : 'foobar' })
+        const node = comment.node
         it('node.data', () => {
-            assert.propertyVal(text.node, 'data', 'foobar')
+            assert.propertyVal(node, 'data', 'foobar')
+        })
+        it('serializeToString(node)', () => {
+            assert.equal(serializer.serializeToString(node), '<!--foobar-->')
         })
     })
     describe('new CommentAssembler({ node })', () => {
         const node = document.createComment('foobar')
-        const text = new CommentAssembler({ node })
+        const comment = new CommentAssembler({ node })
         it('nodes equal', () => {
-            assert.equal(text.node, node)
+            assert.equal(comment.node, node)
         })
     })
     describe('data = new String', () => {
-        const text = new CommentAssembler
-        text.data = 'foobar'
+        const comment = new CommentAssembler
+        const node = comment.node
+        comment.data = 'foobar'
         it('node.data', () => {
-            assert.propertyVal(text.node, 'data', 'foobar')
+            assert.propertyVal(node, 'data', 'foobar')
         })
         it('data', () => {
-            assert.propertyVal(text, 'data', 'foobar')
+            assert.propertyVal(comment, 'data', 'foobar')
+        })
+        it('serializeToString(node)', () => {
+            assert.equal(serializer.serializeToString(node), '<!--foobar-->')
+        })
+    })
+    describe('new CommentAssembler({ data, parentNode })', () => {
+        const element = new ElementAssembler
+        const comment = new CommentAssembler({
+            data : 'foobar',
+            parentNode : element
+        })
+        const node = comment.node
+        it('node.parentNode', () => {
+            assert.propertyVal(node, 'parentNode', element.node)
+        })
+        it('parentNode', () => {
+            assert.propertyVal(comment, 'parentNode', element)
+        })
+        it('serializeToString(element.node)', () => {
+            const xml = serializer.serializeToString(element.node)
+            assert.equal(xml, '<element><!--foobar--></element>')
         })
     })
 })
