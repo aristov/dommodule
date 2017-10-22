@@ -1,5 +1,9 @@
 import chai from 'chai'
-import { Element, ElementAssembler, AttrAssembler } from '../lib/'
+import {
+    AttrAssembler,
+    Element, ElementAssembler,
+    Text, TextAssembler
+} from '../lib/'
 
 const { assert } = chai
 
@@ -152,8 +156,8 @@ describe('ElementAssembler', () => {
         })
     })
     describe('new ElementAssembler(document.createElementNS())', () => {
-        const child = document.createElementNS('', 'child')
-        const element = new ElementAssembler(child)
+        const childNode = document.createElementNS('', 'child')
+        const element = new ElementAssembler(childNode)
         const node = element.node
         it('node.tagName', () => {
             assert.equal(node.tagName, 'element')
@@ -165,10 +169,83 @@ describe('ElementAssembler', () => {
             assert.equal(node.childNodes.length, 1)
         })
         it('node.firstChild', () => {
-            assert.equal(node.firstChild, child)
+            assert.equal(node.firstChild, childNode)
         })
         it('serializeToString(node)', () => {
             const sample = '<element><child/></element>'
+            assert.equal(serializer.serializeToString(node), sample)
+        })
+    })
+    describe('new ElementAssembler(new TextAssembler)', () => {
+        const data = 'foobar'
+        const text = new TextAssembler(data)
+        const element = new ElementAssembler(text)
+        const node = element.node
+        it('node.tagName', () => {
+            assert.equal(node.tagName, 'element')
+        })
+        it('node.hasChildNodes()', () => {
+            assert(node.hasChildNodes(), 'node.hasChildNodes()')
+        })
+        it('node.childNodes.length', () => {
+            assert.equal(node.childNodes.length, 1)
+        })
+        it('node.firstChild', () => {
+            assert.equal(node.firstChild, text.node)
+        })
+        it('node.textContent', () => {
+            assert.equal(node.textContent, data)
+        })
+        it('serializeToString(node)', () => {
+            const sample = '<element>foobar</element>'
+            assert.equal(serializer.serializeToString(node), sample)
+        })
+    })
+    describe('new ElementAssembler(document.createTextNode())', () => {
+        const textNode = document.createTextNode('foobar')
+        const element = new ElementAssembler(textNode)
+        const node = element.node
+        it('node.tagName', () => {
+            assert.equal(node.tagName, 'element')
+        })
+        it('node.hasChildNodes()', () => {
+            assert(node.hasChildNodes(), 'node.hasChildNodes()')
+        })
+        it('node.childNodes.length', () => {
+            assert.equal(node.childNodes.length, 1)
+        })
+        it('node.firstChild', () => {
+            assert.equal(node.firstChild, textNode)
+        })
+        it('node.textContent', () => {
+            assert.equal(node.textContent, textNode.data)
+        })
+        it('serializeToString(node)', () => {
+            const sample = '<element>foobar</element>'
+            assert.equal(serializer.serializeToString(node), sample)
+        })
+    })
+    describe('new ElementAssembler(new String)', () => {
+        const textContent = 'foobar'
+        const element = new ElementAssembler(textContent)
+        const node = element.node
+        it('node.tagName', () => {
+            assert.equal(node.tagName, 'element')
+        })
+        it('node.hasChildNodes()', () => {
+            assert(node.hasChildNodes(), 'node.hasChildNodes()')
+        })
+        it('node.childNodes.length', () => {
+            assert.equal(node.childNodes.length, 1)
+        })
+        it('node.firstChild', () => {
+            assert.instanceOf(node.firstChild, Text)
+        })
+        it('node.textContent', () => {
+            assert.equal(node.textContent, textContent)
+        })
+        it('serializeToString(node)', () => {
+            const sample = '<element>foobar</element>'
             assert.equal(serializer.serializeToString(node), sample)
         })
     })
