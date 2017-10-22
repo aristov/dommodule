@@ -110,6 +110,26 @@ describe('ElementAssembler', () => {
             assert.equal(serializer.serializeToString(node), sample)
         })
     })
+    describe('new ElementAssembler({ node })', () => {
+        const foobar = document.createElementNS('', 'foobar')
+        const element = new ElementAssembler({ node : foobar })
+        const node = element.node
+        it('node', () => {
+            assert.equal(node, foobar)
+        })
+        it('node.tagName', () => {
+            assert.equal(node.tagName, 'foobar')
+        })
+        it('node.hasAttributes()', () => {
+            assert.isFalse(node.hasAttributes())
+        })
+        it('node.hasChildNodes()', () => {
+            assert.isFalse(node.hasChildNodes())
+        })
+        it('serializeToString(node)', () => {
+            assert.equal(serializer.serializeToString(node), '<foobar/>')
+        })
+    })
     describe('new ElementAssembler(new ElementAssembler)', () => {
         const child = new ElementAssembler
         const element = new ElementAssembler(child)
@@ -252,9 +272,9 @@ describe('ElementAssembler', () => {
         const node = element.node
         const attrNode = document.createAttribute('foobar')
         node.setAttributeNode(attrNode)
-        const removedInstance = element.removeAttributeNode(attrNode)
+        const removedAttr = element.removeAttributeNode(attrNode)
         it('nodes equal', () => {
-            assert.equal(removedInstance.node, attrNode)
+            assert.equal(removedAttr.node, attrNode)
         })
         it('node.hasAttributes()', () => {
             assert.isFalse(node.hasAttributes())
@@ -274,9 +294,9 @@ describe('ElementAssembler', () => {
         const node = element.node
         const attrNode = document.createAttribute('attr')
         node.setAttributeNode(attrNode)
-        const removedInstance = element.removeAttributeNode(AttrAssembler)
+        const removedAttr = element.removeAttributeNode(AttrAssembler)
         it('nodes equal', () => {
-            assert.equal(removedInstance.node, attrNode)
+            assert.equal(removedAttr.node, attrNode)
         })
         it('node.hasAttributes()', () => {
             assert.isFalse(node.hasAttributes())
@@ -296,9 +316,9 @@ describe('ElementAssembler', () => {
         const node = element.node
         const attrNode = document.createAttribute('foobar')
         node.setAttributeNode(attrNode)
-        const removedInstance = element.removeAttributeNode('foobar')
+        const removedAttr = element.removeAttributeNode('foobar')
         it('nodes equal', () => {
-            assert.equal(removedInstance.node, attrNode)
+            assert.equal(removedAttr.node, attrNode)
         })
         it('node.hasAttributes()', () => {
             assert.isFalse(node.hasAttributes())
