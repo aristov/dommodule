@@ -1,3 +1,5 @@
+const mocha = { setup : () => {}, run : () => {} }
+
 /**
  * @param {String} msg
  * @param {Function} fn

@@ -6,7 +6,7 @@ import {
     Element,
     ProcessingInstruction,
     Text
-} from '../lib/'
+} from '../lib'
 
 const { assert } = chai
 
@@ -56,7 +56,7 @@ describe('DocumentFragmentAssembler', () => {
         it('node.childNodes[2]', () => {
             assert.instanceOf(node.childNodes[2], ProcessingInstruction)
         })
-        it('parentNode = element; serializeToString(node)', () => {
+        it('parentNode = element; serializeToString(element)', () => {
             fragment.parentNode = element
             const xml = serializer.serializeToString(element)
             const sample = '<foo><!--foobar--><bar/><?foo bar?>foobar</foo>'

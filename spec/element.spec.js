@@ -3,7 +3,7 @@ import {
     AttrAssembler,
     Element, ElementAssembler,
     Text, TextAssembler
-} from '../lib/'
+} from '../lib'
 
 const { assert } = chai
 

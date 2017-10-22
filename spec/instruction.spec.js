@@ -1,5 +1,9 @@
 import chai from 'chai'
-import { ProcessingInstruction, ProcessingInstructionAssembler, ElementAssembler } from '../lib'
+import {
+    ProcessingInstruction,
+    ProcessingInstructionAssembler,
+    ElementAssembler
+} from '../lib'
 
 const { assert } = chai
 

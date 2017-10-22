@@ -1,5 +1,5 @@
 import chai from 'chai'
-import { Attr, AttrAssembler, ElementAssembler } from '../lib/'
+import { Attr, AttrAssembler, ElementAssembler } from '../lib'
 
 const { assert } = chai
 
