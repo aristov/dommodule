@@ -38,6 +38,25 @@ describe('ElementAssembler', () => {
             assert.equal(serializer.serializeToString(node), '<foobar/>')
         })
     })
+    describe('new ElementAssembler({ qualifiedName })', () => {
+        const element = new ElementAssembler({ qualifiedName : 'foobar' })
+        const node = element.node
+        it('node.namespaceURI', () => {
+            assert.isNull(node.namespaceURI)
+        })
+        it('node.prefix', () => {
+            assert.isNull(node.prefix)
+        })
+        it('node.localName', () => {
+            assert.equal(node.localName, 'foobar')
+        })
+        it('node.tagName', () => {
+            assert.equal(node.tagName, 'foobar')
+        })
+        it('serializeToString(node)', () => {
+            assert.equal(serializer.serializeToString(node), '<foobar/>')
+        })
+    })
     describe('new ElementAssembler({ namespaceURI, prefix, localName })', () => {
         const element = new ElementAssembler({
             namespaceURI : 'http://example.com/namespace',
@@ -45,17 +64,91 @@ describe('ElementAssembler', () => {
             localName : 'bar'
         })
         const node = element.node
+        it('node.namespaceURI', () => {
+            assert.equal(node.namespaceURI, 'http://example.com/namespace')
+        })
         it('node.prefix', () => {
             assert.equal(node.prefix, 'foo')
         })
         it('node.localName', () => {
             assert.equal(node.localName, 'bar')
         })
+        it('node.tagName', () => {
+            assert.equal(node.tagName, 'foo:bar')
+        })
         it('node.hasAttributes()', () => {
             assert.isFalse(node.hasAttributes())
         })
         it('serializeToString(node)', () => {
             const sample = '<foo:bar xmlns:foo="http://example.com/namespace"/>'
+            assert.equal(serializer.serializeToString(node), sample)
+        })
+    })
+    describe('new ElementAssembler({ namespaceURI, qualifiedName })', () => {
+        const element = new ElementAssembler({
+            namespaceURI : 'http://example.com/namespace',
+            qualifiedName : 'foo:bar'
+        })
+        const node = element.node
+        it('node.namespaceURI', () => {
+            assert.equal(node.namespaceURI, 'http://example.com/namespace')
+        })
+        it('node.prefix', () => {
+            assert.equal(node.prefix, 'foo')
+        })
+        it('node.localName', () => {
+            assert.equal(node.localName, 'bar')
+        })
+        it('node.tagName', () => {
+            assert.equal(node.tagName, 'foo:bar')
+        })
+        it('node.hasAttributes()', () => {
+            assert.isFalse(node.hasAttributes())
+        })
+        it('serializeToString(node)', () => {
+            const sample = '<foo:bar xmlns:foo="http://example.com/namespace"/>'
+            assert.equal(serializer.serializeToString(node), sample)
+        })
+    })
+    describe('new ElementAssembler(new ElementAssembler)', () => {
+        const child = new ElementAssembler
+        const element = new ElementAssembler(child)
+        const node = element.node
+        it('node.tagName', () => {
+            assert.equal(node.tagName, 'element')
+        })
+        it('node.hasChildNodes()', () => {
+            assert(node.hasChildNodes(), 'node.hasChildNodes()')
+        })
+        it('node.childNodes.length', () => {
+            assert.equal(node.childNodes.length, 1)
+        })
+        it('node.firstChild', () => {
+            assert.equal(node.firstChild, child.node)
+        })
+        it('serializeToString(node)', () => {
+            const sample = '<element><element/></element>'
+            assert.equal(serializer.serializeToString(node), sample)
+        })
+    })
+    describe('new ElementAssembler(document.createElementNS())', () => {
+        const child = document.createElementNS('', 'child')
+        const element = new ElementAssembler(child)
+        const node = element.node
+        it('node.tagName', () => {
+            assert.equal(node.tagName, 'element')
+        })
+        it('node.hasChildNodes()', () => {
+            assert(node.hasChildNodes(), 'node.hasChildNodes()')
+        })
+        it('node.childNodes.length', () => {
+            assert.equal(node.childNodes.length, 1)
+        })
+        it('node.firstChild', () => {
+            assert.equal(node.firstChild, child)
+        })
+        it('serializeToString(node)', () => {
+            const sample = '<element><child/></element>'
             assert.equal(serializer.serializeToString(node), sample)
         })
     })
@@ -231,7 +324,7 @@ describe('ElementAssembler', () => {
             assert.lengthOf(node.attributes, 1)
         })
         it('node.hasAttribute()', () => {
-            assert(node.hasAttribute(AttrAssembler.localName), 'has attribute')
+            assert(node.hasAttribute(AttrAssembler.localName), 'node.hasAttribute()')
         })
         it('node.getAttribute()', () => {
             assert.equal(node.getAttribute(AttrAssembler.localName), 'foobar')
@@ -251,7 +344,7 @@ describe('ElementAssembler', () => {
             assert.lengthOf(node.attributes, 1)
         })
         it('node.hasAttribute()', () => {
-            assert(node.hasAttribute('foo'), 'has attribute')
+            assert(node.hasAttribute('foo'), 'node.hasAttribute()')
         })
         it('node.value', () => {
             assert.equal(node.getAttribute('foo'), 'bar')
