@@ -19,16 +19,6 @@ describe('AttrAssembler', () => {
             assert.equal(node.value, '')
         })
     })
-    describe('new AttrAssembler(new String)', () => {
-        const attr = new AttrAssembler('foobar')
-        const node = attr.node
-        it('node.name', () => {
-            assert.equal(node.name, 'attr')
-        })
-        it('node.value', () => {
-            assert.equal(node.value, 'foobar')
-        })
-    })
     describe('new AttrAssembler({ name, value })', () => {
         const attr = new AttrAssembler({ name : 'foo', value : 'bar' })
         const node = attr.node
@@ -64,6 +54,16 @@ describe('AttrAssembler', () => {
         const attr = new AttrAssembler({ node })
         it('nodes equal', () => {
             assert.equal(attr.node, node)
+        })
+    })
+    describe('new AttrAssembler(new String)', () => {
+        const attr = new AttrAssembler('foobar')
+        const node = attr.node
+        it('node.name', () => {
+            assert.equal(node.name, 'attr')
+        })
+        it('node.value', () => {
+            assert.equal(node.value, 'foobar')
         })
     })
     describe('value = new String', () => {
@@ -114,7 +114,7 @@ describe('AttrAssembler', () => {
         const element = new ElementAssembler
         element.setAttributeNode(attr)
         attr.ownerElement = null
-        it('attr.node.ownerElement', () => {
+        it('node.ownerElement', () => {
             assert.isNull(attr.node.ownerElement)
         })
         it('element.node.hasAttributes()', () => {
