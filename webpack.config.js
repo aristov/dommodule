@@ -18,7 +18,10 @@ module.exports = {
         filename : 'dist.[name].js',
         // libraryTarget : 'commonjs2'
     },
-    module : {
-        loaders : [{ test : /\.js$/, loader : 'babel-loader' }]
-    }
+    module : process.env.NODE_ENV === 'test'? {
+        loaders : [{
+            test : /\.js$/,
+            loader : 'babel-loader'
+        }]
+    } : undefined
 }
