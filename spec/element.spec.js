@@ -115,7 +115,7 @@ describe('ElementAssembler', () => {
             assert.equal(serializer.serializeToString(node), sample)
         })
     })
-    describe('new ElementAssembler({ node })', () => {
+    describe('new ElementAssembler({ node : document.createElementNS() })', () => {
         const foobar = document.createElementNS('', 'foobar')
         const element = new ElementAssembler({ node : foobar })
         const node = element.node
@@ -133,6 +133,13 @@ describe('ElementAssembler', () => {
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '<foobar/>')
+        })
+    })
+    describe('new ElementAssembler({ node : document.createTextNode() })', () => {
+        const foobar = document.createTextNode('foobar')
+        const fn = () => new ElementAssembler({ node : foobar })
+        it('throws TypeError', () => {
+            assert.throws(fn, TypeError)
         })
     })
     describe('new ElementAssembler(new ElementAssembler)', () => {
