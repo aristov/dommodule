@@ -1,5 +1,10 @@
 import chai from 'chai'
-import { DocumentType, DocumentTypeAssembler, DocumentAssembler } from '../lib'
+import {
+    DocumentType,
+    DocumentTypeAssembler,
+    DocumentAssembler,
+    doctype, implementation
+} from '../lib'
 
 const { assert } = chai
 
@@ -52,20 +57,34 @@ describe('DocumentTypeAssembler', () => {
             assert.equal(xml, sample)
         })
     })
-    describe('new DocumentTypeAssembler({ qualifiedName, parentNode })', () => {
+    describe('new DocumentTypeAssembler({ node })', () => {
+        const node = implementation.createDocumentType('html', '', '')
+        const doctype = new DocumentTypeAssembler({ node })
+        it('node', () => {
+            assert.equal(doctype.node, node)
+        })
+    })
+    describe('class extends DocumentTypeAssembler', () => {
+        class Foobar extends DocumentTypeAssembler {}
+        const fragment = new Foobar
+        it('node.name', () => {
+            assert.equal(fragment.node.name, 'foobar')
+        })
+    })
+    describe('doctype({ qualifiedName, parentNode : new DocumentAssembler })', () => {
         const document = new DocumentAssembler
-        const doctype = new DocumentTypeAssembler({
+        const instance = doctype({
             qualifiedName : DocumentAssembler.qualifiedName,
             parentNode : document
         })
-        const node = doctype.node
+        const node = instance.node
         it('node.parentNode', () => {
             assert.equal(node.parentNode, document.node)
         })
         it('parentNode', () => {
-            assert.equal(doctype.parentNode, document)
+            assert.equal(instance.parentNode, document)
         })
-        it('serializeToString(element.node)', () => {
+        it('serializeToString(document.node)', () => {
             const xml = serializer.serializeToString(document.node)
             assert.equal(xml, '<!DOCTYPE document><document/>')
         })
