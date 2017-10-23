@@ -1,9 +1,11 @@
+'use strict'
+
 const path = require('path')
 
 module.exports = {
     entry : {
-        docs : ['./docs/index.js'],
         spec : ['./spec/index.spec.js'],
+        // docs : ['./docs/index.js'],
         // element : ['./docs/element-test.js'],
         // attr : ['./docs/attr-test.js'],
         // index : ['./docs/index.js'],
@@ -15,5 +17,8 @@ module.exports = {
         path : path.join(__dirname, 'dist'),
         filename : 'dist.[name].js',
         // libraryTarget : 'commonjs2'
+    },
+    module : {
+        loaders : [{ test : /\.js$/, loader : 'babel-loader' }]
     }
 }
