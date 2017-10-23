@@ -16,7 +16,7 @@ const browsers = Object.keys(customLaunchers)
 module.exports = function(config) {
     config.set({
         basePath : '',
-        frameworks : ['mocha'],
+        frameworks : ['mocha', 'sinon'],
         files : ['dist/dist.spec.js'],
         exclude : [],
         reporters : ['mocha', 'coverage'],
