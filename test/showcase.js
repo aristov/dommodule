@@ -2,17 +2,18 @@ import {
     fragment,
     element,
     text,
-    cdata,
     comment,
     instruction
 } from '../lib'
 
+const assign = Object.assign
+
 const title = function(init) {
-    return element({ localName : 'title' }, init)
+    return element(assign({ localName : 'title' }, init))
 }
 
 const example = function(init) {
-    return element({ localName : 'example' }, init)
+    return element(assign({ localName : 'example' }, init))
 }
 
 instruction({
@@ -39,10 +40,6 @@ element({
             example([
                 title('Text'),
                 text('Text node')
-            ]),
-            example([
-                title('CDATA section'),
-                cdata('CDATA section node')
             ]),
             example([
                 title('Comment'),
