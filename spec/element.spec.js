@@ -6,6 +6,7 @@ import {
 } from '../lib'
 
 const { assert } = chai
+const { sinon } = window
 
 const serializer = new XMLSerializer
 
@@ -448,6 +449,23 @@ describe('ElementAssembler', () => {
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '<element foo="bar"/>')
+        })
+    })
+    describe('on(new String, handler)', () => {
+        const element = new ElementAssembler
+        const handler = sinon.spy()
+        element.on('foobar', handler)
+        it('handler.notCalled', () => {
+            assert(handler.notCalled, 'hanlder.notCalled')
+        })
+        it('emit(new String) => handler.calledOnce', () => {
+            element.emit('foobar')
+            assert(handler.calledOnce, 'handler.calledOnce')
+        })
+        it('un(new String, hanlder); emit(new String) => handler.calledOnce', () => {
+            element.un('foobar', handler)
+            element.emit('foobar')
+            assert(handler.calledOnce, 'handler.calledOnce')
         })
     })
 })
