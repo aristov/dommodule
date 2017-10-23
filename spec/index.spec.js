@@ -1,3 +1,4 @@
+import './common.spec'
 import './attr.spec'
 import './comment.spec'
 import './document.spec'
