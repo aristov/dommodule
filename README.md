@@ -4,11 +4,12 @@
 
 The **dommodule** is a JavaScript library of DOM node assemblers.
 
+- [attr](lib/attr.js) — `Attr` node assembler (XML: `test="example"`)
 - [document](lib/document.js) — `Document` node assembler
-- [doctype](lib/doctype.js) — `DocumentType` node assembler (XML: `<!DOCTYPE example>`)
+- [doctype](lib/doctype.js) — `DocumentType` node assembler (XML: `<!DOCTYPE test>`)
 - [fragment](lib/fragment.js) — `DocumentFragment` node assembler 
 - [element](lib/element.js) — `Element` node assembler (XML: `<example/>`)
-- [text](lib/text.js) — `Text` node assembler (XML: `example`)
+- [text](lib/text.js) — `Text` node assembler (XML: `test`)
 - [comment](lib/comment.js) — `Comment` node assembler (XML: `<!--example-->`)
 - [instruction](lib/instruction.js) — `ProcessingInstruction` node assembler (XML: `<?test example?>`)
 
@@ -32,14 +33,11 @@ new DocumentAssembler([
     fragment([
         instruction({
             target : 'xml-stylesheet',
-            attrset : { href : './example.css' }
+            attributes : attr({ name : 'role', value : 'application' }),
         }),
         element({
             localName : 'example',
-            attributes : attr({
-                name : 'role',
-                value : 'application'
-            }),
+            attrset : { role : 'application' },
             childNodes : [
                 comment('Version 1.0.0'),
                 text('Hello world!')
