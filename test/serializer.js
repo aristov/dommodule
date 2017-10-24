@@ -1,6 +1,6 @@
 const { prototype : { forEach, map } } = Array
 
-module.exports = class XMLSerializer {
+class XMLSerializer {
     serializeToString(node) {
         switch(node.nodeType) {
             case 1:
@@ -41,10 +41,12 @@ module.exports = class XMLSerializer {
                     pub = ` PUBLIC "${ node.publicId }"`
                 }
                 if(node.systemId) {
-                    sys = node.publicId? ' ' : ' SYSTEM '
+                    sys = node.publicId? ' ' :
                     sys += `"${ node.systemId }"`
                 }
                 return `<!DOCTYPE ${ node.name + pub + sys }>`
         }
     }
 }
+
+module.exports = XMLSerializer

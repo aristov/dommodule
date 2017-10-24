@@ -1,9 +1,9 @@
-const jsdom = require('jsdom')
-const { JSDOM } = jsdom
-const document = new JSDOM('', { contentType : 'application/xml' })
-global.window = document.window
+const { JSDOM } = require('jsdom')
+const jsdom = new JSDOM('', { contentType : 'application/xml' })
+global.window = jsdom.window
 
-const xmlserializer = require('xmlserializer')
+const XMLSerializer = require('./serializer')
+const serializer = new XMLSerializer
 
 const dommodule = require('../dist/dist.jsdom.dommodule')
 
@@ -38,4 +38,4 @@ const $document = new DocumentAssembler({
     ]
 })
 
-console.log(xmlserializer.serializeToString($document.node))
+console.log(serializer.serializeToString($document.node))
