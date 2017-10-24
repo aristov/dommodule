@@ -14,27 +14,26 @@ class XMLSerializer {
     serializeToString(node) {
         switch(node.nodeType) {
             case ELEMENT_NODE:
-                const { tagName, namespaceURI } = node
-                let attrs = EMPTY_STRING
-                let childs = '/'
+                let attributes = EMPTY_STRING
+                let childNodes = '/'
                 if(node.hasAttributes()) {
                     forEach.call(node.attributes, ({ name, value }) => {
-                        attrs += ` ${ name }="${ value }"`
+                        attributes += ` ${ name }="${ value }"`
                     })
                 }
-                if(namespaceURI) {
-                    attrs += ' xmlns'
-                    if(node.prefix) attrs += ':' + node.prefix
-                    attrs += `="${ namespaceURI }"`
+                if(node.namespaceURI) {
+                    attributes += ' xmlns'
+                    if(node.prefix) attributes += ':' + node.prefix
+                    attributes += `="${ node.namespaceURI }"`
                 }
                 if(node.hasChildNodes()) {
-                    childs = '>'
+                    childNodes = '>'
                     forEach.call(node.childNodes, child => {
-                        childs += this.serializeToString(child)
+                        childNodes += this.serializeToString(child)
                     })
-                    childs += '</' + tagName
+                    childNodes += '</' + node.tagName
                 }
-                return `<${ tagName + attrs + childs }>`
+                return `<${ node.tagName + attributes + childNodes }>`
             case TEXT_NODE:
                 return node.data
             case CDATA_SECTION_NODE:
@@ -50,16 +49,16 @@ class XMLSerializer {
                 }
                 else return EMPTY_STRING
             case DOCUMENT_TYPE_NODE:
-                let pub = EMPTY_STRING
-                let sys = EMPTY_STRING
+                let publicId = EMPTY_STRING
+                let systemId = EMPTY_STRING
                 if(node.publicId) {
-                    pub = ` PUBLIC "${ node.publicId }"`
+                    publicId = ` PUBLIC "${ node.publicId }"`
                 }
                 if(node.systemId) {
-                    sys = node.publicId? ' ' : ' SYSTEM '
-                    sys += `"${ node.systemId }"`
+                    systemId = node.publicId? ' ' : ' SYSTEM '
+                    systemId += `"${ node.systemId }"`
                 }
-                return `<!DOCTYPE ${ node.name + pub + sys }>`
+                return `<!DOCTYPE ${ node.name + publicId + systemId }>`
         }
     }
 }
