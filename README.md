@@ -33,11 +33,11 @@ new DocumentAssembler([
     fragment([
         instruction({
             target : 'xml-stylesheet',
-            attributes : attr({ name : 'role', value : 'application' }),
+            attrset : { href : './style.css' },
         }),
         element({
             localName : 'example',
-            attrset : { role : 'application' },
+            attributes : attr({ name : 'role', value : 'application' }),
             childNodes : [
                 comment('Version 1.0.0'),
                 text('Hello world!')
