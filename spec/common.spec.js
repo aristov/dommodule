@@ -31,28 +31,26 @@ describe('Common', () => {
     })
     describe('DocumentAssembler', () => {
         let $attr, $doctype, $fragment, $instruction, $element, $comment, $text
-        const $document = new DocumentAssembler({
-            childNodes : [
-                $doctype = doctype('example'),
-                $fragment = fragment([
-                    $instruction = instruction({
-                        target : 'xml-stylesheet',
-                        attrset : { href : './example.css' }
+        const $document = new DocumentAssembler([
+            $doctype = doctype('example'),
+            $fragment = fragment([
+                $instruction = instruction({
+                    target : 'xml-stylesheet',
+                    attrset : { href : './example.css' }
+                }),
+                $element = element({
+                    localName : 'example',
+                    attributes : $attr = attr({
+                        name : 'role',
+                        value : 'application'
                     }),
-                    $element = element({
-                        localName : 'example',
-                        attributes : $attr = attr({
-                            name : 'role',
-                            value : 'application'
-                        }),
-                        childNodes : [
-                            $comment = comment('Version 1.0.0'),
-                            $text = text('Hello world!')
-                        ]
-                    })
-                ])
-            ]
-        })
+                    childNodes : [
+                        $comment = comment('Version 1.0.0'),
+                        $text = text('Hello world!')
+                    ]
+                })
+            ])
+        ])
         it('serializeToString(dom)', () => {
             const sample = '<!DOCTYPE example><?xml-stylesheet href="./example.css"?><example role="application"><!--Version 1.0.0-->Hello world!</example>'
             assert.equal(serializer.serializeToString($document.node), sample)
