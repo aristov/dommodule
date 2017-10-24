@@ -2,6 +2,7 @@ import chai from 'chai'
 import {
     Document, Element,
     DocumentAssembler,
+    XMLSerializer,
     element, doctype
 } from '../lib'
 

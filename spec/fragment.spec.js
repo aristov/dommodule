@@ -5,7 +5,9 @@ import {
     DocumentFragmentAssembler,
     Element,
     ProcessingInstruction,
-    Text
+    Text,
+    XMLSerializer,
+    document
 } from '../lib'
 
 const { assert } = chai

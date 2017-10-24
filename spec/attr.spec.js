@@ -1,5 +1,8 @@
 import chai from 'chai'
-import { Attr, AttrAssembler, ElementAssembler } from '../lib'
+import {
+    AttrAssembler, ElementAssembler,
+    Attr, XMLSerializer, document
+} from '../lib'
 
 const { assert } = chai
 

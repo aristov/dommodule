@@ -3,7 +3,10 @@ import {
     CharacterData, CharacterDataAssembler,
     EventTarget, EventTargetAssembler,
     Node, NodeAssembler,
-    DocumentAssembler, attr, comment, doctype, element, fragment, instruction, text
+    DocumentAssembler,
+    XMLSerializer,
+    attr, comment, doctype, element,
+    fragment, instruction, text
 } from '../lib'
 
 const { assert } = chai
@@ -50,7 +53,7 @@ describe('Common', () => {
                 ])
             ]
         })
-        it('serializeToStinrg(dom)', () => {
+        it('serializeToString(dom)', () => {
             const sample = '<!DOCTYPE example><?xml-stylesheet href="./example.css"?><example role="application"><!--Version 1.0.0-->Hello world!</example>'
             assert.equal(serializer.serializeToString($document.node), sample)
         })

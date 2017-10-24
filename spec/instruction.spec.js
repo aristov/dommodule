@@ -2,7 +2,9 @@ import chai from 'chai'
 import {
     ProcessingInstruction,
     ProcessingInstructionAssembler,
-    ElementAssembler
+    ElementAssembler,
+    XMLSerializer,
+    document
 } from '../lib'
 
 const { assert } = chai

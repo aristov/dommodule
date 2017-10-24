@@ -5,13 +5,13 @@ const path = require('path')
 module.exports = {
     entry : {
         spec : ['./spec/index.spec.js'],
-        document : ['./test/document-test.js']
+        document : ['./test/document-test.js'],
         // docs : ['./test/index.js'],
         // element : ['./test/element-test.js'],
         // attr : ['./test/attr-test.js'],
         // index : ['./test/index.js'],
         // dommodule : ['./lib'],
-        // 'jsdom.dommodule' : ['./lib/index'],
+        'jsdom.dommodule' : ['./lib/index'],
     },
     output : {
         path : path.join(__dirname, 'dist'),

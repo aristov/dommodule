@@ -1,26 +1,41 @@
-const { JSDOM } = require('jsdom')
-const jsdom = new JSDOM
+const jsdom = require('jsdom')
+const { JSDOM } = jsdom
+const document = new JSDOM('', { contentType : 'application/xml' })
+global.window = document.window
 
-global.window = jsdom.window
+const xmlserializer = require('xmlserializer')
 
 const dommodule = require('../dist/dist.jsdom.dommodule')
 
 const {
     DocumentAssembler,
-    element
+    attr, comment, doctype,
+    element, fragment,
+    instruction, text
 } = dommodule
 
-new DocumentAssembler({ node : window.document }, {
-    documentElement : {
-        children : [
-            element('test'),
+const $document = new DocumentAssembler({
+    node : window.document,
+    childNodes : [
+        doctype('example'),
+        fragment([
+            instruction({
+                target : 'xml-stylesheet',
+                attrset : { href : './example.css' }
+            }),
             element({
-                qualifiedName : 'test',
-                attrset : { attrname : 'attrvalue' },
-                children : 'attrtest'
+                localName : 'example',
+                attributes : attr({
+                    name : 'role',
+                    value : 'application'
+                }),
+                childNodes : [
+                    comment(new Date + ' version 1.0.0'),
+                    text('Hello world!')
+                ]
             })
-        ]
-    }
+        ])
+    ]
 })
 
-console.log(jsdom.serialize())
+console.log(xmlserializer.serializeToString($document.node))

@@ -2,12 +2,12 @@ import chai from 'chai'
 import {
     AttrAssembler,
     Element, ElementAssembler,
-    Text, TextAssembler
+    Text, TextAssembler,
+    XMLSerializer,
+    document,
 } from '../lib'
 
 const { assert } = chai
-const { sinon } = window
-
 const serializer = new XMLSerializer
 
 describe('ElementAssembler', () => {
