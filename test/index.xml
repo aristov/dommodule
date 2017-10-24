@@ -1,4 +1,0 @@
-<root>
-    <script xmlns="http://www.w3.org/1999/xhtml" src="../dist/dist.window.dommodule.js"/>
-    <script xmlns="http://www.w3.org/1999/xhtml" src="index.js"/>
-</root>

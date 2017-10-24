@@ -6,11 +6,10 @@
   "scripts": {
     "webpack": "webpack -w",
     "pretest": "NODE_ENV=test webpack",
-    "test": "karma start",
-    "api": "esdoc -c esdoc.json",
-    "publish": "git push && git push --tags",
-    "patch": "npm version patch && npm publish",
-    "minor": "npm version minor && npm publish"
+    "mocha": "mocha",
+    "karma": "karma start",
+    "test": "mocha && npm run karma",
+    "api": "esdoc -c esdoc.json"
   },
   "repository": {
     "type": "git",

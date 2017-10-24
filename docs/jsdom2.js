@@ -2,7 +2,7 @@ const { JSDOM } = require('jsdom')
 const jsdom = new JSDOM('', { contentType : 'application/xml' })
 global.window = jsdom.window
 
-const XMLSerializer = require('./serializer')
+const XMLSerializer = require('../lib/serializer')
 const serializer = new XMLSerializer
 
 const dommodule = require('../dist/dist.jsdom.dommodule')
