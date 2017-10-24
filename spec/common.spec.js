@@ -15,18 +15,18 @@ const serializer = new XMLSerializer
 
 describe('Common', () => {
     describe('CharacterDataAssembler', () => {
-        it('static domInterface', () => {
-            assert.equal(CharacterDataAssembler.domInterface, CharacterData)
+        it('static interface', () => {
+            assert.equal(CharacterDataAssembler.interface, CharacterData)
         })
     })
     describe('EventTargetAssembler', () => {
-        it('static domInterface', () => {
-            assert.equal(EventTargetAssembler.domInterface, EventTarget)
+        it('static interface', () => {
+            assert.equal(EventTargetAssembler.interface, EventTarget)
         })
     })
     describe('NodeAssembler', () => {
-        it('static domInterface', () => {
-            assert.equal(NodeAssembler.domInterface, Node)
+        it('static interface', () => {
+            assert.equal(NodeAssembler.interface, Node)
         })
     })
     describe('DocumentAssembler', () => {
