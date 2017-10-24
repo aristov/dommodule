@@ -75,5 +75,10 @@ describe('DocumentAssembler', () => {
         it('element', () => {
             assert.equal($document.documentElement, $element)
         })
+        it('serializeToString(node)', () => {
+            const xml = serializer.serializeToString($document.node)
+            const sample = '<!DOCTYPE example><example/>'
+            assert.equal(xml, sample)
+        })
     })
 })
