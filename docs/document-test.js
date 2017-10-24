@@ -1,8 +1,7 @@
 import {
     DocumentAssembler,
-    attr, comment, doctype,
-    element, fragment,
-    instruction, text
+    attr, comment, doctype, element,
+    fragment, instruction, text
 } from '../lib'
 
 new DocumentAssembler({
@@ -29,29 +28,3 @@ new DocumentAssembler({
         ])
     ]
 })
-
-// <!DOCTYPE example-doctype>
-// <?xml-stylesheet href="./test.css"?>
-// <element role="application">
-//      <!--Version 1.0.0-->
-//      Hello world!
-// </element>
-
-
-/*instruction({
-    target : 'xml-stylesheet',
-    attrset : { href : './test.css' },
-    parentNode : new DocumentAssembler({
-        node : document,
-        doctype : doctype('dom-application'),
-        documentElement : element({
-            attributes : [
-                attr({ name : 'role', value : 'application' })
-            ],
-            children : fragment([
-                comment('Example dommodule application / version 1.0.0'),
-                text('Hello world!')
-            ])
-        })
-    })
-})*/
