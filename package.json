@@ -8,7 +8,7 @@
     "pretest": "NODE_ENV=test webpack",
     "mocha": "mocha",
     "karma": "karma start",
-    "test": "mocha && npm run karma",
+    "test": "mocha",
     "api": "esdoc -c esdoc.json"
   },
   "repository": {
