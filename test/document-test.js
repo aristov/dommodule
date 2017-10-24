@@ -22,7 +22,7 @@ new DocumentAssembler({
                     value : 'application'
                 }),
                 childNodes : [
-                    comment('Version 1.0.0'),
+                    comment(new Date + ' version 1.0.0'),
                     text('Hello world!')
                 ]
             })

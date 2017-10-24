@@ -1,6 +1,9 @@
 example[role=application]
 {
-    font: 100px sans-serif;
-    padding: 15% 0;
+    font: 100px monospace;
+    opacity: 0.7;
+    color: white;
+    background-color: rgba(0, 145, 77, 0.8);
+    padding: 50px 0;
     text-align: center;
 }
