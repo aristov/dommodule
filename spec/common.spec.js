@@ -1,10 +1,10 @@
 import chai from 'chai'
+import { CharacterData, EventTarget, Node, XMLSerializer } from '../lib/dom'
 import {
-    CharacterData, CharacterDataAssembler,
-    EventTarget, EventTargetAssembler,
-    Node, NodeAssembler,
+    CharacterDataAssembler,
+    EventTargetAssembler,
+    NodeAssembler,
     DocumentAssembler,
-    XMLSerializer,
     attr, comment, doctype, element,
     fragment, instruction, text
 } from '../lib'

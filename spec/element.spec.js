@@ -1,11 +1,6 @@
 import chai from 'chai'
-import {
-    AttrAssembler,
-    Element, ElementAssembler,
-    Text, TextAssembler,
-    XMLSerializer,
-    document,
-} from '../lib'
+import { Element, Text, XMLSerializer, document } from '../lib/dom'
+import { AttrAssembler, ElementAssembler, TextAssembler } from '../lib'
 
 const { assert } = chai
 const serializer = new XMLSerializer

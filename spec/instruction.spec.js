@@ -1,11 +1,6 @@
 import chai from 'chai'
-import {
-    ProcessingInstruction,
-    ProcessingInstructionAssembler,
-    ElementAssembler,
-    XMLSerializer,
-    document
-} from '../lib'
+import { ProcessingInstruction, XMLSerializer, document } from '../lib/dom'
+import { ProcessingInstructionAssembler, ElementAssembler } from '../lib'
 
 const { assert } = chai
 

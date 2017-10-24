@@ -1,14 +1,14 @@
 import chai from 'chai'
+import { DocumentFragmentAssembler } from '../lib'
 import {
     Comment,
     DocumentFragment,
-    DocumentFragmentAssembler,
     Element,
     ProcessingInstruction,
     Text,
     XMLSerializer,
     document
-} from '../lib'
+} from '../lib/dom'
 
 const { assert } = chai
 

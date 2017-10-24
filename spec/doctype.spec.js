@@ -1,12 +1,6 @@
 import chai from 'chai'
-import {
-    DocumentType,
-    DocumentTypeAssembler,
-    DocumentAssembler,
-    XMLSerializer,
-    doctype,
-    implementation
-} from '../lib'
+import { DocumentType, XMLSerializer, implementation } from '../lib/dom'
+import { DocumentTypeAssembler, DocumentAssembler, doctype } from '../lib'
 
 const { assert } = chai
 
