@@ -1,5 +1,9 @@
 import chai from 'chai'
-import { Document, Element, DocumentAssembler, ElementAssembler } from '../lib'
+import {
+    Document, Element,
+    DocumentAssembler,
+    element, doctype
+} from '../lib'
 
 const { assert } = chai
 
@@ -7,8 +11,8 @@ const serializer = new XMLSerializer
 
 describe('DocumentAssembler', () => {
     describe('new DocumentAssembler', () => {
-        const document = new DocumentAssembler
-        const node = document.node
+        const doc = new DocumentAssembler
+        const node = doc.node
         const elemNode = node.documentElement
         const name = DocumentAssembler.qualifiedName
         it('node', () => {
@@ -31,12 +35,12 @@ describe('DocumentAssembler', () => {
         })
     })
     describe('new DocumentAssembler({ namespaceURI, prefix, localName })', () => {
-        const document = new DocumentAssembler({
+        const doc = new DocumentAssembler({
             namespaceURI : 'http://www.w3.org/2000/svg',
             prefix : 'svg',
             localName : 'svg'
         })
-        const node = document.node
+        const node = doc.node
         const elemNode = node.documentElement
         it('node', () => {
             assert.instanceOf(node, Document)
@@ -56,6 +60,19 @@ describe('DocumentAssembler', () => {
         it('serializeToString(node)', () => {
             const sample = '<svg:svg xmlns:svg="http://www.w3.org/2000/svg"/>'
             assert.equal(serializer.serializeToString(node), sample)
+        })
+    })
+    describe('new DocumentAssembler({ doctype, documentElement })', () => {
+        let $doctype, $element
+        const $document = new DocumentAssembler({
+            doctype : $doctype = doctype('example'),
+            documentElement : $element = element({ localName : 'example' })
+        })
+        it('doctype', () => {
+            assert.equal($document.doctype, $doctype)
+        })
+        it('element', () => {
+            assert.equal($document.documentElement, $element)
         })
     })
 })
