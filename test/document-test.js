@@ -7,6 +7,7 @@ import {
 
 new DocumentAssembler({
     node : document,
+    title : 'dommodule: example',
     childNodes : [
         doctype('example'),
         fragment([
