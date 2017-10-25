@@ -1,6 +1,12 @@
 # dommodule
 
-<em>work in progress</em>
+[![NPM Version](https://img.shields.io/npm/v/dommodule.svg?maxAge=2592000)](https://www.npmjs.com/package/dommodule)
+[![Build Status](https://travis-ci.org/aristov/dommodule.svg?branch=master)](https://travis-ci.org/aristov/dommodule)
+[![Coverage Status](https://coveralls.io/repos/github/aristov/dommodule/badge.svg?branch=master)](https://coveralls.io/github/aristov/dommodule?branch=master)
+[![dependencies Status](https://david-dm.org/aristov/dommodule/status.svg)](https://david-dm.org/aristov/dommodule)
+[![devDependencies Status](https://david-dm.org/aristov/dommodule/dev-status.svg)](https://david-dm.org/aristov/dommodule?type=dev)
+
+_work in progress_
 
 The **dommodule** is a JavaScript library of DOM node assemblers.
 
