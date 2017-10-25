@@ -17,7 +17,7 @@ module.exports = function(config) {
     config.set({
         basePath : '',
         frameworks : ['mocha', 'sinon'],
-        files : ['dist/dist.spec.js'],
+        files : ['build/build.spec.js'],
         exclude : [],
         reporters : ['mocha', 'coverage'],
         coverageReporter : {

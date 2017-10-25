@@ -1,6 +1,8 @@
 'use strict'
 
 const path = require('path')
+const { optimize : { UglifyJsPlugin } } = require('webpack')
+
 const babelLoader = {
     test : /\.js$/,
     loader : 'babel-loader'
@@ -25,7 +27,14 @@ module.exports = [
             library : 'dommodule',
             libraryTarget : 'window'
         },
-        module : { loaders : [babelLoader] }
+        module : { loaders : [babelLoader] },
+        plugins : [
+            new UglifyJsPlugin({
+                compress : { warnings : false },
+                mangle : { keep_fnames : true },
+                comments : false
+            })
+        ]
     },
     {
         entry : './spec/index.spec.js',
