@@ -2,5 +2,7 @@
 .idea/
 npm-debug.log
 /dist
+/coverage
+.nyc_output
 node_modules
 tmp

@@ -5,4 +5,4 @@ global.window = window
 global.sinon = require('sinon')
 window.XMLSerializer = require('./serializer')
 
-require('../dist/dist.spec.js')
+require('../spec/index.spec.js')
