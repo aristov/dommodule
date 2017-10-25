@@ -1,9 +1,10 @@
 import chai from 'chai'
-import { Document, Element, XMLSerializer } from '../lib/dom'
+import { Document, Element, XMLSerializer, document } from '../lib/dom'
 import { DocumentAssembler, element, doctype } from '../lib'
 
 const { assert } = chai
 
+const { implementation } = document
 const serializer = new XMLSerializer
 
 describe('DocumentAssembler', () => {
@@ -31,11 +32,10 @@ describe('DocumentAssembler', () => {
             assert.equal(serializer.serializeToString(node), '<document/>')
         })
     })
-    describe('new DocumentAssembler({ namespaceURI, prefix, localName })', () => {
+    describe('new DocumentAssembler({ namespaceURI, qualifiedName })', () => {
         const doc = new DocumentAssembler({
             namespaceURI : 'http://www.w3.org/2000/svg',
-            prefix : 'svg',
-            localName : 'svg'
+            qualifiedName : 'svg:svg'
         })
         const node = doc.node
         const elemNode = node.documentElement
@@ -74,6 +74,24 @@ describe('DocumentAssembler', () => {
         it('serializeToString(node)', () => {
             const xml = serializer.serializeToString($document.node)
             const sample = '<!DOCTYPE example><example/>'
+            assert.equal(xml, sample)
+        })
+    })
+    describe('new DocumentAssembler({ doctype : node, documentElement : node })', () => {
+        let $doctype, $element
+        const $document = new DocumentAssembler({
+            doctype : $doctype = implementation.createDocumentType('test', '', ''),
+            documentElement : $element = document.createElementNS('', 'test')
+        })
+        it('doctype.node', () => {
+            assert.equal($document.doctype.node, $doctype)
+        })
+        it('element.node', () => {
+            assert.equal($document.documentElement.node, $element)
+        })
+        it('serializeToString(node)', () => {
+            const xml = serializer.serializeToString($document.node)
+            const sample = '<!DOCTYPE test><test/>'
             assert.equal(xml, sample)
         })
     })
