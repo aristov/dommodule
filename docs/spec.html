@@ -6,17 +6,9 @@
 </head>
 <body>
     <div id=mocha></div>
-
-    <!--get frameworks-->
-    <script src=https://cdnjs.cloudflare.com/ajax/libs/sinon.js/4.0.1/sinon.min.js></script>
     <script src=https://cdnjs.cloudflare.com/ajax/libs/mocha/4.0.1/mocha.min.js></script>
-
-    <!--setup mocha-->
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/sinon.js/4.0.1/sinon.min.js></script>
     <script>window.mocha.setup('bdd')</script>
-
-    <!--import module spec-->
-    <script src=../build/build.spec.js></script>
-
-    <!--run mocha-->
+    <script src=build/build.spec.js></script>
     <script>window.mocha.run()</script>
 </body>

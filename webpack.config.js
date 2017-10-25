@@ -39,7 +39,7 @@ module.exports = [
     {
         entry : './spec/index.spec.js',
         output : {
-            path : path.join(__dirname, 'build'),
+            path : path.join(__dirname, 'docs', 'build'),
             filename : 'build.spec.js'
         }
     }

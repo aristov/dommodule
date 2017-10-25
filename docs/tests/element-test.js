@@ -1,4 +1,4 @@
-import { element, } from '../lib'
+import { element, } from '../../lib/index'
 
 element({
     qualifiedName : 'document',

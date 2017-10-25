@@ -1,4 +1,4 @@
-import { AttrAssembler } from '../lib'
+import { AttrAssembler } from '../../lib/index'
 
 const ROLE_ATTR_NAME = 'role'
 const ROLE_SEPARATOR = ' '

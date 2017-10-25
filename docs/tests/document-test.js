@@ -1,8 +1,8 @@
-const {
+import {
     DocumentAssembler,
     attr, comment, doctype, element,
     fragment, instruction, text
-} = dommodule
+} from '../../lib/index'
 
 new DocumentAssembler({
     node : document,

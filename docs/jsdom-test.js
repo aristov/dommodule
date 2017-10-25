@@ -1,12 +1,20 @@
-import {
+const { JSDOM } = require('jsdom')
+const jsdom = new JSDOM('', { contentType : 'application/xml' })
+global.window = jsdom.window
+
+const XMLSerializer = require('../test/serializer')
+const serializer = new XMLSerializer
+
+const dommodule = require('../dist/dist.dommodule')
+
+const {
     DocumentAssembler,
     attr, comment, doctype, element,
     fragment, instruction, text
-} from '../lib'
+} = dommodule
 
-new DocumentAssembler({
-    node : document,
-    title : 'dommodule: example',
+const $document = new DocumentAssembler({
+    node : window.document,
     childNodes : [
         doctype('example'),
         fragment([
@@ -28,3 +36,5 @@ new DocumentAssembler({
         ])
     ]
 })
+
+console.log(serializer.serializeToString($document.node))

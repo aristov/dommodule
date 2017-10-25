@@ -1,5 +1,5 @@
-import { attr, element, } from '../lib'
-import { xmlns } from './xmlns'
+import { attr, element, } from '../../lib/index'
+import { xmlns } from '../xmlns'
 import { role, button } from './role'
 
 element({

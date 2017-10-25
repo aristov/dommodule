@@ -1,4 +1,4 @@
-import { DocumentTypeAssembler } from '../lib/doctype'
+import { DocumentTypeAssembler } from '../../lib/doctype'
 
 class Html extends DocumentTypeAssembler {
     static get qualifiedName() {

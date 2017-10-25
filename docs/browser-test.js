@@ -1,27 +1,18 @@
-const { JSDOM } = require('jsdom')
-const jsdom = new JSDOM('', { contentType : 'application/xml' })
-global.window = jsdom.window
-
-const XMLSerializer = require('../test/serializer')
-const serializer = new XMLSerializer
-
-const dommodule = require('../dist/dist.jsdom.dommodule')
-
 const {
     DocumentAssembler,
-    attr, comment, doctype,
-    element, fragment,
-    instruction, text
+    attr, comment, doctype, element,
+    fragment, instruction, text
 } = dommodule
 
-const $document = new DocumentAssembler({
-    node : window.document,
+new DocumentAssembler({
+    node : document,
+    title : 'dommodule: example',
     childNodes : [
         doctype('example'),
         fragment([
             instruction({
                 target : 'xml-stylesheet',
-                attrset : { href : './example.css' }
+                attrset : { href : './browser-test.css' }
             }),
             element({
                 localName : 'example',
@@ -37,5 +28,3 @@ const $document = new DocumentAssembler({
         ])
     ]
 })
-
-console.log(serializer.serializeToString($document.node))
