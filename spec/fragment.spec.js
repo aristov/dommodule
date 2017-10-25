@@ -28,6 +28,13 @@ describe('DocumentFragmentAssembler', () => {
             assert.equal(node.childElementCount, 0)
         })
     })
+    describe('new DocumentFragmentAssembler({ node : document.createDocumentFragment() })', () => {
+        const node = document.createDocumentFragment()
+        const fragment = new DocumentFragmentAssembler({ node })
+        it('node', () => {
+            assert.equal(fragment.node, node)
+        })
+    })
     describe('new DocumentFragmentAssembler(new Array)', () => {
         const element = document.createElementNS('', 'foo')
         const fragment = new DocumentFragmentAssembler([
