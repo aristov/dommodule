@@ -26,7 +26,7 @@ import {
     DocumentAssembler,
     attr, comment, doctype, element,
     fragment, instruction, text
-} from '../lib'
+} from 'dommodule'
 
 new DocumentAssembler([
     doctype('example'),
