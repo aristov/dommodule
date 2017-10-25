@@ -4,9 +4,11 @@
   "description": "DOM assembler library",
   "main": "lib/index.js",
   "scripts": {
+    "build": "webpack",
     "webpack": "webpack -w",
     "mocha": "mocha",
     "karma": "karma start",
+    "spec": "cross-env NODE_ENV=spec webpack -w",
     "test": "cross-env NODE_ENV=test nyc mocha",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "api": "esdoc"
