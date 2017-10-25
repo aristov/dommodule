@@ -48,7 +48,6 @@
     "url": "https://github.com/aristov/dommodule/issues"
   },
   "homepage": "https://github.com/aristov/dommodule#readme",
-  "dependencies": {},
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
