@@ -33,7 +33,7 @@ new DocumentAssembler([
     fragment([
         instruction({
             target : 'xml-stylesheet',
-            attrset : { href : './style.css' },
+            attrset : { href : './example.css' },
         }),
         element({
             localName : 'example',
