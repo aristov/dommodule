@@ -14,17 +14,24 @@ class XMLSerializer {
     serializeToString(node) {
         switch(node.nodeType) {
             case ELEMENT_NODE:
+                let xmlns = EMPTY_STRING
                 let attributes = EMPTY_STRING
                 let childNodes = '/'
-                if(node.hasAttributes()) {
-                    forEach.call(node.attributes, ({ name, value }) => {
-                        attributes += ` ${ name }="${ value }"`
-                    })
-                }
                 if(node.namespaceURI) {
-                    attributes += ' xmlns'
-                    if(node.prefix) attributes += ':' + node.prefix
-                    attributes += `="${ node.namespaceURI }"`
+                    xmlns += ' xmlns'
+                    if(node.prefix) xmlns += ':' + node.prefix
+                    xmlns += `="${ node.namespaceURI }"`
+                }
+                if(node.hasAttributes()) {
+                    forEach.call(node.attributes, attr => {
+                        const { namespaceURI, prefix, name, value } = attr
+                        attributes += ` ${ name }="${ value }"`
+                        if(namespaceURI) {
+                            xmlns += ' xmlns'
+                            if(prefix) xmlns += ':' + prefix
+                            xmlns += `="${ namespaceURI }"`
+                        }
+                    })
                 }
                 if(node.hasChildNodes()) {
                     childNodes = '>'
@@ -33,7 +40,7 @@ class XMLSerializer {
                     })
                     childNodes += '</' + node.tagName
                 }
-                return `<${ node.tagName + attributes + childNodes }>`
+                return `<${ node.tagName + xmlns + attributes + childNodes }>`
             case TEXT_NODE:
                 return node.data
             case CDATA_SECTION_NODE:

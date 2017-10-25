@@ -56,6 +56,9 @@ describe('AttrAssembler', () => {
         it('nodes equal', () => {
             assert.equal(attr.node, node)
         })
+        it('ownerElement', () => {
+            assert.isNull(attr.ownerElement)
+        })
     })
     describe('new AttrAssembler(new String)', () => {
         const attr = new AttrAssembler('foobar')
@@ -108,6 +111,28 @@ describe('AttrAssembler', () => {
         it('serializeToString(element)', () => {
             const xml = serializer.serializeToString(elementNode)
             assert.equal(xml, '<foobar foo="bar"/>')
+        })
+    })
+    describe('namespaceURI, ownerElement = document.createElementNS()', () => {
+        const attr = new AttrAssembler({
+            namespaceURI : 'http://example.com/ns',
+            name : 'foo:bar',
+            value : 'wiz'
+        })
+        const elementNode = document.createElementNS('', 'foobar')
+        attr.ownerElement = elementNode
+        it('node.ownerElement', () => {
+            assert.equal(attr.node.ownerElement, elementNode)
+        })
+        it('ownerElement', () => {
+            assert.instanceOf(attr.ownerElement, ElementAssembler)
+        })
+        it('ownerElement.node', () => {
+            assert.equal(attr.ownerElement.node, elementNode)
+        })
+        it('serializeToString(element)', () => {
+            const xml = serializer.serializeToString(elementNode)
+            assert.equal(xml, '<foobar xmlns:foo="http://example.com/ns" foo:bar="wiz"/>')
         })
     })
     describe('ownerElement = null', () => {
