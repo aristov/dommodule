@@ -82,4 +82,23 @@ describe('Common', () => {
             assert.equal($attr.ownerElement, $element)
         })
     })
+    describe('ChildNodeAssembler.remove()', () => {
+        let $element
+        const $root = element([
+            text('foobar'),
+            comment('example'),
+            $element = element(),
+            instruction('test')
+        ])
+        const node = $root.node
+        $element.remove()
+        it('node.childNodes.length', () => {
+            assert.equal(node.childNodes.length, 3)
+        })
+        it('serializeToString(node)', () => {
+            const xml = serializer.serializeToString(node)
+            const sample = '<element>foobar<!--example--><?instruction test?></element>'
+            assert.equal(xml, sample)
+        })
+    })
 })
