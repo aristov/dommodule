@@ -20,6 +20,16 @@ describe('AttrAssembler', () => {
             assert.equal(node.value, '')
         })
     })
+    describe('new AttrAssembler({ name })', () => {
+        const attr = new AttrAssembler({ name : 'foobar' })
+        const node = attr.node
+        it('node.name', () => {
+            assert.equal(node.name, 'foobar')
+        })
+        it('node.value', () => {
+            assert.equal(node.value, '')
+        })
+    })
     describe('new AttrAssembler({ name, value })', () => {
         const attr = new AttrAssembler({ name : 'foo', value : 'bar' })
         const node = attr.node
@@ -166,6 +176,9 @@ describe('AttrAssembler', () => {
             static get prefix() {
                 return 'wiz'
             }
+            static get value() {
+                return 'qwerty'
+            }
         }
         const attr = new FooBar
         const node = attr.node
@@ -177,6 +190,9 @@ describe('AttrAssembler', () => {
         })
         it('node.namespaceURI', () => {
             assert.equal(node.namespaceURI, 'http://example.com/ns')
+        })
+        it('node.value', () => {
+            assert.equal(node.value, 'qwerty')
         })
     })
 })
