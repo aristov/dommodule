@@ -2,17 +2,16 @@
 
 <em>work in progress</em>
 
-The **dommodule** serves to assemble and manipulate XML documents in JavaScript.
-It provides the full set of assemblers for all DOM tree interfaces.
+The **dommodule** is a JavaScript library of DOM node assemblers.
 
+- [attr](lib/attr.js) — `Attr` node assembler (XML: `test="example"`)
 - [document](lib/document.js) — `Document` node assembler
-- [doctype](lib/doctype.js) — `DocumentType` node assembler (XML: `<!DOCTYPE>`)
+- [doctype](lib/doctype.js) — `DocumentType` node assembler (XML: `<!DOCTYPE test>`)
 - [fragment](lib/fragment.js) — `DocumentFragment` node assembler 
-- [element](lib/element.js) — `Element` node assembler (XML: `<element/>`)
-- [text](lib/text.js) — `Text` node assembler (XML: `text`)
-- [cdata](lib/cdata.js) — `CDATASection` node assembler (XML: `<![CDATA[character data section]]>`)
-- [comment](lib/comment.js) — `Comment` node assembler (XML: `<!--comment-->`)
-- [instruction](lib/instruction.js) — `ProcessingInstruction` node assembler (XML: `<?processing instruction?>`)
+- [element](lib/element.js) — `Element` node assembler (XML: `<example/>`)
+- [text](lib/text.js) — `Text` node assembler (XML: `test`)
+- [comment](lib/comment.js) — `Comment` node assembler (XML: `<!--example-->`)
+- [instruction](lib/instruction.js) — `ProcessingInstruction` node assembler (XML: `<?test example?>`)
 
 ## Installation
 
@@ -20,58 +19,43 @@ It provides the full set of assemblers for all DOM tree interfaces.
 npm install dommodule
 ```
 
-## Usage
+## Example
 
 ```js
-// import the DOM assemblers
-import { document, element } from 'dommodule'
+import {
+    DocumentAssembler,
+    attr, comment, doctype, element,
+    fragment, instruction, text
+} from 'dommodule'
 
-// define the playlist document assembler
-function playlist({ title, genre, children }) {
-    return document({
-        qualifiedName : 'playlist',
-        documentElement : {
-            attributes : { title, genre },
-            children
-        }
-    })
-}
-
-// define the track element assembler
-function track(attributes) {
-    return element({ qualifiedName : 'track', attributes })
-}
-
-// create the playlist document using just defined APIs
-const doc = playlist({
-
-    // assign attributes of the root
-    title : 'Classic hits',
-    genre : 'Rock',
-
-    // append children tracks to the root
-    children : [
-        track({
-            author : 'The Doors',
-            title : 'Light My Fire',
-            year : '1967'
+new DocumentAssembler([
+    doctype('example'),
+    fragment([
+        instruction({
+            target : 'xml-stylesheet',
+            attrset : { href : './example.css' },
         }),
-        track({
-            author : 'Led Zeppelin',
-            title : 'Black Dog',
-            year : '1971'
+        element({
+            localName : 'example',
+            attributes : attr({ name : 'role', value : 'application' }),
+            childNodes : [
+                comment('Version 1.0.0'),
+                text('Hello world!')
+            ]
         })
-    ]
-})
+    ])
+])
 ```
 
-This code generates the document, with the following structure:
+This code generates a document with the following structure:
 
 ```xml
-<playlist title="Classic hits" genre="rock">
-    <track author="The Doors" title="Light My Fire" year="1967"/>
-    <track author="Led Zeppelin" title="Black Dog" year="1971"/>
-</playlist>
+<!DOCTYPE example>
+<?xml-stylesheet href="./example.css"?>
+<example role="application">
+     <!--Version 1.0.0-->
+     Hello world!
+</example>
 ```
 
 ## Development
@@ -80,7 +64,7 @@ This code generates the document, with the following structure:
 git clone git@github.com:aristov/dommodule.git
 cd dommodule
 npm install
-npm start
+npm run webpack
 ```
 
 ## License
