@@ -158,4 +158,25 @@ describe('AttrAssembler', () => {
             assert.throws(fn, TypeError)
         })
     })
+    describe('class extends AttrAssembler', () => {
+        class FooBar extends AttrAssembler {
+            static get namespaceURI() {
+                return 'http://example.com/ns'
+            }
+            static get prefix() {
+                return 'wiz'
+            }
+        }
+        const attr = new FooBar
+        const node = attr.node
+        it('static qualifiedName', () => {
+            assert.equal(FooBar.qualifiedName, 'wiz:foobar')
+        })
+        it('node.name', () => {
+            assert.equal(node.name, 'wiz:foobar')
+        })
+        it('node.namespaceURI', () => {
+            assert.equal(node.namespaceURI, 'http://example.com/ns')
+        })
+    })
 })
