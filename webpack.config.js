@@ -3,11 +3,16 @@
 const path = require('path')
 const { optimize : { UglifyJsPlugin } } = require('webpack')
 
+const distPath = path.join(__dirname, 'dist')
 const babelLoader = {
     test : /\.js$/,
     loader : 'babel-loader'
 }
-const distPath = path.join(__dirname, 'dist')
+const uglifyJsPlugin = new UglifyJsPlugin({
+    compress : { warnings : false },
+    mangle : { keep_fnames : true },
+    comments : false
+})
 
 module.exports = [
     {
@@ -28,13 +33,7 @@ module.exports = [
             libraryTarget : 'window'
         },
         module : { loaders : [babelLoader] },
-        plugins : [
-            new UglifyJsPlugin({
-                compress : { warnings : false },
-                mangle : { keep_fnames : true },
-                comments : false
-            })
-        ]
+        plugins : [uglifyJsPlugin]
     },
     {
         entry : './spec/index.spec.js',
