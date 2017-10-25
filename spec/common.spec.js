@@ -75,7 +75,7 @@ describe('Common', () => {
         it('fragment.parentNode', () => {
             assert.isNull($fragment.parentNode)
         })
-        it('fragment.node.hasChildNodes', () => {
+        it('fragment.node.hasChildNodes()', () => {
             assert.isFalse($fragment.node.hasChildNodes())
         })
         it('attr.ownerElement', () => {
