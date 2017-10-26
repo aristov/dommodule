@@ -101,4 +101,28 @@ describe('Common', () => {
             assert.equal(xml, sample)
         })
     })
+    describe('element(element())', () => {
+        let child
+        const parent = element(child = element())
+        it('parent.firstElementChild', () => {
+            assert.equal(parent.firstElementChild, child)
+        })
+        it('parent.lastElementChild', () => {
+            assert.equal(parent.lastElementChild, child)
+        })
+        it('removeChild(child); node.hasChildNodes', () => {
+            parent.removeChild(child)
+            assert.isFalse(parent.node.hasChildNodes())
+        })
+    })
+    describe('element({ textContent })', () => {
+        const test = element({ textContent : 'foobar' })
+        it('parent.textContent', () => {
+            assert.equal(test.textContent, 'foobar')
+        })
+        it('serializeToString(node)', () => {
+            const xml = serializer.serializeToString(test.node)
+            assert.equal(xml, '<element>foobar</element>')
+        })
+    })
 })
