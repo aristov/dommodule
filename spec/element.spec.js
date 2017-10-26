@@ -660,6 +660,58 @@ describe('ElementAssembler', () => {
             assert.equal(attrset.cux, 'wiz')
         })
     })
+    describe('element({ attributes : new Array })', () => {
+        let foo, wiz
+        const test = element({
+            attributes : [
+                foo = new AttrAssembler({ name : 'foo', value : 'bar' }),
+                wiz = document.createAttribute('wiz')
+            ]
+        })
+        const attributes = test.attributes
+        it('attributes.length', () => {
+            assert.equal(test.attributes.length, 2)
+        })
+        it('hasAttribute()', () => {
+            assert(test.hasAttribute('foo'), 'hasAttribute("foo")')
+            assert(test.hasAttribute('wiz'), 'hasAttribute("wiz")')
+        })
+        it('getAttribute()', () => {
+            assert.equal(test.getAttribute('foo'), 'bar')
+            assert.equal(test.getAttribute('wiz'), '')
+        })
+        it('attributes', () => {
+            assert.equal(attributes[0], foo)
+            assert.equal(attributes[1].node, wiz)
+        })
+        it('serializeToString(node)', () => {
+            const xml = serializer.serializeToString(test.node)
+            const sample = '<element foo="bar" wiz=""/>'
+            assert.equal(xml, sample)
+        })
+    })
+    describe('element({ attributes : document.createAttribute() })', () => {
+        const foobar = document.createAttribute('foobar')
+        const test = element({ attributes : foobar })
+        const attributes = test.attributes
+        it('attributes.length', () => {
+            assert.equal(test.attributes.length, 1)
+        })
+        it('hasAttribute()', () => {
+            assert(test.hasAttribute('foobar'), 'hasAttribute()')
+        })
+        it('getAttribute()', () => {
+            assert.equal(test.getAttribute('foobar'), '')
+        })
+        it('attributes', () => {
+            assert.equal(attributes[0].node, foobar)
+        })
+        it('serializeToString(node)', () => {
+            const xml = serializer.serializeToString(test.node)
+            const sample = '<element foobar=""/>'
+            assert.equal(xml, sample)
+        })
+    })
     describe('children', () => {
         let foo, bar, wiz
         const test = element({
