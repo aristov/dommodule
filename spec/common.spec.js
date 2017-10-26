@@ -89,6 +89,13 @@ describe('Common', () => {
         })
     })
     describe('ChildNodeAssembler.remove()', () => {
+        const test = element()
+        test.remove()
+        it('parentNode', () => {
+            assert.isNull(test.parentNode)
+        })
+    })
+    describe('ChildNodeAssembler.remove()', () => {
         let $element
         const $root = element([
             text('foobar'),

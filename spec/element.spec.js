@@ -708,10 +708,11 @@ describe('ElementAssembler', () => {
             assert.equal(xml, '<foo:bar xmlns:foo="http://example.com/ns"/>')
         })
     })
-    describe('element(element(), element(), element())', () => {
+    describe('element(element(), null, element(), element())', () => {
         let foo, bar, wiz
         const test = element([
             foo = element('foo'),
+            null,
             bar = element('bar'),
             wiz = element('wiz')
         ])

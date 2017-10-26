@@ -81,7 +81,8 @@ describe('ProcessingInstructionAssembler', () => {
         })
     })
     describe('new ProcessingInstructionAssembler({ attrset })', () => {
-        const instruction = new ProcessingInstructionAssembler({ attrset : { foo : 'bar' } })
+        const attrset = { foo : 'bar', '' : 'empty' }
+        const instruction = new ProcessingInstructionAssembler({ attrset })
         const node = instruction.node
         it('node.target', () => {
             assert.equal(node.target, 'instruction')

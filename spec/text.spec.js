@@ -20,6 +20,19 @@ describe('TextAssembler', () => {
             assert.equal(serializer.serializeToString(node), '')
         })
     })
+    describe('new TextAssembler({})', () => {
+        const text = new TextAssembler({})
+        const node = text.node
+        it('node', () => {
+            assert.instanceOf(node, Text)
+        })
+        it('node.data', () => {
+            assert.equal(node.data, '')
+        })
+        it('serializeToString(node)', () => {
+            assert.equal(serializer.serializeToString(node), '')
+        })
+    })
     describe('new TextAssembler(new String)', () => {
         const text = new TextAssembler('foobar')
         const node = text.node

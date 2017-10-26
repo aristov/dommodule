@@ -74,7 +74,7 @@ describe('DocumentAssembler', () => {
         it('doctype', () => {
             assert.equal($document.doctype, $doctype)
         })
-        it('element', () => {
+        it('documentElement', () => {
             assert.equal($document.documentElement, $element)
         })
         it('serializeToString(node)', () => {
@@ -92,13 +92,25 @@ describe('DocumentAssembler', () => {
         it('doctype.node', () => {
             assert.equal($document.doctype.node, $doctype)
         })
-        it('element.node', () => {
+        it('documentElement.node', () => {
             assert.equal($document.documentElement.node, $element)
         })
         it('serializeToString(node)', () => {
             const xml = serializer.serializeToString($document.node)
             const sample = '<!DOCTYPE test><test/>'
             assert.equal(xml, sample)
+        })
+    })
+    describe('new DocumentAssembler({ documentElement : null }); documentElement = document.createElementNS()', () => {
+        const test = new DocumentAssembler({ documentElement : null })
+        const element = document.createElementNS('', 'test')
+        test.documentElement = element
+        it('documentElement.node', () => {
+            assert.equal(test.documentElement.node, element)
+        })
+        it('serializeToString(node)', () => {
+            const xml = serializer.serializeToString(test.node)
+            assert.equal(xml, '<test/>')
         })
     })
     describe('new DocumentAssembler({ documentElement : null })', () => {

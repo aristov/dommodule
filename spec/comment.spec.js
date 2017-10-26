@@ -20,6 +20,19 @@ describe('CommentAssembler', () => {
             assert.equal(serializer.serializeToString(node), '<!---->')
         })
     })
+    describe('new CommentAssembler({})', () => {
+        const comment = new CommentAssembler({})
+        const node = comment.node
+        it('node', () => {
+            assert.instanceOf(node, Comment)
+        })
+        it('node.data', () => {
+            assert.equal(node.data, '')
+        })
+        it('serializeToString(node)', () => {
+            assert.equal(serializer.serializeToString(node), '<!---->')
+        })
+    })
     describe('new CommentAssembler(new String)', () => {
         const comment = new CommentAssembler('foobar')
         const node = comment.node
