@@ -527,13 +527,16 @@ describe('ElementAssembler', () => {
             assert.equal(serializer.serializeToString(node), '<element attr="foobar"/>')
         })
     })
-    describe('getAttribute(AttrAssembler)', () => {
+    describe('hasAttribute(AttrAssembler); getAttribute(AttrAssembler)', () => {
         const test = new ElementAssembler({ attrset : { attr : 'foobar' } })
+        it('hasAttribute()', () => {
+            assert(test.hasAttribute(AttrAssembler), 'hasAttribute(AttrAssembler)')
+        })
         it('getAttribute()', () => {
             assert.equal(test.getAttribute(AttrAssembler), 'foobar')
         })
     })
-    describe('getAttribute(class extends AttrAssembler)', () => {
+    describe('hasAttribute(class extends AttrAssembler); getAttribute(class extends AttrAssembler)', () => {
         class Bar extends AttrAssembler {
             static get namespaceURI() {
                 return 'http://example.com/ns'
@@ -543,6 +546,9 @@ describe('ElementAssembler', () => {
             }
         }
         const test = new ElementAssembler({ attributes : new Bar('test') })
+        it('hasAttribute()', () => {
+            assert(test.hasAttribute(Bar), 'hasAttribute(Bar)')
+        })
         it('getAttribute()', () => {
             assert.equal(test.getAttribute(Bar), 'test')
         })
