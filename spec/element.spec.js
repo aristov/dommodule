@@ -553,6 +553,41 @@ describe('ElementAssembler', () => {
             assert.equal(test.getAttribute(Bar), 'test')
         })
     })
+    describe('removeAttribute(new String)', () => {
+        const test = new ElementAssembler({ attrset : { foo : 'bar' } })
+        const node = test.node
+        test.removeAttribute('foo')
+        it('node.hasAttribute()', () => {
+            assert.isFalse(node.hasAttribute('foo'))
+        })
+    })
+    describe('removeAttribute(AttrAssembler)', () => {
+        const test = new ElementAssembler({ attrset : { attr : 'foobar' } })
+        const node = test.node
+        test.removeAttribute(AttrAssembler)
+        it('node.hasAttribute()', () => {
+            assert.isFalse(node.hasAttribute('attr'))
+        })
+    })
+    describe('removeAttribute(class extends AttrAssembler)', () => {
+        class Bar extends AttrAssembler {
+            static get namespaceURI() {
+                return 'http://example.com/ns'
+            }
+            static get prefix() {
+                return 'foo'
+            }
+        }
+        const test = new ElementAssembler({ attributes : new Bar('test') })
+        const node = test.node
+        it('node.hasAttributes()', () => {
+            assert(node.hasAttributes(), 'node.hasAttributes()')
+        })
+        it('removeAttribute; node.hasAttributes()', () => {
+            test.removeAttribute(Bar)
+            assert.isFalse(node.hasAttributes())
+        })
+    })
     describe('on(new String, handler)', () => {
         const test = new ElementAssembler
         const handler = sinon.spy()
