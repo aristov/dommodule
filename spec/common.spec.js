@@ -3,8 +3,9 @@ import { CharacterData, EventTarget, Node, XMLSerializer } from '../lib/dom'
 import {
     CharacterDataAssembler,
     EventTargetAssembler,
-    NodeAssembler,
     DocumentAssembler,
+    NodeAssembler,
+    TargetAssembler,
     attr, comment, doctype, element,
     fragment, instruction, text
 } from '../lib'
@@ -14,6 +15,12 @@ const { assert } = chai
 const serializer = new XMLSerializer
 
 describe('Common', () => {
+    describe('new TargetAssembler', () => {
+        const fn = () => new TargetAssembler
+        it('throws', () => {
+            assert.throws(fn, Error)
+        })
+    })
     describe('CharacterDataAssembler', () => {
         it('static interface', () => {
             assert.equal(CharacterDataAssembler.interface, CharacterData)
