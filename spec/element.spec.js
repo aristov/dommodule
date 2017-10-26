@@ -377,6 +377,9 @@ describe('ElementAssembler', () => {
         it('node.hasAttribute()', () => {
             assert.isFalse(node.hasAttribute(AttrAssembler.localName))
         })
+        it('removeAttributeNode()', () => {
+            assert.isNull(test.removeAttributeNode('example'))
+        })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '<element/>')
         })
@@ -404,7 +407,7 @@ describe('ElementAssembler', () => {
         })
     })
     describe('removeAttributeNode(AttrAssembler)', () => {
-        const test = new ElementAssembler()
+        const test = new ElementAssembler
         const node = test.node
         const attrNode = document.createAttribute('attr')
         node.setAttributeNode(attrNode)
@@ -415,11 +418,27 @@ describe('ElementAssembler', () => {
         it('node.hasAttributes()', () => {
             assert.isFalse(node.hasAttributes())
         })
-        it('node.attributes.length', () => {
-            assert.lengthOf(node.attributes, 0)
-        })
         it('node.hasAttribute()', () => {
             assert.isFalse(node.hasAttribute('attr'))
+        })
+        it('serializeToString(node)', () => {
+            assert.equal(serializer.serializeToString(node), '<element/>')
+        })
+    })
+    describe('removeAttributeNode(class extends AttrAssembler)', () => {
+        const test = new ElementAssembler
+        const node = test.node
+        node.setAttribute('foo', 'bar')
+        class Foo extends AttrAssembler {}
+        const removedAttr = test.removeAttributeNode(Foo)
+        it('instanceof', () => {
+            assert.instanceOf(removedAttr, Foo)
+        })
+        it('node.hasAttributes()', () => {
+            assert.isFalse(node.hasAttributes())
+        })
+        it('node.hasAttribute()', () => {
+            assert.isFalse(node.hasAttribute('foo'))
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '<element/>')
