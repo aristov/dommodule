@@ -278,14 +278,39 @@ describe('ElementAssembler', () => {
         const node = test.node
         node.setAttribute(AttrAssembler.localName, 'foobar')
         const attr = test.getAttributeNode(AttrAssembler)
-        it('instanceof AttrAssembler', () => {
+        const attrNode = attr.node
+        it('instanceof', () => {
             assert.instanceOf(attr, AttrAssembler)
         })
-        it('node.localName', () => {
-            assert.equal(attr.node.localName, AttrAssembler.localName)
+        it('attrNode.localName', () => {
+            assert.equal(attrNode.localName, AttrAssembler.localName)
         })
-        it('node.value', () => {
-            assert.equal(attr.node.value, 'foobar')
+        it('attrNode.value', () => {
+            assert.equal(attrNode.value, 'foobar')
+        })
+    })
+    describe('getAttributeNode(class extends AttrAssembler)', () => {
+        const test = new ElementAssembler
+        const node = test.node
+        class Bar extends AttrAssembler {
+            static get prefix() {
+                return 'foo'
+            }
+            static get namespaceURI() {
+                return 'http://example.com/ns'
+            }
+        }
+        node.setAttributeNS(Bar.namespaceURI, Bar.qualifiedName, 'test')
+        const attr = test.getAttributeNode(Bar)
+        const attrNode = attr.node
+        it('instanceof', () => {
+            assert.instanceOf(attr, Bar)
+        })
+        it('attrNode.name', () => {
+            assert.equal(attrNode.name, Bar.qualifiedName)
+        })
+        it('attrNode.value', () => {
+            assert.equal(attrNode.value, 'test')
         })
     })
     describe('setAttributeNode(document.createAttribute())', () => {
@@ -326,6 +351,9 @@ describe('ElementAssembler', () => {
         })
         it('node.getAttribute()', () => {
             assert.equal(node.getAttribute('foo'), 'bar')
+        })
+        it('getAttributeNode()', () => {
+            assert.equal(test.getAttributeNode('foo'), attr)
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '<element foo="bar"/>')
