@@ -20,9 +20,9 @@ describe('Common', () => {
             assert.throws(fn, Error)
         })
     })
-    describe('CharacterDataAssembler', () => {
+    describe('NodeAssembler', () => {
         it('static interface', () => {
-            assert.equal(CharacterDataAssembler.interface, CharacterData)
+            assert.equal(NodeAssembler.interface, Node)
         })
     })
     describe('EventTargetAssembler', () => {
@@ -30,12 +30,12 @@ describe('Common', () => {
             assert.equal(EventTargetAssembler.interface, EventTarget)
         })
     })
-    describe('NodeAssembler', () => {
+    describe('CharacterDataAssembler', () => {
         it('static interface', () => {
-            assert.equal(NodeAssembler.interface, Node)
+            assert.equal(CharacterDataAssembler.interface, CharacterData)
         })
     })
-    describe('DocumentAssembler', () => {
+    describe('Example', () => {
         let $attr, $doctype, $fragment, $instruction, $element, $comment, $text
         const $document = new DocumentAssembler([
             $doctype = doctype('example'),
