@@ -1,6 +1,6 @@
 # dommodule
 
-[![NPM Version](https://img.shields.io/npm/v/dommodule.svg?maxAge=2592000)](https://www.npmjs.com/package/dommodule)
+[![NPM Version](https://img.shields.io/npm/v/dommodule.svg)](https://www.npmjs.com/package/dommodule)
 [![Build Status](https://travis-ci.org/aristov/dommodule.svg?branch=master)](https://travis-ci.org/aristov/dommodule)
 [![Coverage Status](https://coveralls.io/repos/github/aristov/dommodule/badge.svg?branch=master)](https://coveralls.io/github/aristov/dommodule?branch=master)
 [![dependencies Status](https://david-dm.org/aristov/dommodule/status.svg)](https://david-dm.org/aristov/dommodule)
