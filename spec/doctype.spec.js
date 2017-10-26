@@ -60,13 +60,6 @@ describe('DocumentTypeAssembler', () => {
             assert.equal($doctype.node, node)
         })
     })
-    describe('class extends DocumentTypeAssembler', () => {
-        class Foobar extends DocumentTypeAssembler {}
-        const $doctype = new Foobar
-        it('node.name', () => {
-            assert.equal($doctype.node.name, 'foobar')
-        })
-    })
     describe('doctype({ qualifiedName, parentNode : new DocumentAssembler })', () => {
         const $document = new DocumentAssembler
         const $doctype = doctype({
@@ -83,6 +76,26 @@ describe('DocumentTypeAssembler', () => {
         it('serializeToString(document.node)', () => {
             const xml = serializer.serializeToString($document.node)
             assert.equal(xml, '<!DOCTYPE document><document/>')
+        })
+    })
+    describe('doctype({ parentNode : implementation.createDocument() })', () => {
+        const doctypeNode = implementation.createDocumentType('test', '', '')
+        const doc = implementation.createDocument('', 'test', doctypeNode)
+        const $doctype = doctype({ parentNode : doc })
+        const node = $doctype.node
+        it('parentNode', () => {
+            assert.equal(node.parentNode, doc)
+        })
+        it('serializeToString(document.node)', () => {
+            const xml = serializer.serializeToString(doc)
+            assert.equal(xml, '<!DOCTYPE document><test/>')
+        })
+    })
+    describe('class extends DocumentTypeAssembler', () => {
+        class Foobar extends DocumentTypeAssembler {}
+        const $doctype = new Foobar
+        it('node.name', () => {
+            assert.equal($doctype.node.name, 'foobar')
         })
     })
 })
