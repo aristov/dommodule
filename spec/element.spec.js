@@ -466,6 +466,26 @@ describe('ElementAssembler', () => {
             assert.equal(serializer.serializeToString(node), '<element/>')
         })
     })
+    describe('setAttribute(new String, new String)', () => {
+        const test = new ElementAssembler
+        const node = test.node
+        test.setAttribute('foo', 'bar')
+        it('node.hasAttributes()', () => {
+            assert(node.hasAttributes(), 'node.hasAttributes()')
+        })
+        it('node.attributes.length', () => {
+            assert.lengthOf(node.attributes, 1)
+        })
+        it('node.hasAttribute()', () => {
+            assert(node.hasAttribute('foo'), 'node.hasAttribute()')
+        })
+        it('node.value', () => {
+            assert.equal(node.getAttribute('foo'), 'bar')
+        })
+        it('serializeToString(node)', () => {
+            assert.equal(serializer.serializeToString(node), '<element foo="bar"/>')
+        })
+    })
     describe('setAttribute(AttrAssembler, new String)', () => {
         const test = new ElementAssembler
         const node = test.node
@@ -507,24 +527,24 @@ describe('ElementAssembler', () => {
             assert.equal(serializer.serializeToString(node), '<element attr="foobar"/>')
         })
     })
-    describe('setAttribute(new String, new String)', () => {
-        const test = new ElementAssembler
-        const node = test.node
-        test.setAttribute('foo', 'bar')
-        it('node.hasAttributes()', () => {
-            assert(node.hasAttributes(), 'node.hasAttributes()')
+    describe('getAttribute(AttrAssembler)', () => {
+        const test = new ElementAssembler({ attrset : { attr : 'foobar' } })
+        it('getAttribute()', () => {
+            assert.equal(test.getAttribute(AttrAssembler), 'foobar')
         })
-        it('node.attributes.length', () => {
-            assert.lengthOf(node.attributes, 1)
-        })
-        it('node.hasAttribute()', () => {
-            assert(node.hasAttribute('foo'), 'node.hasAttribute()')
-        })
-        it('node.value', () => {
-            assert.equal(node.getAttribute('foo'), 'bar')
-        })
-        it('serializeToString(node)', () => {
-            assert.equal(serializer.serializeToString(node), '<element foo="bar"/>')
+    })
+    describe('getAttribute(class extends AttrAssembler)', () => {
+        class Bar extends AttrAssembler {
+            static get namespaceURI() {
+                return 'http://example.com/ns'
+            }
+            static get prefix() {
+                return 'foo'
+            }
+        }
+        const test = new ElementAssembler({ attributes : new Bar('test') })
+        it('getAttribute()', () => {
+            assert.equal(test.getAttribute(Bar), 'test')
         })
     })
     describe('on(new String, handler)', () => {
