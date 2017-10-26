@@ -486,6 +486,27 @@ describe('ElementAssembler', () => {
             assert.equal(serializer.serializeToString(node), '<element attr="foobar"/>')
         })
     })
+    describe('node.setAttribute(); setAttribute(AttrAssembler, new String)', () => {
+        const test = new ElementAssembler
+        const node = test.node
+        node.setAttribute('attr', 'test')
+        test.setAttribute(AttrAssembler, 'foobar')
+        it('node.hasAttributes()', () => {
+            assert(node.hasAttributes(), 'node.hasAttributes()')
+        })
+        it('node.attributes.length', () => {
+            assert.lengthOf(node.attributes, 1)
+        })
+        it('node.hasAttribute()', () => {
+            assert(node.hasAttribute(AttrAssembler.localName), 'node.hasAttribute()')
+        })
+        it('node.getAttribute()', () => {
+            assert.equal(node.getAttribute(AttrAssembler.localName), 'foobar')
+        })
+        it('serializeToString(node)', () => {
+            assert.equal(serializer.serializeToString(node), '<element attr="foobar"/>')
+        })
+    })
     describe('setAttribute(new String, new String)', () => {
         const test = new ElementAssembler
         const node = test.node
