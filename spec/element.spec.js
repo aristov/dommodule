@@ -644,7 +644,7 @@ describe('ElementAssembler', () => {
     describe('element({ attrset })', () => {
         const test = element({ attrset : { foo : 'bar', cux : 'wiz' } })
         const attrset = test.attrset
-        it('attributes', () => {
+        it('attributes.length', () => {
             assert.equal(test.attributes.length, 2)
         })
         it('hasAttribute()', () => {
@@ -658,6 +658,34 @@ describe('ElementAssembler', () => {
         it('attrset', () => {
             assert.equal(attrset.foo, 'bar')
             assert.equal(attrset.cux, 'wiz')
+        })
+    })
+    describe('children', () => {
+        let foo, bar, wiz
+        const test = element({
+            children : [
+                foo = document.createElementNS('', 'foo'),
+                bar = element({ localName : 'bar' }),
+                wiz = document.createElementNS('', 'wiz'),
+            ]
+        })
+        const children = test.children
+        it('children.length', () => {
+            assert.equal(children.length, 3)
+        })
+        it('children[*].instanceof', () => {
+            assert.instanceOf(children[0], ElementAssembler)
+            assert.instanceOf(children[1], ElementAssembler)
+            assert.instanceOf(children[2], ElementAssembler)
+        })
+        it('children[*]', () => {
+            assert.equal(children[0].node, foo)
+            assert.equal(children[1], bar)
+            assert.equal(children[2].node, wiz)
+        })
+        it('serializeToString(node)', () => {
+            const sample = '<element><foo/><bar/><wiz/></element>'
+            assert.equal(serializer.serializeToString(test.node), sample)
         })
     })
 })
