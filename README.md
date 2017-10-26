@@ -11,13 +11,13 @@ _work in progress_
 The **dommodule** is a JavaScript library of DOM node assemblers.
 
 - [attr](lib/attr.js) — `Attr` node assembler (XML: `test="example"`)
+- [comment](lib/comment.js) — `Comment` node assembler (XML: `<!--example-->`)
 - [document](lib/document.js) — `Document` node assembler
 - [doctype](lib/doctype.js) — `DocumentType` node assembler (XML: `<!DOCTYPE test>`)
-- [fragment](lib/fragment.js) — `DocumentFragment` node assembler 
 - [element](lib/element.js) — `Element` node assembler (XML: `<example/>`)
-- [text](lib/text.js) — `Text` node assembler (XML: `test`)
-- [comment](lib/comment.js) — `Comment` node assembler (XML: `<!--example-->`)
+- [fragment](lib/fragment.js) — `DocumentFragment` node assembler
 - [instruction](lib/instruction.js) — `ProcessingInstruction` node assembler (XML: `<?test example?>`)
+- [text](lib/text.js) — `Text` node assembler (XML: `test`)
 
 ## Installation
 
