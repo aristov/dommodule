@@ -80,6 +80,37 @@ describe('ProcessingInstructionAssembler', () => {
             assert.equal(xml, sample)
         })
     })
+    describe('new ProcessingInstructionAssembler({ attrset })', () => {
+        const instruction = new ProcessingInstructionAssembler({ attrset : { foo : 'bar' } })
+        const node = instruction.node
+        it('node.target', () => {
+            assert.equal(node.target, 'instruction')
+        })
+        it('node.data', () => {
+            assert.equal(node.data, 'foo="bar"')
+        })
+        it('JSON.stringify(attrset)', () => {
+            assert.equal(JSON.stringify(instruction.attrset), '{"foo":"bar"}')
+        })
+        it('serializeToString(node)', () => {
+            const xml = serializer.serializeToString(node)
+            const sample = '<?instruction foo="bar"?>'
+            assert.equal(xml, sample)
+        })
+    })
+    describe('new ProcessingInstructionAssembler({ attrset })', () => {
+        const attrset = { foo : 'bar', cux : 'wiz' }
+        const instruction = new ProcessingInstructionAssembler({ attrset })
+        const node = instruction.node
+        const $attrset = instruction.attrset
+        it('node.target', () => {
+            assert.equal(node.target, 'instruction')
+        })
+        it('attrset', () => {
+            assert.equal($attrset.foo, 'bar')
+            assert.equal($attrset.cux, 'wiz')
+        })
+    })
     describe('new ProcessingInstructionAssembler({ node })', () => {
         const node = document.createProcessingInstruction('foo', 'bar')
         const instruction = new ProcessingInstructionAssembler({ node })
@@ -118,6 +149,12 @@ describe('ProcessingInstructionAssembler', () => {
         it('serializeToString(element.node)', () => {
             const xml = serializer.serializeToString(element.node)
             assert.equal(xml, '<element><?foo bar?></element>')
+        })
+    })
+    describe('class extends ProcessingInstructionAssembler', () => {
+        class FooBar extends ProcessingInstructionAssembler {}
+        it('target', () => {
+            assert.equal(FooBar.target, 'foobar')
         })
     })
 })
