@@ -479,7 +479,7 @@ describe('ElementAssembler', () => {
     describe('id', () => {
         const test = new ElementAssembler({ id : 'foobar' })
         it('id', () => {
-            assert(test.id, 'foobar')
+            assert.equal(test.id, 'foobar')
         })
         it('serializeToString(node)', () => {
             const xml = serializer.serializeToString(test.node)
@@ -489,11 +489,73 @@ describe('ElementAssembler', () => {
     describe('className', () => {
         const test = new ElementAssembler({ className : 'foo bar' })
         it('className', () => {
-            assert(test.className, 'foo bar')
+            assert.equal(test.className, 'foo bar')
         })
         it('serializeToString(node)', () => {
             const xml = serializer.serializeToString(test.node)
             assert.equal(xml, '<element class="foo bar"/>')
+        })
+    })
+    describe('classList = new Array', () => {
+        const test = new ElementAssembler
+        test.classList = ['foo', 'bar']
+        it('className', () => {
+            assert.equal(test.className, 'foo bar')
+        })
+        it('classList', () => {
+            assert.instanceOf(test.classList, window.DOMTokenList)
+        })
+        it('classList.contains', () => {
+            assert(test.classList.contains('foo'))
+            assert(test.classList.contains('bar'))
+        })
+        it('serializeToString(node)', () => {
+            const xml = serializer.serializeToString(test.node)
+            assert.equal(xml, '<element class="foo bar"/>')
+        })
+    })
+    describe('classList = new Object', () => {
+        const test = new ElementAssembler
+        test.classList = { foo : true, bar : false, wiz : true }
+        it('className', () => {
+            assert.equal(test.className, 'foo wiz')
+        })
+        it('classList.contains', () => {
+            assert(test.classList.contains('foo'))
+            assert(test.classList.contains('wiz'))
+        })
+        it('serializeToString(node)', () => {
+            const xml = serializer.serializeToString(test.node)
+            assert.equal(xml, '<element class="foo wiz"/>')
+        })
+    })
+    describe('classList = new String', () => {
+        const test = new ElementAssembler({ className : 'foo' })
+        test.classList = 'bar'
+        it('className', () => {
+            assert.equal(test.className, 'foo bar')
+        })
+        it('classList.contains', () => {
+            assert(test.classList.contains('foo'))
+            assert(test.classList.contains('bar'))
+        })
+        it('serializeToString(node)', () => {
+            const xml = serializer.serializeToString(test.node)
+            assert.equal(xml, '<element class="foo bar"/>')
+        })
+    })
+    describe('classList = false', () => {
+        const test = new ElementAssembler({ className : 'foo' })
+        test.classList = false
+        it('className', () => {
+            assert.equal(test.className, 'foo')
+        })
+        it('classList.contains', () => {
+            assert(test.classList.contains('foo'))
+        })
+        it('serializeToString(node)', () => {
+            const xml = serializer.serializeToString(test.node)
+            assert.equal(xml, '<element class="foo"/>')
         })
     })
     describe('class extends ElementAssembler', () => {
@@ -577,6 +639,25 @@ describe('ElementAssembler', () => {
         })
         it('serializeToString(doc.node)', () => {
             assert.equal(serializer.serializeToString(doc.node), '<element/>')
+        })
+    })
+    describe('element({ attrset })', () => {
+        const test = element({ attrset : { foo : 'bar', cux : 'wiz' } })
+        const attrset = test.attrset
+        it('attributes', () => {
+            assert.equal(test.attributes.length, 2)
+        })
+        it('hasAttribute()', () => {
+            assert(test.hasAttribute('foo'), 'hasAttribute("foo")')
+            assert(test.hasAttribute('cux'), 'hasAttribute("cux")')
+        })
+        it('getAttribute()', () => {
+            assert.equal(test.getAttribute('foo'), 'bar')
+            assert.equal(test.getAttribute('cux'), 'wiz')
+        })
+        it('attrset', () => {
+            assert.equal(attrset.foo, 'bar')
+            assert.equal(attrset.cux, 'wiz')
         })
     })
 })

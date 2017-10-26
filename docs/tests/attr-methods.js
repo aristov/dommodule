@@ -51,3 +51,15 @@ class AttrAssembler {
         return this.ownerElement? this.ownerElement.children : []
     }
 }
+
+class ElementAssembler {
+    /**
+     * @param {*} child
+     */
+    appendChild(child) {
+        if(child instanceof AttrAssembler) {
+            child.parentNode = this
+        }
+        else super.appendChild(child)
+    }
+}
