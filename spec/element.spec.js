@@ -470,4 +470,24 @@ describe('ElementAssembler', () => {
             assert(handler.calledOnce, 'handler.calledOnce')
         })
     })
+    describe('id', () => {
+        const test = new ElementAssembler({ id : 'foobar' })
+        it('id', () => {
+            assert(test.id, 'foobar')
+        })
+        it('serializeToString(node)', () => {
+            const xml = serializer.serializeToString(test.node)
+            assert.equal(xml, '<element id="foobar"/>')
+        })
+    })
+    describe('className', () => {
+        const test = new ElementAssembler({ className : 'foo bar' })
+        it('className', () => {
+            assert(test.className, 'foo bar')
+        })
+        it('serializeToString(node)', () => {
+            const xml = serializer.serializeToString(test.node)
+            assert.equal(xml, '<element class="foo bar"/>')
+        })
+    })
 })
