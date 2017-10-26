@@ -11,7 +11,6 @@ import {
 } from '../lib'
 
 const { assert } = chai
-
 const serializer = new XMLSerializer
 
 describe('Common', () => {
@@ -120,6 +119,36 @@ describe('Common', () => {
         it('removeChild(child); node.hasChildNodes', () => {
             parent.removeChild(child)
             assert.isFalse(parent.node.hasChildNodes())
+        })
+    })
+    describe('element({ onclick })', () => {
+        const onclick = sinon.spy()
+        const button = element({
+            namespaceURI : 'http://www.w3.org/1999/xhtml',
+            localName : 'button',
+            onclick
+        })
+        button.node.click()
+        it('node.onclick', () => {
+            assert.equal(button.node.onclick, onclick)
+        })
+        it('onclick.calledOnce', () => {
+            assert(onclick.calledOnce, 'onclick.calledOnce')
+        })
+    })
+    describe('element({ foobar, undefined })', () => {
+        const warn = console.warn
+        const spy = console.warn = sinon.spy()
+        const $element = element({ foobar : 'test', undefined })
+        console.warn = warn
+        it('node.foobar', () => {
+            assert.isUndefined($element.node.foobar)
+        })
+        it('node.undefined', () => {
+            assert.isUndefined($element.node.undefined)
+        })
+        it('console.warn.calledOnce', () => {
+            assert(spy.calledOnce, 'spy.calledOnce')
         })
     })
     describe('element({ textContent })', () => {

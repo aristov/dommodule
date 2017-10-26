@@ -1,4 +1,5 @@
 const mocha = { setup : () => {}, run : () => {} }
+const sinon = { spy : () => {} }
 
 /**
  * @param {String} msg
@@ -21,4 +22,5 @@ assert.isFalse = function () {}
 assert.isTrue = function () {}
 assert.lengthOf = function () {}
 assert.isNull = function () {}
+assert.isUndefined = function () {}
 assert.throws = function () {}
