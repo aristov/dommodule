@@ -336,7 +336,7 @@ describe('ElementAssembler', () => {
         })
     })
     describe('setAttributeNode(new AttrAssembler)', () => {
-        const test = new ElementAssembler
+        const test = new ElementAssembler({ attrset : { foo : 'wiz' } })
         const node = test.node
         const attr = new AttrAssembler({ name : 'foo', value : 'bar' })
         test.setAttributeNode(attr)
@@ -716,6 +716,48 @@ describe('ElementAssembler', () => {
             const xml = serializer.serializeToString(test.node)
             const sample = '<element foo="bar" wiz=""/>'
             assert.equal(xml, sample)
+        })
+        it('setAttributeNode(new AttrAssembler)', () => {
+            const attr = new AttrAssembler({
+                name : 'foo',
+                value : 'test'
+            })
+            test.setAttributeNode(attr)
+            it('attributes', () => {
+                assert.equal(attributes.length, 2)
+                assert.equal(attributes[0], attr)
+            })
+            it('getAttribute', () => {
+                assert.equal(test.getAttribute('foo'), 'test')
+            })
+        })
+    })
+    describe('setAttributeNode(new AttrAssembler({ namespaceURI }))', () => {
+        const test = new ElementAssembler
+        const attr = new AttrAssembler({
+            namespaceURI : 'http://example.com/ns',
+            name : 'foo:bar',
+            value : 'test'
+        })
+        test.setAttributeNode(attr)
+        it('attributes', () => {
+            assert.equal(test.attributes.length, 1)
+            assert.equal(test.attributes[0], attr)
+        })
+        it('node.getAttributeNS', () => {
+            assert.equal(test.node.getAttributeNS('http://example.com/ns', 'bar'), 'test')
+        })
+    })
+    describe('setAttributeNode(document.createAttributeNS())', () => {
+        const test = new ElementAssembler
+        const attrNode = document.createAttributeNS('http://example.com/ns', 'foo:bar')
+        test.setAttributeNode(attrNode)
+        it('attributes', () => {
+            assert.equal(test.attributes.length, 1)
+            assert.equal(test.attributes[0].node, attrNode)
+        })
+        it('node.getAttributeNS', () => {
+            assert.equal(test.node.getAttributeNS('http://example.com/ns', 'bar'), '')
         })
     })
     describe('element({ attributes : document.createAttribute() })', () => {
