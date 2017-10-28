@@ -2,7 +2,7 @@
   "name": "dommodule",
   "version": "0.3.0",
   "description": "DOM assembler library",
-  "main": "lib/index.js",
+  "main": "dist/dist.dommodule.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test nyc mocha",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
@@ -10,7 +10,8 @@
     "karma": "karma start",
     "build": "webpack",
     "webpack": "webpack -w",
-    "api": "esdoc"
+    "api": "esdoc",
+    "postinstall": "webpack"
   },
   "repository": {
     "type": "git",
