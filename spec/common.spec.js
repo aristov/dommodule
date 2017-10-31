@@ -117,7 +117,7 @@ describe('Common', () => {
     describe('element({ onclick })', () => {
         const onclick = sinon.spy()
         const test = element({
-            namespaceURI : 'http://www.w3.org/1999/xhtml',
+            namespace : 'http://www.w3.org/1999/xhtml',
             localName : 'button',
             onclick
         })

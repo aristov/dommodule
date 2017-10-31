@@ -44,9 +44,9 @@ describe('AttrAssembler', () => {
             assert.equal(node.value, 'bar')
         })
     })
-    describe('new AttrAssembler({ namespaceURI, prefix, localName, value })', () => {
+    describe('new AttrAssembler({ namespace, prefix, localName, value })', () => {
         const test = new AttrAssembler({
-            namespaceURI : 'http://www.w3.org/XML/1998/namespace',
+            namespace : 'http://www.w3.org/XML/1998/namespace',
             prefix : 'xml',
             localName : 'id',
             value : 'foobar'
@@ -127,9 +127,9 @@ describe('AttrAssembler', () => {
             assert.equal(xml, '<foobar foo="bar"/>')
         })
     })
-    describe('namespaceURI, ownerElement = document.createElementNS()', () => {
+    describe('namespace, ownerElement = document.createElementNS()', () => {
         const test = new AttrAssembler({
-            namespaceURI : 'http://example.com/ns',
+            namespace : 'http://example.com/ns',
             name : 'foo:bar',
             value : 'wiz'
         })
@@ -192,7 +192,7 @@ describe('AttrAssembler', () => {
     })
     describe('class extends AttrAssembler', () => {
         class FooBar extends AttrAssembler {
-            static get namespaceURI() {
+            static get namespace() {
                 return 'http://example.com/ns'
             }
             static get prefix() {

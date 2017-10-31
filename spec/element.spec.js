@@ -63,9 +63,9 @@ describe('ElementAssembler', () => {
             assert.equal(serializer.serializeToString(node), '<foobar/>')
         })
     })
-    describe('new ElementAssembler({ namespaceURI, prefix, localName })', () => {
+    describe('new ElementAssembler({ namespace, prefix, localName })', () => {
         const test = new ElementAssembler({
-            namespaceURI : 'http://example.com/namespace',
+            namespace : 'http://example.com/namespace',
             prefix : 'foo',
             localName : 'bar'
         })
@@ -90,9 +90,9 @@ describe('ElementAssembler', () => {
             assert.equal(serializer.serializeToString(node), sample)
         })
     })
-    describe('new ElementAssembler({ namespaceURI, qualifiedName })', () => {
+    describe('new ElementAssembler({ namespace, qualifiedName })', () => {
         const test = new ElementAssembler({
-            namespaceURI : 'http://example.com/namespace',
+            namespace : 'http://example.com/namespace',
             qualifiedName : 'foo:bar'
         })
         const node = test.node
@@ -296,11 +296,11 @@ describe('ElementAssembler', () => {
             static get prefix() {
                 return 'foo'
             }
-            static get namespaceURI() {
+            static get namespace() {
                 return 'http://example.com/ns'
             }
         }
-        node.setAttributeNS(Bar.namespaceURI, Bar.qualifiedName, 'test')
+        node.setAttributeNS(Bar.namespace, Bar.qualifiedName, 'test')
         const attr = test.getAttributeNode(Bar)
         const attrNode = attr.node
         it('instanceof', () => {
@@ -548,7 +548,7 @@ describe('ElementAssembler', () => {
     })
     describe('hasAttribute(class extends AttrAssembler); getAttribute(class extends AttrAssembler)', () => {
         class Bar extends AttrAssembler {
-            static get namespaceURI() {
+            static get namespace() {
                 return 'http://example.com/ns'
             }
             static get prefix() {
@@ -581,7 +581,7 @@ describe('ElementAssembler', () => {
     })
     describe('removeAttribute(class extends AttrAssembler)', () => {
         class Bar extends AttrAssembler {
-            static get namespaceURI() {
+            static get namespace() {
                 return 'http://example.com/ns'
             }
             static get prefix() {
@@ -689,8 +689,8 @@ describe('ElementAssembler', () => {
         it('className', () => {
             assert.equal(test.className, 'foo')
         })
-        it('classList.contains', () => {
-            assert(test.classList.contains('foo'))
+        it('classList.contains()', () => {
+            assert(test.classList.contains('foo'), 'classList.contains()')
         })
         it('serializeToString(node)', () => {
             const xml = serializer.serializeToString(test.node)
@@ -699,7 +699,7 @@ describe('ElementAssembler', () => {
     })
     describe('class extends ElementAssembler', () => {
         class Bar extends ElementAssembler {
-            static get namespaceURI() {
+            static get namespace() {
                 return 'http://example.com/ns'
             }
             static get prefix() {
@@ -719,13 +719,15 @@ describe('ElementAssembler', () => {
         })
     })
     describe('element(element(), null, element(), element())', () => {
-        let foo, bar, wiz
-        const test = element([
-            foo = element('foo'),
-            null,
-            bar = element('bar'),
-            wiz = element('wiz')
-        ])
+        let test, foo, bar, wiz
+        beforeEach(() => {
+            test = element([
+                foo = element('foo'),
+                null,
+                bar = element('bar'),
+                wiz = element('wiz')
+            ])
+        })
         it('firstElementChild', () => {
             assert.equal(test.firstElementChild, foo)
         })
@@ -761,8 +763,6 @@ describe('ElementAssembler', () => {
             assert.equal(test.childNodes.length, 2)
             assert.equal(bar.elementIndex, -1)
             assert.equal(wiz.elementIndex, 1)
-        })
-        it('serializeToString(node)', () => {
             const xml = serializer.serializeToString(test.node)
             const sample = '<element>' +
                 '<element>foo</element>' +
@@ -844,10 +844,10 @@ describe('ElementAssembler', () => {
             })
         })
     })
-    describe('setAttributeNode(new AttrAssembler({ namespaceURI }))', () => {
+    describe('setAttributeNode(new AttrAssembler({ namespace }))', () => {
         const test = new ElementAssembler
         const attr = new AttrAssembler({
-            namespaceURI : 'http://example.com/ns',
+            namespace : 'http://example.com/ns',
             name : 'foo:bar',
             value : 'test'
         })
@@ -895,15 +895,17 @@ describe('ElementAssembler', () => {
         })
     })
     describe('children', () => {
-        let foo, bar, wiz
-        const test = element({
-            children : [
-                foo = document.createElementNS('', 'foo'),
-                bar = element({ localName : 'bar' }),
-                wiz = document.createElementNS('', 'wiz'),
-            ]
+        let test, foo, bar, wiz, children
+        beforeEach(() => {
+            test = element({
+                children : [
+                    foo = document.createElementNS('', 'foo'),
+                    bar = element({ localName : 'bar' }),
+                    wiz = document.createElementNS('', 'wiz'),
+                ]
+            })
+            children = test.children
         })
-        const children = test.children
         it('children.length', () => {
             assert.equal(children.length, 3)
         })
