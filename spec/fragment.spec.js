@@ -6,18 +6,13 @@ import {
     ProcessingInstructionAssembler,
     TextAssembler,
 } from '../lib'
-import {
-    Comment,
-    DocumentFragment,
-    Element,
-    ProcessingInstruction,
-    Text,
-    XMLSerializer,
-    document
-} from '../lib/dom'
 
 const { assert } = chai
-
+const {
+    Comment, DocumentFragment, Element,
+    ProcessingInstruction, Text,
+    XMLSerializer, document
+} = window
 const serializer = new XMLSerializer
 
 describe('DocumentFragmentAssembler', () => {

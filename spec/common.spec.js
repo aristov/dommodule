@@ -1,5 +1,4 @@
 import chai from 'chai'
-import { CharacterData, EventTarget, Node, XMLSerializer } from '../lib/dom'
 import {
     CharacterDataAssembler,
     EventTargetAssembler,
@@ -11,6 +10,7 @@ import {
 } from '../lib'
 
 const { assert } = chai
+const { CharacterData, EventTarget, Node, XMLSerializer } = window
 const serializer = new XMLSerializer
 
 describe('Common', () => {

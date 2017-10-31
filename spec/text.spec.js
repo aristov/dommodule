@@ -1,9 +1,8 @@
 import chai from 'chai'
-import { Text, XMLSerializer, document } from '../lib/dom'
 import { TextAssembler, ElementAssembler } from '../lib'
 
 const { assert } = chai
-
+const { Text, XMLSerializer, document } = window
 const serializer = new XMLSerializer
 
 describe('TextAssembler', () => {

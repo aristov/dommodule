@@ -1,9 +1,8 @@
 import chai from 'chai'
-import { ProcessingInstruction, XMLSerializer, document } from '../lib/dom'
 import { ProcessingInstructionAssembler, ElementAssembler } from '../lib'
 
 const { assert } = chai
-
+const { ProcessingInstruction, XMLSerializer, document } = window
 const serializer = new XMLSerializer
 
 describe('ProcessingInstructionAssembler', () => {
