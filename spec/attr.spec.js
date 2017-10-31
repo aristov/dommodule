@@ -168,6 +168,21 @@ describe('AttrAssembler', () => {
             assert.throws(fn, TypeError)
         })
     })
+    describe('new AttrAssembler({ ownerElement }); remove()', () => {
+        const ownerElement = new ElementAssembler
+        const test = new AttrAssembler({ ownerElement })
+        test.remove()
+        it('ownerElement.node.hasAttribute()', () => {
+            assert.isFalse(ownerElement.node.hasAttribute(AttrAssembler.localName))
+        })
+    })
+    describe('remove()', () => {
+        const attr = new AttrAssembler
+        const fn = () => attr.remove()
+        it('throws TypeError', () => {
+            assert.throws(fn, TypeError)
+        })
+    })
     describe('class extends AttrAssembler', () => {
         class FooBar extends AttrAssembler {
             static get namespaceURI() {
