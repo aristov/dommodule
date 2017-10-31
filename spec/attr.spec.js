@@ -7,23 +7,28 @@ const serializer = new XMLSerializer
 
 describe('AttrAssembler', () => {
     describe('new AttrAssembler', () => {
+        const name = AttrAssembler.qualifiedName
         const test = new AttrAssembler
         const node = test.node
         it('node', () => {
             assert.instanceOf(node, Attr)
         })
         it('node.name', () => {
-            assert.equal(node.name, 'attr')
+            assert.equal(node.name, name)
         })
         it('node.value', () => {
             assert.equal(node.value, '')
         })
+        it('name', () => {
+            assert.equal(test.name, name)
+        })
     })
     describe('new AttrAssembler({ name })', () => {
-        const test = new AttrAssembler({ name : 'foobar' })
+        const name = 'foobar'
+        const test = new AttrAssembler({ name })
         const node = test.node
         it('node.name', () => {
-            assert.equal(node.name, 'foobar')
+            assert.equal(node.name, name)
         })
         it('node.value', () => {
             assert.equal(node.value, '')
