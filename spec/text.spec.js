@@ -1,15 +1,14 @@
 import chai from 'chai'
-import { Text, XMLSerializer, document } from '../lib/dom'
 import { TextAssembler, ElementAssembler } from '../lib'
 
 const { assert } = chai
-
+const { Text, XMLSerializer, document } = window
 const serializer = new XMLSerializer
 
 describe('TextAssembler', () => {
     describe('new TextAssembler', () => {
-        const text = new TextAssembler
-        const node = text.node
+        const test = new TextAssembler
+        const node = test.node
         it('node', () => {
             assert.instanceOf(node, Text)
         })
@@ -21,8 +20,8 @@ describe('TextAssembler', () => {
         })
     })
     describe('new TextAssembler({})', () => {
-        const text = new TextAssembler({})
-        const node = text.node
+        const test = new TextAssembler({})
+        const node = test.node
         it('node', () => {
             assert.instanceOf(node, Text)
         })
@@ -34,8 +33,8 @@ describe('TextAssembler', () => {
         })
     })
     describe('new TextAssembler(new String)', () => {
-        const text = new TextAssembler('foobar')
-        const node = text.node
+        const test = new TextAssembler('foobar')
+        const node = test.node
         it('node.data', () => {
             assert.equal(node.data, 'foobar')
         })
@@ -44,8 +43,8 @@ describe('TextAssembler', () => {
         })
     })
     describe('new TextAssembler({ data })', () => {
-        const text = new TextAssembler({ data : 'foobar' })
-        const node = text.node
+        const test = new TextAssembler({ data : 'foobar' })
+        const node = test.node
         it('node.data', () => {
             assert.equal(node.data, 'foobar')
         })
@@ -55,40 +54,40 @@ describe('TextAssembler', () => {
     })
     describe('new TextAssembler({ node })', () => {
         const node = document.createTextNode('foobar')
-        const text = new TextAssembler({ node })
+        const test = new TextAssembler({ node })
         it('nodes equal', () => {
-            assert.equal(text.node, node)
+            assert.equal(test.node, node)
         })
     })
     describe('data = new String', () => {
-        const text = new TextAssembler
-        const node = text.node
-        text.data = 'foobar'
+        const test = new TextAssembler
+        const node = test.node
+        test.data = 'foobar'
         it('node.data', () => {
             assert.equal(node.data, 'foobar')
         })
         it('data', () => {
-            assert.equal(text.data, 'foobar')
+            assert.equal(test.data, 'foobar')
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), 'foobar')
         })
     })
     describe('new TextAssembler({ data, parentNode })', () => {
-        const element = new ElementAssembler
-        const text = new TextAssembler({
+        const parent = new ElementAssembler
+        const test = new TextAssembler({
             data : 'foobar',
-            parentNode : element
+            parentNode : parent
         })
-        const node = text.node
+        const node = test.node
         it('node.parentNode', () => {
-            assert.equal(node.parentNode, element.node)
+            assert.equal(node.parentNode, parent.node)
         })
         it('parentNode', () => {
-            assert.equal(text.parentNode, element)
+            assert.equal(test.parentNode, parent)
         })
         it('serializeToString(element.node)', () => {
-            const xml = serializer.serializeToString(element.node)
+            const xml = serializer.serializeToString(parent.node)
             assert.equal(xml, '<element>foobar</element>')
         })
     })

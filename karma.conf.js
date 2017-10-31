@@ -7,7 +7,22 @@ const localBrowserSet = {
         base : 'Chrome',
         browserName : 'chrome',
         displayName : 'chrome'
-    }
+    },
+    firefox : {
+        base : 'Firefox',
+        browserName : 'firefox',
+        displayName : 'firefox'
+    },
+    safari : {
+        base : 'Safari',
+        browserName : 'safari',
+        displayName : 'safari'
+    },
+    opera : {
+        base : 'Opera',
+        browserName : 'opera',
+        displayName : 'opera'
+    },
 }
 
 const customLaunchers = localBrowserSet

@@ -1,5 +1,4 @@
 import chai from 'chai'
-import { Element, Text, XMLSerializer, document } from '../lib/dom'
 import {
     AttrAssembler,
     DocumentAssembler,
@@ -9,6 +8,7 @@ import {
 } from '../lib'
 
 const { assert } = chai
+const { Element, Text, XMLSerializer, document } = window
 const serializer = new XMLSerializer
 
 describe('ElementAssembler', () => {
@@ -384,7 +384,7 @@ describe('ElementAssembler', () => {
             assert.equal(serializer.serializeToString(node), '<element/>')
         })
     })
-    describe('removeAttributeNode(document.createAttribute())', () => {
+    describe('node.setAttributeNode(document.createAttribute()); removeAttributeNode()', () => {
         const test = new ElementAssembler()
         const node = test.node
         const attrNode = document.createAttribute('foobar')
@@ -447,9 +447,10 @@ describe('ElementAssembler', () => {
     describe('removeAttributeNode(new String)', () => {
         const test = new ElementAssembler()
         const node = test.node
-        const attrNode = document.createAttribute('foobar')
+        const name = 'foobar'
+        const attrNode = document.createAttribute(name)
         node.setAttributeNode(attrNode)
-        const removedAttr = test.removeAttributeNode('foobar')
+        const removedAttr = test.removeAttributeNode(name)
         it('nodes equal', () => {
             assert.equal(removedAttr.node, attrNode)
         })
@@ -460,10 +461,19 @@ describe('ElementAssembler', () => {
             assert.lengthOf(node.attributes, 0)
         })
         it('node.hasAttribute()', () => {
-            assert.isFalse(node.hasAttribute('attr'))
+            assert.isFalse(node.hasAttribute(name))
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '<element/>')
+        })
+    })
+    describe('document.createAttribute(); removeAttributeNode()', () => {
+        const test = new ElementAssembler()
+        const name = 'foobar'
+        const attrNode = document.createAttribute(name)
+        const fn = () => test.removeAttributeNode(attrNode)
+        it('throws', () => {
+            assert.throws(fn)
         })
     })
     describe('setAttribute(new String, new String)', () => {
