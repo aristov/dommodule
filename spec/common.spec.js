@@ -97,13 +97,13 @@ describe('Common', () => {
     })
     describe('ChildNodeAssembler.remove()', () => {
         let $element
-        const $root = element([
+        const test = element([
             text('foobar'),
             comment('example'),
             $element = element(),
             instruction('test')
         ])
-        const node = $root.node
+        const node = test.node
         $element.remove()
         it('node.childNodes.length', () => {
             assert.equal(node.childNodes.length, 3)
@@ -116,14 +116,14 @@ describe('Common', () => {
     })
     describe('element({ onclick })', () => {
         const onclick = sinon.spy()
-        const button = element({
+        const test = element({
             namespaceURI : 'http://www.w3.org/1999/xhtml',
             localName : 'button',
             onclick
         })
-        button.node.click()
+        test.node.click()
         it('node.onclick', () => {
-            assert.equal(button.node.onclick, onclick)
+            assert.equal(test.node.onclick, onclick)
         })
         it('onclick.calledOnce', () => {
             assert(onclick.calledOnce, 'onclick.calledOnce')
@@ -132,13 +132,13 @@ describe('Common', () => {
     describe('element({ foobar, undefined })', () => {
         const warn = console.warn
         const spy = console.warn = sinon.spy()
-        const $element = element({ foobar : 'test', undefined })
+        const test = element({ foobar : 'test', undefined })
         console.warn = warn
         it('node.foobar', () => {
-            assert.isUndefined($element.node.foobar)
+            assert.isUndefined(test.node.foobar)
         })
         it('node.undefined', () => {
-            assert.isUndefined($element.node.undefined)
+            assert.isUndefined(test.node.undefined)
         })
         it('console.warn.calledOnce', () => {
             assert(spy.calledOnce, 'spy.calledOnce')

@@ -7,8 +7,8 @@ const serializer = new XMLSerializer
 
 describe('CommentAssembler', () => {
     describe('new CommentAssembler', () => {
-        const comment = new CommentAssembler
-        const node = comment.node
+        const test = new CommentAssembler
+        const node = test.node
         it('node', () => {
             assert.instanceOf(node, Comment)
         })
@@ -20,8 +20,8 @@ describe('CommentAssembler', () => {
         })
     })
     describe('new CommentAssembler({})', () => {
-        const comment = new CommentAssembler({})
-        const node = comment.node
+        const test = new CommentAssembler({})
+        const node = test.node
         it('node', () => {
             assert.instanceOf(node, Comment)
         })
@@ -33,8 +33,8 @@ describe('CommentAssembler', () => {
         })
     })
     describe('new CommentAssembler(new String)', () => {
-        const comment = new CommentAssembler('foobar')
-        const node = comment.node
+        const test = new CommentAssembler('foobar')
+        const node = test.node
         it('node.data', () => {
             assert.equal(node.data, 'foobar')
         })
@@ -43,8 +43,8 @@ describe('CommentAssembler', () => {
         })
     })
     describe('new CommentAssembler({ data })', () => {
-        const comment = new CommentAssembler({ data : 'foobar' })
-        const node = comment.node
+        const test = new CommentAssembler({ data : 'foobar' })
+        const node = test.node
         it('node.data', () => {
             assert.equal(node.data, 'foobar')
         })
@@ -54,40 +54,40 @@ describe('CommentAssembler', () => {
     })
     describe('new CommentAssembler({ node })', () => {
         const node = document.createComment('foobar')
-        const comment = new CommentAssembler({ node })
+        const test = new CommentAssembler({ node })
         it('nodes equal', () => {
-            assert.equal(comment.node, node)
+            assert.equal(test.node, node)
         })
     })
     describe('data = new String', () => {
-        const comment = new CommentAssembler
-        const node = comment.node
-        comment.data = 'foobar'
+        const test = new CommentAssembler
+        const node = test.node
+        test.data = 'foobar'
         it('node.data', () => {
             assert.equal(node.data, 'foobar')
         })
         it('data', () => {
-            assert.equal(comment.data, 'foobar')
+            assert.equal(test.data, 'foobar')
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '<!--foobar-->')
         })
     })
     describe('new CommentAssembler({ data, parentNode })', () => {
-        const element = new ElementAssembler
-        const comment = new CommentAssembler({
+        const parent = new ElementAssembler
+        const test = new CommentAssembler({
             data : 'foobar',
-            parentNode : element
+            parentNode : parent
         })
-        const node = comment.node
+        const node = test.node
         it('node.parentNode', () => {
-            assert.equal(node.parentNode, element.node)
+            assert.equal(node.parentNode, parent.node)
         })
         it('parentNode', () => {
-            assert.equal(comment.parentNode, element)
+            assert.equal(test.parentNode, parent)
         })
         it('serializeToString(element.node)', () => {
-            const xml = serializer.serializeToString(element.node)
+            const xml = serializer.serializeToString(parent.node)
             assert.equal(xml, '<element><!--foobar--></element>')
         })
     })

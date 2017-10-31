@@ -8,8 +8,8 @@ const serializer = new XMLSerializer
 
 describe('DocumentTypeAssembler', () => {
     describe('new DocumentTypeAssembler', () => {
-        const $doctype = new DocumentTypeAssembler
-        const node = $doctype.node
+        const test = new DocumentTypeAssembler
+        const node = test.node
         const name = DocumentTypeAssembler.qualifiedName
         it('node', () => {
             assert.instanceOf(node, DocumentType)
@@ -22,8 +22,8 @@ describe('DocumentTypeAssembler', () => {
         })
     })
     describe('new DocumentTypeAssembler(new String)', () => {
-        const $doctype = new DocumentTypeAssembler('html')
-        const node = $doctype.node
+        const test = new DocumentTypeAssembler('html')
+        const node = test.node
         it('node.name', () => {
             assert.equal(node.name, 'html')
         })
@@ -32,12 +32,12 @@ describe('DocumentTypeAssembler', () => {
         })
     })
     describe('new DocumentTypeAssembler({ qualifiedName, publicId, systemId })', () => {
-        const $doctype = new DocumentTypeAssembler({
+        const test = new DocumentTypeAssembler({
             qualifiedName : 'html',
             publicId : '-//W3C//DTD XHTML 1.1//EN',
             systemId : 'http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd'
         })
-        const node = $doctype.node
+        const node = test.node
         it('node.name', () => {
             assert.equal(node.name, 'html')
         })
@@ -82,8 +82,8 @@ describe('DocumentTypeAssembler', () => {
     describe('doctype({ parentNode : implementation.createDocument() })', () => {
         const doctypeNode = implementation.createDocumentType('test', '', '')
         const doc = implementation.createDocument('', 'test', doctypeNode)
-        const $doctype = doctype({ parentNode : doc })
-        const node = $doctype.node
+        const test = doctype({ parentNode : doc })
+        const node = test.node
         it('parentNode', () => {
             assert.equal(node.parentNode, doc)
         })
@@ -95,9 +95,9 @@ describe('DocumentTypeAssembler', () => {
     })
     describe('class extends DocumentTypeAssembler', () => {
         class Foobar extends DocumentTypeAssembler {}
-        const $doctype = new Foobar
+        const test = new Foobar
         it('node.name', () => {
-            assert.equal($doctype.node.name, 'foobar')
+            assert.equal(test.node.name, 'foobar')
         })
     })
 })
