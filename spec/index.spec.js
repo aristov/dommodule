@@ -1,3 +1,4 @@
+import './instance.spec'
 import './common.spec'
 import './attr.spec'
 import './comment.spec'

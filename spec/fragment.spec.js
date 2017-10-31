@@ -1,5 +1,11 @@
 import chai from 'chai'
-import { DocumentFragmentAssembler } from '../lib'
+import {
+    CommentAssembler,
+    DocumentFragmentAssembler,
+    ElementAssembler,
+    ProcessingInstructionAssembler,
+    TextAssembler,
+} from '../lib'
 import {
     Comment,
     DocumentFragment,
@@ -16,8 +22,8 @@ const serializer = new XMLSerializer
 
 describe('DocumentFragmentAssembler', () => {
     describe('new DocumentFragmentAssembler', () => {
-        const fragment = new DocumentFragmentAssembler
-        const node = fragment.node
+        const test = new DocumentFragmentAssembler
+        const node = test.node
         it('node', () => {
             assert.instanceOf(node, DocumentFragment)
         })
@@ -30,20 +36,23 @@ describe('DocumentFragmentAssembler', () => {
     })
     describe('new DocumentFragmentAssembler({ node : document.createDocumentFragment() })', () => {
         const node = document.createDocumentFragment()
-        const fragment = new DocumentFragmentAssembler({ node })
+        const test = new DocumentFragmentAssembler({ node })
         it('node', () => {
-            assert.equal(fragment.node, node)
+            assert.equal(test.node, node)
         })
     })
     describe('new DocumentFragmentAssembler(new Array)', () => {
-        const element = document.createElementNS('', 'foo')
-        const fragment = new DocumentFragmentAssembler([
-            document.createComment('foobar'),
-            document.createElementNS('', 'bar'),
-            document.createProcessingInstruction('foo', 'bar'),
-            document.createTextNode('foobar'),
-        ])
-        const node = fragment.node
+        let element, test, node
+        beforeEach(() => {
+            element = document.createElementNS('', 'foo')
+            test = new DocumentFragmentAssembler([
+                document.createComment('foobar'),
+                document.createElementNS('', 'bar'),
+                document.createProcessingInstruction('foo', 'bar'),
+                document.createTextNode('foobar'),
+            ])
+            node = test.node
+        })
         it('node.hasChildNodes()', () => {
             assert(node.hasChildNodes(), 'node.hasChildNodes()')
         })
@@ -51,7 +60,22 @@ describe('DocumentFragmentAssembler', () => {
             assert.equal(node.childElementCount, 1)
         })
         it('node.childNodes.length', () => {
-            assert(node.childNodes.length, 4)
+            assert.equal(node.childNodes.length, 4)
+        })
+        it('childNodes.length', () => {
+            assert.equal(test.childNodes.length, 4)
+        })
+        it('childNodes[0]', () => {
+            assert.instanceOf(test.childNodes[0], CommentAssembler)
+        })
+        it('childNodes[1]', () => {
+            assert.instanceOf(test.childNodes[1], ElementAssembler)
+        })
+        it('childNodes[2]', () => {
+            assert.instanceOf(test.childNodes[2], ProcessingInstructionAssembler)
+        })
+        it('childNodes[3]', () => {
+            assert.instanceOf(test.childNodes[3], TextAssembler)
         })
         it('node.firstChild', () => {
             assert.instanceOf(node.firstChild, Comment)
@@ -66,7 +90,7 @@ describe('DocumentFragmentAssembler', () => {
             assert.instanceOf(node.childNodes[2], ProcessingInstruction)
         })
         it('parentNode = element; serializeToString(element)', () => {
-            fragment.parentNode = element
+            test.parentNode = element
             const xml = serializer.serializeToString(element)
             const sample = '<foo><!--foobar--><bar/><?foo bar?>foobar</foo>'
             assert.equal(xml, sample)
