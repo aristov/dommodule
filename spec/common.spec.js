@@ -58,8 +58,8 @@ describe('Common', () => {
             ])
         ])
         it('serializeToString(dom)', () => {
-            const sample = '<!DOCTYPE example><?xml-stylesheet href="./example.css"?><example role="application"><!--Version 1.0.0-->Hello world!</example>'
-            assert.equal(serializer.serializeToString($document.node), sample)
+            const sample = /^<\!DOCTYPE example>\n?<\?xml-stylesheet href="\.\/example\.css"\?>\n?<example role="application"><\!--Version 1\.0\.0-->Hello world\!<\/example>$/
+            assert.match(serializer.serializeToString($document.node), sample)
         })
         it('index', () => {
             assert.equal($document.index, -1)

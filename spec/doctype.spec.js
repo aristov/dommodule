@@ -55,27 +55,28 @@ describe('DocumentTypeAssembler', () => {
     })
     describe('new DocumentTypeAssembler({ node })', () => {
         const node = implementation.createDocumentType('html', '', '')
-        const $doctype = new DocumentTypeAssembler({ node })
+        const test = new DocumentTypeAssembler({ node })
         it('node', () => {
-            assert.equal($doctype.node, node)
+            assert.equal(test.node, node)
         })
     })
     describe('doctype({ qualifiedName, parentNode : new DocumentAssembler })', () => {
-        const $document = new DocumentAssembler
-        const $doctype = doctype({
+        const doc = new DocumentAssembler
+        const test = doctype({
             qualifiedName : DocumentAssembler.qualifiedName,
-            parentNode : $document
+            parentNode : doc
         })
-        const node = $doctype.node
+        const node = test.node
         it('node.parentNode', () => {
-            assert.equal(node.parentNode, $document.node)
+            assert.equal(node.parentNode, doc.node)
         })
         it('parentNode', () => {
-            assert.equal($doctype.parentNode, $document)
+            assert.equal(test.parentNode, doc)
         })
         it('serializeToString(document.node)', () => {
-            const xml = serializer.serializeToString($document.node)
-            assert.equal(xml, '<!DOCTYPE document><document/>')
+            const xml = serializer.serializeToString(doc.node)
+            const sample = /^<\!DOCTYPE document>\n?<document\/>$/
+            assert.match(xml, sample)
         })
     })
     describe('doctype({ parentNode : implementation.createDocument() })', () => {
@@ -88,7 +89,8 @@ describe('DocumentTypeAssembler', () => {
         })
         it('serializeToString(document.node)', () => {
             const xml = serializer.serializeToString(doc)
-            assert.equal(xml, '<!DOCTYPE document><test/>')
+            const sample = /^<\!DOCTYPE document>\n?<test\/>/
+            assert.match(xml, sample)
         })
     })
     describe('class extends DocumentTypeAssembler', () => {

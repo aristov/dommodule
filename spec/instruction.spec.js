@@ -19,7 +19,8 @@ describe('ProcessingInstructionAssembler', () => {
             assert.equal(node.data, ProcessingInstructionAssembler.data)
         })
         it('serializeToString(node)', () => {
-            assert.equal(serializer.serializeToString(node), '<?instruction ?>')
+            const sample = /^<\?instruction ?\?>$/
+            assert.match(serializer.serializeToString(node), sample)
         })
     })
     describe('new ProcessingInstructionAssembler(new String)', () => {
@@ -45,7 +46,8 @@ describe('ProcessingInstructionAssembler', () => {
             assert.equal(node.data, ProcessingInstructionAssembler.data)
         })
         it('serializeToString(node)', () => {
-            assert.equal(serializer.serializeToString(node), '<?foobar ?>')
+            const sample = /^<\?foobar ?\?>$/
+            assert.match(serializer.serializeToString(node), sample)
         })
     })
     describe('new ProcessingInstructionAssembler({ data })', () => {
