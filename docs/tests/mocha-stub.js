@@ -8,6 +8,11 @@ const sinon = { spy : () => {} }
 function describe(msg, fn) {}
 
 /**
+ * @param {Function} fn
+ */
+function beforeEach(fn) {}
+
+/**
  * @param {String} msg
  * @param {Function} fn
  */
