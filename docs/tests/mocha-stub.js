@@ -28,4 +28,5 @@ assert.isTrue = function () {}
 assert.lengthOf = function () {}
 assert.isNull = function () {}
 assert.isUndefined = function () {}
+assert.match = function () {}
 assert.throws = function () {}

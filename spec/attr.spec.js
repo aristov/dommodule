@@ -141,7 +141,10 @@ describe('AttrAssembler', () => {
         })
         it('serializeToString(element)', () => {
             const xml = serializer.serializeToString(elementNode)
-            assert.equal(xml, '<foobar xmlns:foo="http://example.com/ns" foo:bar="wiz"/>')
+            const sample = /^<foobar .+\/>$/
+            assert.match(xml, sample)
+            assert.match(xml, / xmlns\:foo="http\:\/\/example.com\/ns"/)
+            assert.match(xml, / foo\:bar="wiz"/)
         })
     })
     describe('ownerElement = null', () => {
