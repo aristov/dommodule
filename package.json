@@ -2,7 +2,7 @@
   "name": "dommodule",
   "version": "0.4.2",
   "description": "DOM assembler library",
-  "main": "dist/dist.dommodule.js",
+  "main": "lib",
   "scripts": {
     "test": "cross-env NODE_ENV=test nyc mocha",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
@@ -12,8 +12,7 @@
     "build": "webpack",
     "webpack": "webpack -w",
     "api": "esdoc",
-    "publish": "git push && git push --tags",
-    "postinstall": "webpack"
+    "publish": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
