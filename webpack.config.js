@@ -20,7 +20,7 @@ module.exports = [
         output : {
             path : distPath,
             filename : 'dist.dommodule.js',
-            libraryTarget : 'commonjs2'
+            libraryTarget : 'commonjs'
         },
         module : { loaders : [babelLoader] }
     },
