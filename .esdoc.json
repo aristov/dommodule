@@ -1,6 +1,6 @@
 {
   "source": "./lib",
   "destination": "./dist/api",
-  "excludes": ["config.js", "dom.js", "const.js"],
+  "excludes": ["const.js"],
   "plugins": [{"name": "esdoc-standard-plugin"}]
 }
