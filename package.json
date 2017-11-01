@@ -12,6 +12,7 @@
     "build": "webpack",
     "webpack": "webpack -w",
     "api": "esdoc",
+    "publish": "git push && git push --tags",
     "postinstall": "webpack"
   },
   "repository": {
