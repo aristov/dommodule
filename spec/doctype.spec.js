@@ -1,5 +1,10 @@
 import chai from 'chai'
-import { DocumentTypeAssembler, DocumentAssembler, doctype } from '../lib'
+import {
+    ElementAssembler,
+    DocumentAssembler,
+    DocumentTypeAssembler,
+    doctype
+} from '../lib'
 
 const { assert } = chai
 const { DocumentType, XMLSerializer, document } = window
@@ -94,8 +99,18 @@ describe('DocumentTypeAssembler', () => {
         })
     })
     describe('class extends DocumentTypeAssembler', () => {
-        class Foobar extends DocumentTypeAssembler {}
-        const test = new Foobar
+        class Foobar extends ElementAssembler {}
+        class FoobarDoc extends DocumentAssembler {
+            static get elementAssembler() {
+                return Foobar
+            }
+        }
+        class FoobarDoctype extends DocumentTypeAssembler {
+            static get documentAssembler() {
+                return FoobarDoc
+            }
+        }
+        const test = new FoobarDoctype
         it('node.name', () => {
             assert.equal(test.node.name, 'foobar')
         })
