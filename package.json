@@ -2,7 +2,13 @@
   "name": "dommodule",
   "version": "0.4.3",
   "description": "DOM assembler library",
+  "files": [
+    "lib"
+  ],
   "main": "lib",
+  "directories": {
+    "lib": "lib"
+  },
   "scripts": {
     "test": "cross-env NODE_ENV=test nyc mocha",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
