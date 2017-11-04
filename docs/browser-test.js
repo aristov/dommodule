@@ -17,8 +17,9 @@ new DocumentAssembler({
             element({
                 localName : 'example',
                 attributes : attr({
-                    name : 'role',
-                    value : 'application'
+                    namespace : 'http://www.w3.org/XML/1998/namespace',
+                    name : 'xml:lang',
+                    value : 'en'
                 }),
                 childNodes : [
                     comment(new Date + ' version 1.0.0'),
