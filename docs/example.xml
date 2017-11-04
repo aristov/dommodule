@@ -1,4 +1,4 @@
 <div xmlns="http://www.w3.org/1999/xhtml">
     <script src="../dist/window.dommodule.js"/>
-    <script src="browser-test.js"/>
+    <script src="example.js"/>
 </div>
