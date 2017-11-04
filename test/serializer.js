@@ -9,6 +9,7 @@ const PROCESSING_INSTRUCTION_NODE = 7
 const COMMENT_NODE = 8
 const DOCUMENT_NODE = 9
 const DOCUMENT_TYPE_NODE = 10
+const XML_NAMESPACE_URI = 'http://www.w3.org/XML/1998/namespace'
 
 class XMLSerializer {
     serializeToString(node) {
@@ -17,7 +18,8 @@ class XMLSerializer {
                 let xmlns = EMPTY_STRING
                 let attributes = EMPTY_STRING
                 let childNodes = '/'
-                if(node.namespaceURI) {
+                const { namespaceURI } = node
+                if(namespaceURI && namespaceURI !== XML_NAMESPACE_URI) {
                     xmlns += ' xmlns'
                     if(node.prefix) xmlns += ':' + node.prefix
                     xmlns += `="${ node.namespaceURI }"`
@@ -26,7 +28,7 @@ class XMLSerializer {
                     forEach.call(node.attributes, attr => {
                         const { namespaceURI, prefix, name, value } = attr
                         attributes += ` ${ name }="${ value }"`
-                        if(namespaceURI) {
+                        if(namespaceURI && namespaceURI !== XML_NAMESPACE_URI) {
                             xmlns += ' xmlns'
                             if(prefix) xmlns += ':' + prefix
                             xmlns += `="${ namespaceURI }"`
