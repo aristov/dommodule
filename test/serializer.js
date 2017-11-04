@@ -22,7 +22,7 @@ class XMLSerializer {
                 if(namespaceURI && namespaceURI !== XML_NAMESPACE_URI) {
                     xmlns += ' xmlns'
                     if(node.prefix) xmlns += ':' + node.prefix
-                    xmlns += `="${ node.namespaceURI }"`
+                    xmlns += `="${ namespaceURI }"`
                 }
                 if(node.hasAttributes()) {
                     forEach.call(node.attributes, attr => {
