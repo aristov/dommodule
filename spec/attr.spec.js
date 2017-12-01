@@ -198,9 +198,6 @@ describe('AttrAssembler', () => {
             static get prefix() {
                 return 'wiz'
             }
-            static get value() {
-                return 'qwerty'
-            }
         }
         const test = new FooBar
         const node = test.node
@@ -214,7 +211,7 @@ describe('AttrAssembler', () => {
             assert.equal(node.namespaceURI, 'http://example.com/ns')
         })
         it('node.value', () => {
-            assert.equal(node.value, 'qwerty')
+            assert.equal(node.value, '')
         })
     })
 })
