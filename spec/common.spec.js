@@ -87,6 +87,17 @@ describe('Common', () => {
         it('attr.ownerElement', () => {
             assert.equal($attr.ownerElement, $element)
         })
+        it('contains', () => {
+            assert($document.contains($doctype), 'doctype')
+            assert($document.contains($instruction.node), 'instruction')
+            assert($document.contains($element), 'element')
+            assert($document.contains($comment.node), 'comment')
+            assert($document.contains($text), 'text')
+            assert.isFalse($document.contains($fragment.node))
+            assert.isFalse($element.contains($instruction))
+            assert($element.contains($comment.node), 'element contains comment')
+            assert($element.contains($text), 'element contains text')
+        })
     })
     describe('ChildNodeAssembler.remove()', () => {
         const test = element()
@@ -152,6 +163,14 @@ describe('Common', () => {
         it('serializeToString(node)', () => {
             const xml = serializer.serializeToString(test.node)
             assert.equal(xml, '<element>foobar</element>')
+        })
+    })
+    describe('isEqualNode', () => {
+        const e1 = element()
+        const e2 = element()
+        it('isEqualNode', () => {
+            assert(e1.isEqualNode(e2), 'isEqualNode')
+            assert(e1.isEqualNode(e2.node), 'isEqualNode')
         })
     })
 })

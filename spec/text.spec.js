@@ -42,6 +42,17 @@ describe('TextAssembler', () => {
             assert.equal(serializer.serializeToString(node), 'foobar')
         })
     })
+    describe('new TextAssembler({ nodeValue })', () => {
+        const nodeValue = 'foobar'
+        const test = new TextAssembler({ nodeValue })
+        const node = test.node
+        it('nodeValue', () => {
+            assert.equal(test.nodeValue, nodeValue)
+        })
+        it('serializeToString(node)', () => {
+            assert.equal(serializer.serializeToString(node), 'foobar')
+        })
+    })
     describe('new TextAssembler({ data })', () => {
         const test = new TextAssembler({ data : 'foobar' })
         const node = test.node

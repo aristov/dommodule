@@ -8,7 +8,7 @@ import {
 } from '../lib'
 
 const { assert } = chai
-const { Element, Text, XMLSerializer, document } = window
+const { Element, Node, Text, XMLSerializer, document } = window
 const serializer = new XMLSerializer
 
 describe('ElementAssembler', () => {
@@ -18,14 +18,17 @@ describe('ElementAssembler', () => {
         it('node', () => {
             assert.instanceOf(node, Element)
         })
+        it('nodeType', () => {
+            assert.equal(test.nodeType, Node.ELEMENT_NODE)
+        })
         it('node.constructor', () => {
             assert.equal(node.constructor, Element)
         })
-        it('node.tagName', () => {
-            assert.equal(node.tagName, 'element')
+        it('tagName', () => {
+            assert.equal(test.tagName, 'element')
         })
-        it('node.hasAttributes()', () => {
-            assert.isFalse(node.hasAttributes())
+        it('hasAttributes()', () => {
+            assert.isFalse(test.hasAttributes())
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '<element/>')
@@ -34,11 +37,11 @@ describe('ElementAssembler', () => {
     describe('new ElementAssembler({ localName })', () => {
         const test = new ElementAssembler({ localName : 'foobar' })
         const node = test.node
-        it('node.localName', () => {
-            assert.equal(node.localName, 'foobar')
+        it('localName', () => {
+            assert.equal(test.localName, 'foobar')
         })
-        it('node.prefix', () => {
-            assert.isNull(node.prefix)
+        it('prefix', () => {
+            assert.isNull(test.prefix)
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '<foobar/>')
@@ -47,17 +50,17 @@ describe('ElementAssembler', () => {
     describe('new ElementAssembler({ qualifiedName })', () => {
         const test = new ElementAssembler({ qualifiedName : 'foobar' })
         const node = test.node
-        it('node.namespaceURI', () => {
-            assert.isNull(node.namespaceURI)
+        it('namespaceURI', () => {
+            assert.isNull(test.namespaceURI)
         })
-        it('node.prefix', () => {
-            assert.isNull(node.prefix)
+        it('prefix', () => {
+            assert.isNull(test.prefix)
         })
-        it('node.localName', () => {
-            assert.equal(node.localName, 'foobar')
+        it('localName', () => {
+            assert.equal(test.localName, 'foobar')
         })
-        it('node.tagName', () => {
-            assert.equal(node.tagName, 'foobar')
+        it('tagName', () => {
+            assert.equal(test.tagName, 'foobar')
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '<foobar/>')
@@ -70,20 +73,20 @@ describe('ElementAssembler', () => {
             localName : 'bar'
         })
         const node = test.node
-        it('node.namespaceURI', () => {
-            assert.equal(node.namespaceURI, 'http://example.com/namespace')
+        it('namespaceURI', () => {
+            assert.equal(test.namespaceURI, 'http://example.com/namespace')
         })
-        it('node.prefix', () => {
-            assert.equal(node.prefix, 'foo')
+        it('prefix', () => {
+            assert.equal(test.prefix, 'foo')
         })
-        it('node.localName', () => {
-            assert.equal(node.localName, 'bar')
+        it('localName', () => {
+            assert.equal(test.localName, 'bar')
         })
-        it('node.tagName', () => {
-            assert.equal(node.tagName, 'foo:bar')
+        it('tagName', () => {
+            assert.equal(test.tagName, 'foo:bar')
         })
-        it('node.hasAttributes()', () => {
-            assert.isFalse(node.hasAttributes())
+        it('hasAttributes()', () => {
+            assert.isFalse(test.hasAttributes())
         })
         it('serializeToString(node)', () => {
             const sample = '<foo:bar xmlns:foo="http://example.com/namespace"/>'
@@ -91,27 +94,37 @@ describe('ElementAssembler', () => {
         })
     })
     describe('new ElementAssembler({ namespace, qualifiedName })', () => {
+        const namespace = 'http://example.com/namespace'
         const test = new ElementAssembler({
-            namespace : 'http://example.com/namespace',
+            namespace,
             qualifiedName : 'foo:bar'
         })
         const node = test.node
-        it('node.namespaceURI', () => {
-            assert.equal(node.namespaceURI, 'http://example.com/namespace')
+        it('namespaceURI', () => {
+            assert.equal(test.namespaceURI, namespace)
         })
-        it('node.prefix', () => {
-            assert.equal(node.prefix, 'foo')
+        it('prefix', () => {
+            assert.equal(test.prefix, 'foo')
         })
-        it('node.localName', () => {
-            assert.equal(node.localName, 'bar')
+        it('localName', () => {
+            assert.equal(test.localName, 'bar')
         })
-        it('node.tagName', () => {
-            assert.equal(node.tagName, 'foo:bar')
+        it('tagName', () => {
+            assert.equal(test.tagName, 'foo:bar')
         })
-        it('node.hasAttributes()', () => {
-            assert.isFalse(node.hasAttributes())
+        it('hasAttributes()', () => {
+            assert.isFalse(test.hasAttributes())
         })
-        it('serializeToString(node)', () => {
+        it('lookupNamespaceURI()', () => {
+            assert.equal(test.lookupNamespaceURI('foo'), namespace)
+        })
+        it.skip('lookupPrefix()', () => { // todo jsdom
+            assert.equal(test.lookupPrefix(namespace), 'foo')
+        })
+        it.skip('isDefaultNamespace()', () => { // todo jsdom
+            assert.isFalse(test.isDefaultNamespace(namespace))
+        })
+        it.skip('serializeToString(node)', () => { // todo jsdom
             const sample = '<foo:bar xmlns:foo="http://example.com/namespace"/>'
             assert.equal(serializer.serializeToString(node), sample)
         })
@@ -123,14 +136,14 @@ describe('ElementAssembler', () => {
         it('node', () => {
             assert.equal(node, foobar)
         })
-        it('node.tagName', () => {
-            assert.equal(node.tagName, 'foobar')
+        it('tagName', () => {
+            assert.equal(test.tagName, 'foobar')
         })
-        it('node.hasAttributes()', () => {
-            assert.isFalse(node.hasAttributes())
+        it('hasAttributes()', () => {
+            assert.isFalse(test.hasAttributes())
         })
-        it('node.hasChildNodes()', () => {
-            assert.isFalse(node.hasChildNodes())
+        it('hasChildNodes()', () => {
+            assert.isFalse(test.hasChildNodes())
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '<foobar/>')
@@ -147,17 +160,17 @@ describe('ElementAssembler', () => {
         const child = new ElementAssembler
         const test = new ElementAssembler(child)
         const node = test.node
-        it('node.tagName', () => {
-            assert.equal(node.tagName, 'element')
+        it('tagName', () => {
+            assert.equal(test.tagName, 'element')
         })
-        it('node.hasChildNodes()', () => {
-            assert(node.hasChildNodes(), 'node.hasChildNodes()')
+        it('hasChildNodes()', () => {
+            assert(test.hasChildNodes(), 'hasChildNodes()')
         })
-        it('node.childNodes.length', () => {
-            assert.equal(node.childNodes.length, 1)
+        it('childNodes.length', () => {
+            assert.equal(test.childNodes.length, 1)
         })
-        it('node.firstChild', () => {
-            assert.equal(node.firstChild, child.node)
+        it('firstChild', () => {
+            assert.equal(test.firstChild, child)
         })
         it('serializeToString(node)', () => {
             const sample = '<element><element/></element>'
@@ -168,14 +181,14 @@ describe('ElementAssembler', () => {
         const childNode = document.createElementNS('', 'child')
         const test = new ElementAssembler(childNode)
         const node = test.node
-        it('node.tagName', () => {
-            assert.equal(node.tagName, 'element')
+        it('tagName', () => {
+            assert.equal(test.tagName, 'element')
         })
-        it('node.hasChildNodes()', () => {
-            assert(node.hasChildNodes(), 'node.hasChildNodes()')
+        it('hasChildNodes()', () => {
+            assert(test.hasChildNodes(), 'hasChildNodes()')
         })
-        it('node.childNodes.length', () => {
-            assert.equal(node.childNodes.length, 1)
+        it('childNodes.length', () => {
+            assert.equal(test.childNodes.length, 1)
         })
         it('node.firstChild', () => {
             assert.equal(node.firstChild, childNode)
@@ -190,20 +203,20 @@ describe('ElementAssembler', () => {
         const text = new TextAssembler(data)
         const test = new ElementAssembler(text)
         const node = test.node
-        it('node.tagName', () => {
-            assert.equal(node.tagName, 'element')
+        it('tagName', () => {
+            assert.equal(test.tagName, 'element')
         })
-        it('node.hasChildNodes()', () => {
-            assert(node.hasChildNodes(), 'node.hasChildNodes()')
+        it('hasChildNodes()', () => {
+            assert(test.hasChildNodes(), 'hasChildNodes()')
         })
-        it('node.childNodes.length', () => {
-            assert.equal(node.childNodes.length, 1)
+        it('childNodes.length', () => {
+            assert.lengthOf(test.childNodes, 1)
         })
-        it('node.firstChild', () => {
-            assert.equal(node.firstChild, text.node)
+        it('firstChild', () => {
+            assert.equal(test.firstChild, text)
         })
-        it('node.textContent', () => {
-            assert.equal(node.textContent, data)
+        it('textContent', () => {
+            assert.equal(test.textContent, data)
         })
         it('serializeToString(node)', () => {
             const sample = '<element>foobar</element>'
@@ -214,20 +227,20 @@ describe('ElementAssembler', () => {
         const textNode = document.createTextNode('foobar')
         const test = new ElementAssembler(textNode)
         const node = test.node
-        it('node.tagName', () => {
-            assert.equal(node.tagName, 'element')
+        it('tagName', () => {
+            assert.equal(test.tagName, 'element')
         })
-        it('node.hasChildNodes()', () => {
-            assert(node.hasChildNodes(), 'node.hasChildNodes()')
+        it('hasChildNodes()', () => {
+            assert(test.hasChildNodes(), 'hasChildNodes()')
         })
-        it('node.childNodes.length', () => {
-            assert.equal(node.childNodes.length, 1)
+        it('childNodes.length', () => {
+            assert.lengthOf(test.childNodes, 1)
         })
         it('node.firstChild', () => {
             assert.equal(node.firstChild, textNode)
         })
-        it('node.textContent', () => {
-            assert.equal(node.textContent, textNode.data)
+        it('textContent', () => {
+            assert.equal(test.textContent, textNode.data)
         })
         it('serializeToString(node)', () => {
             const sample = '<element>foobar</element>'
@@ -238,20 +251,20 @@ describe('ElementAssembler', () => {
         const textContent = 'foobar'
         const test = new ElementAssembler(textContent)
         const node = test.node
-        it('node.tagName', () => {
-            assert.equal(node.tagName, 'element')
+        it('tagName', () => {
+            assert.equal(test.tagName, 'element')
         })
-        it('node.hasChildNodes()', () => {
-            assert(node.hasChildNodes(), 'node.hasChildNodes()')
+        it('hasChildNodes()', () => {
+            assert(test.hasChildNodes(), 'hasChildNodes()')
         })
-        it('node.childNodes.length', () => {
-            assert.equal(node.childNodes.length, 1)
+        it('childNodes.length', () => {
+            assert.equal(test.childNodes.length, 1)
         })
         it('node.firstChild', () => {
             assert.instanceOf(node.firstChild, Text)
         })
-        it('node.textContent', () => {
-            assert.equal(node.textContent, textContent)
+        it('textContent', () => {
+            assert.equal(test.textContent, textContent)
         })
         it('serializeToString(node)', () => {
             const sample = '<element>foobar</element>'
@@ -263,13 +276,13 @@ describe('ElementAssembler', () => {
         const node = test.node
         node.setAttribute('foo', 'bar')
         const attr = test.getAttributeNode('foo')
-        it('instanceof AttrAssembler', () => {
+        it('attr instanceof AttrAssembler', () => {
             assert.instanceOf(attr, AttrAssembler)
         })
-        it('node.localName', () => {
+        it('attr.node.localName', () => {
             assert.equal(attr.node.localName, 'foo')
         })
-        it('node.value', () => {
+        it('attr.node.value', () => {
             assert.equal(attr.node.value, 'bar')
         })
     })
@@ -319,17 +332,17 @@ describe('ElementAssembler', () => {
         const attrNode = document.createAttribute('foo')
         attrNode.value = 'bar'
         test.setAttributeNode(attrNode)
-        it('node.hasAttributes()', () => {
-            assert(node.hasAttributes(), 'node.hasAttributes()')
+        it('hasAttributes()', () => {
+            assert(test.hasAttributes(), 'hasAttributes()')
         })
-        it('node.attributes.length', () => {
-            assert.lengthOf(node.attributes, 1)
+        it('attributes.length', () => {
+            assert.lengthOf(test.attributes, 1)
         })
-        it('node.hasAttribute()', () => {
-            assert(node.hasAttribute('foo'), 'node.hasAttribute()')
+        it('hasAttribute()', () => {
+            assert(test.hasAttribute('foo'), 'hasAttribute()')
         })
-        it('node.getAttribute()', () => {
-            assert.equal(node.getAttribute('foo'), 'bar')
+        it('getAttribute()', () => {
+            assert.equal(test.getAttribute('foo'), 'bar')
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '<element foo="bar"/>')
@@ -340,17 +353,17 @@ describe('ElementAssembler', () => {
         const node = test.node
         const attr = new AttrAssembler({ name : 'foo', value : 'bar' })
         test.setAttributeNode(attr)
-        it('node.hasAttributes()', () => {
-            assert(node.hasAttributes(), 'node.hasAttributes()')
+        it('hasAttributes()', () => {
+            assert(test.hasAttributes(), 'hasAttributes()')
         })
-        it('node.attributes.length', () => {
-            assert.lengthOf(node.attributes, 1)
+        it('attributes.length', () => {
+            assert.lengthOf(test.attributes, 1)
         })
-        it('node.hasAttribute()', () => {
-            assert(node.hasAttribute('foo'), 'node.hasAttribute()')
+        it('hasAttribute()', () => {
+            assert(test.hasAttribute('foo'), 'hasAttribute()')
         })
-        it('node.getAttribute()', () => {
-            assert.equal(node.getAttribute('foo'), 'bar')
+        it('getAttribute()', () => {
+            assert.equal(test.getAttribute('foo'), 'bar')
         })
         it('getAttributeNode()', () => {
             assert.equal(test.getAttributeNode('foo'), attr)
@@ -368,14 +381,14 @@ describe('ElementAssembler', () => {
         it('attrs equal', () => {
             assert.equal(removedAttr, attr)
         })
-        it('node.hasAttributes()', () => {
-            assert.isFalse(node.hasAttributes())
+        it('hasAttributes()', () => {
+            assert.isFalse(test.hasAttributes())
         })
-        it('node.attributes.length', () => {
-            assert.lengthOf(node.attributes, 0)
+        it('attributes.length', () => {
+            assert.lengthOf(test.attributes, 0)
         })
-        it('node.hasAttribute()', () => {
-            assert.isFalse(node.hasAttribute(AttrAssembler.localName))
+        it('hasAttribute()', () => {
+            assert.isFalse(test.hasAttribute(AttrAssembler.localName))
         })
         it('removeAttributeNode()', () => {
             assert.isNull(test.removeAttributeNode('example'))
@@ -393,14 +406,14 @@ describe('ElementAssembler', () => {
         it('nodes equal', () => {
             assert.equal(removedAttr.node, attrNode)
         })
-        it('node.hasAttributes()', () => {
-            assert.isFalse(node.hasAttributes())
+        it('hasAttributes()', () => {
+            assert.isFalse(test.hasAttributes())
         })
-        it('node.attributes.length', () => {
-            assert.lengthOf(node.attributes, 0)
+        it('attributes.length', () => {
+            assert.lengthOf(test.attributes, 0)
         })
-        it('node.hasAttribute()', () => {
-            assert.isFalse(node.hasAttribute('foobar'))
+        it('hasAttribute()', () => {
+            assert.isFalse(test.hasAttribute('foobar'))
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '<element/>')
@@ -415,11 +428,11 @@ describe('ElementAssembler', () => {
         it('nodes equal', () => {
             assert.equal(removedAttr.node, attrNode)
         })
-        it('node.hasAttributes()', () => {
-            assert.isFalse(node.hasAttributes())
+        it('hasAttributes()', () => {
+            assert.isFalse(test.hasAttributes())
         })
-        it('node.hasAttribute()', () => {
-            assert.isFalse(node.hasAttribute('attr'))
+        it('hasAttribute()', () => {
+            assert.isFalse(test.hasAttribute('attr'))
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '<element/>')
@@ -434,11 +447,11 @@ describe('ElementAssembler', () => {
         it('instanceof', () => {
             assert.instanceOf(removedAttr, Foo)
         })
-        it('node.hasAttributes()', () => {
-            assert.isFalse(node.hasAttributes())
+        it('hasAttributes()', () => {
+            assert.isFalse(test.hasAttributes())
         })
-        it('node.hasAttribute()', () => {
-            assert.isFalse(node.hasAttribute('foo'))
+        it('hasAttribute()', () => {
+            assert.isFalse(test.hasAttribute('foo'))
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '<element/>')
@@ -454,14 +467,14 @@ describe('ElementAssembler', () => {
         it('nodes equal', () => {
             assert.equal(removedAttr.node, attrNode)
         })
-        it('node.hasAttributes()', () => {
-            assert.isFalse(node.hasAttributes())
+        it('hasAttributes()', () => {
+            assert.isFalse(test.hasAttributes())
         })
-        it('node.attributes.length', () => {
-            assert.lengthOf(node.attributes, 0)
+        it('attributes.length', () => {
+            assert.lengthOf(test.attributes, 0)
         })
-        it('node.hasAttribute()', () => {
-            assert.isFalse(node.hasAttribute(name))
+        it('hasAttribute()', () => {
+            assert.isFalse(test.hasAttribute(name))
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '<element/>')
@@ -480,17 +493,17 @@ describe('ElementAssembler', () => {
         const test = new ElementAssembler
         const node = test.node
         test.setAttribute('foo', 'bar')
-        it('node.hasAttributes()', () => {
-            assert(node.hasAttributes(), 'node.hasAttributes()')
+        it('hasAttributes()', () => {
+            assert(test.hasAttributes(), 'hasAttributes()')
         })
-        it('node.attributes.length', () => {
-            assert.lengthOf(node.attributes, 1)
+        it('attributes.length', () => {
+            assert.lengthOf(test.attributes, 1)
         })
-        it('node.hasAttribute()', () => {
-            assert(node.hasAttribute('foo'), 'node.hasAttribute()')
+        it('hasAttribute()', () => {
+            assert(test.hasAttribute('foo'), 'hasAttribute()')
         })
-        it('node.value', () => {
-            assert.equal(node.getAttribute('foo'), 'bar')
+        it('getAttribute()', () => {
+            assert.equal(test.getAttribute('foo'), 'bar')
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '<element foo="bar"/>')
@@ -500,17 +513,17 @@ describe('ElementAssembler', () => {
         const test = new ElementAssembler
         const node = test.node
         test.setAttribute(AttrAssembler, 'foobar')
-        it('node.hasAttributes()', () => {
-            assert(node.hasAttributes(), 'node.hasAttributes()')
+        it('hasAttributes()', () => {
+            assert(test.hasAttributes(), 'hasAttributes()')
         })
-        it('node.attributes.length', () => {
-            assert.lengthOf(node.attributes, 1)
+        it('attributes.length', () => {
+            assert.lengthOf(test.attributes, 1)
         })
-        it('node.hasAttribute()', () => {
-            assert(node.hasAttribute(AttrAssembler.localName), 'node.hasAttribute()')
+        it('hasAttribute()', () => {
+            assert(test.hasAttribute(AttrAssembler.localName), 'hasAttribute()')
         })
-        it('node.getAttribute()', () => {
-            assert.equal(node.getAttribute(AttrAssembler.localName), 'foobar')
+        it('getAttribute()', () => {
+            assert.equal(test.getAttribute(AttrAssembler.localName), 'foobar')
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '<element attr="foobar"/>')
@@ -521,17 +534,17 @@ describe('ElementAssembler', () => {
         const node = test.node
         node.setAttribute('attr', 'test')
         test.setAttribute(AttrAssembler, 'foobar')
-        it('node.hasAttributes()', () => {
-            assert(node.hasAttributes(), 'node.hasAttributes()')
+        it('hasAttributes()', () => {
+            assert(test.hasAttributes(), 'hasAttributes()')
         })
-        it('node.attributes.length', () => {
-            assert.lengthOf(node.attributes, 1)
+        it('attributes.length', () => {
+            assert.lengthOf(test.attributes, 1)
         })
-        it('node.hasAttribute()', () => {
-            assert(node.hasAttribute(AttrAssembler.localName), 'node.hasAttribute()')
+        it('hasAttribute()', () => {
+            assert(test.hasAttribute(AttrAssembler.localName), 'hasAttribute()')
         })
-        it('node.getAttribute()', () => {
-            assert.equal(node.getAttribute(AttrAssembler.localName), 'foobar')
+        it('getAttribute()', () => {
+            assert.equal(test.getAttribute(AttrAssembler.localName), 'foobar')
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '<element attr="foobar"/>')
@@ -567,16 +580,16 @@ describe('ElementAssembler', () => {
         const test = new ElementAssembler({ attrset : { foo : 'bar' } })
         const node = test.node
         test.removeAttribute('foo')
-        it('node.hasAttribute()', () => {
-            assert.isFalse(node.hasAttribute('foo'))
+        it('hasAttribute()', () => {
+            assert.isFalse(test.hasAttribute('foo'))
         })
     })
     describe('removeAttribute(AttrAssembler)', () => {
         const test = new ElementAssembler({ attrset : { attr : 'foobar' } })
         const node = test.node
         test.removeAttribute(AttrAssembler)
-        it('node.hasAttribute()', () => {
-            assert.isFalse(node.hasAttribute('attr'))
+        it('hasAttribute()', () => {
+            assert.isFalse(test.hasAttribute('attr'))
         })
     })
     describe('removeAttribute(class extends AttrAssembler)', () => {
@@ -590,12 +603,12 @@ describe('ElementAssembler', () => {
         }
         const test = new ElementAssembler({ attributes : new Bar('test') })
         const node = test.node
-        it('node.hasAttributes()', () => {
-            assert(node.hasAttributes(), 'node.hasAttributes()')
+        it('hasAttributes()', () => {
+            assert(test.hasAttributes(), 'hasAttributes()')
         })
-        it('removeAttribute; node.hasAttributes()', () => {
+        it('removeAttribute; hasAttributes()', () => {
             test.removeAttribute(Bar)
-            assert.isFalse(node.hasAttributes())
+            assert.isFalse(test.hasAttributes())
         })
     })
     describe('on(new String, handler)', () => {
@@ -630,9 +643,22 @@ describe('ElementAssembler', () => {
         it('className', () => {
             assert.equal(test.className, 'foo bar')
         })
+        it('matches selector', () => {
+            assert(test.matches('.foo'), 'matches selector')
+        })
         it('serializeToString(node)', () => {
             const xml = serializer.serializeToString(test.node)
             assert.equal(xml, '<element class="foo bar"/>')
+        })
+    })
+    describe('className', () => {
+        const test = new ElementAssembler({ className : 'foo bar' })
+        test.className = ''
+        it('className', () => {
+            assert.equal(test.className, '')
+        })
+        it('hasAttribute()', () => {
+            assert.equal(test.hasAttribute('class'), false)
         })
     })
     describe('classList = new Array', () => {
@@ -706,16 +732,26 @@ describe('ElementAssembler', () => {
                 return 'foo'
             }
         }
-        const test = new Bar
-        it('node.namespaceURI', () => {
-            assert.equal(test.node.namespaceURI, 'http://example.com/ns')
+        const parent = element()
+        const test = new Bar({ parentNode : parent, className : 'wiz' })
+        it('namespaceURI', () => {
+            assert.equal(test.namespaceURI, 'http://example.com/ns')
         })
-        it('node.tagName', () => {
-            assert.equal(test.node.tagName, Bar.qualifiedName)
+        it('tagName', () => {
+            assert.equal(test.tagName, Bar.qualifiedName)
+        })
+        it('parent.getElementsByClassName', () => {
+            assert.equal(parent.getElementsByClassName('wiz')[0], test)
+        })
+        it('parent.getElementsByTagName', () => {
+            assert.equal(parent.getElementsByTagName(Bar)[0], test)
+        })
+        it('static selector', () => {
+            assert.equal(Bar.selector, 'bar')
         })
         it('serializeToString(node)', () => {
             const xml = serializer.serializeToString(test.node)
-            assert.equal(xml, '<foo:bar xmlns:foo="http://example.com/ns"/>')
+            assert.equal(xml, '<foo:bar xmlns:foo="http://example.com/ns" class="wiz"/>')
         })
     })
     describe('element(element(), null, element(), element())', () => {
@@ -727,6 +763,15 @@ describe('ElementAssembler', () => {
                 bar = element('bar'),
                 wiz = element('wiz')
             ])
+        })
+        it.skip('closest(new String)', () => { // todo jsdom
+            assert.equal(foo.closest('element'), foo)
+        })
+        it.skip('closest(ElementAssembler)', () => { // todo jsdom
+            assert.equal(foo.closest(ElementAssembler), foo)
+        })
+        it('childElementCount', () => {
+            assert.equal(test.childElementCount, 3)
         })
         it('firstElementChild', () => {
             assert.equal(test.firstElementChild, foo)
@@ -748,6 +793,29 @@ describe('ElementAssembler', () => {
             assert.isNull(foo.previousElementSibling)
             assert.equal(bar.previousElementSibling, foo)
             assert.equal(wiz.previousElementSibling, bar)
+        })
+        it('querySelector', () => {
+            assert.equal(test.querySelector('element'), foo)
+        })
+        it('querySelectorAll', () => {
+            const all = test.querySelectorAll('element')
+            assert.instanceOf(all, Array)
+            assert.equal(all[0], foo)
+            assert.equal(all[1], bar)
+            assert.equal(all[2], wiz)
+        })
+        it('getElementsByTagName(new String)', () => {
+            const all = test.getElementsByTagName('element')
+            assert.equal(all[0], foo)
+            assert.equal(all[1], bar)
+            assert.equal(all[2], wiz)
+        })
+        it('getElementsByTagName(ElementAssembler)', () => {
+            const all = test.getElementsByTagName(ElementAssembler)
+            // assert.equal(ElementAssembler.qualifiedName, 'element')
+            assert.equal(all[0], foo)
+            assert.equal(all[1], bar)
+            assert.equal(all[2], wiz)
         })
         it('serializeToString(node)', () => {
             const xml = serializer.serializeToString(test.node)
@@ -819,6 +887,12 @@ describe('ElementAssembler', () => {
         it('getAttribute()', () => {
             assert.equal(test.getAttribute('foo'), 'bar')
             assert.equal(test.getAttribute('wiz'), '')
+        })
+        it('getAttributeNames()', () => {
+            const names = test.getAttributeNames()
+            assert.lengthOf(names, 2)
+            assert.equal(names[0], 'foo')
+            assert.equal(names[1], 'wiz')
         })
         it('attributes', () => {
             assert.equal(attributes[0], foo)
@@ -921,6 +995,17 @@ describe('ElementAssembler', () => {
         })
         it('serializeToString(node)', () => {
             const sample = '<element><foo/><bar/><wiz/></element>'
+            assert.equal(serializer.serializeToString(test.node), sample)
+        })
+    })
+    describe('normalize', () => {
+        const test = element(['text1', 'text2'])
+        test.normalize()
+        it('childNodes.length', () => {
+            assert.lengthOf(test.childNodes, 1)
+        })
+        it('serializeToString(node)', () => {
+            const sample = '<element>text1text2</element>'
             assert.equal(serializer.serializeToString(test.node), sample)
         })
     })

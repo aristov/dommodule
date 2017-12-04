@@ -68,7 +68,10 @@ describe('DocumentAssembler', () => {
         let $doctype, $element
         const test = new DocumentAssembler({
             doctype : $doctype = doctype('example'),
-            documentElement : $element = element({ localName : 'example' })
+            documentElement : $element = element({
+                localName : 'example',
+                id : 'test'
+            })
         })
         it('doctype', () => {
             assert.equal(test.doctype, $doctype)
@@ -76,9 +79,15 @@ describe('DocumentAssembler', () => {
         it('documentElement', () => {
             assert.equal(test.documentElement, $element)
         })
+        it('getElementById', () => {
+            assert.equal(test.getElementById('test'), $element)
+        })
+        it('ownerDocument', () => {
+            assert.equal($element.ownerDocument, test)
+        })
         it('serializeToString(node)', () => {
             const xml = serializer.serializeToString(test.node)
-            const sample = /^<\!DOCTYPE example>\n?<example\/>$/
+            const sample = /^<\!DOCTYPE example>\n?<example id="test"\/>$/
             assert.match(xml, sample)
         })
     })
