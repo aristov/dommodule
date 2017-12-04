@@ -115,7 +115,7 @@ describe('ElementAssembler', () => {
         it('hasAttributes()', () => {
             assert.isFalse(test.hasAttributes())
         })
-        it('lookupNamespaceURI()', () => {
+        it.skip('lookupNamespaceURI()', () => {
             assert.equal(test.lookupNamespaceURI('foo'), namespace)
         })
         it.skip('lookupPrefix()', () => { // todo jsdom
@@ -124,7 +124,7 @@ describe('ElementAssembler', () => {
         it.skip('isDefaultNamespace()', () => { // todo jsdom
             assert.isFalse(test.isDefaultNamespace(namespace))
         })
-        it.skip('serializeToString(node)', () => { // todo jsdom
+        it('serializeToString(node)', () => { // todo jsdom
             const sample = '<foo:bar xmlns:foo="http://example.com/namespace"/>'
             assert.equal(serializer.serializeToString(node), sample)
         })
