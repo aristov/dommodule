@@ -50,7 +50,7 @@
     "instruction",
     "text"
   ],
-  "author": "Vyacheslav Aristov",
+  "author": "Vyacheslav Aristov <vv.aristov@gmail.ru> (http://twitter.com/aristov7)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/aristov/dommodule/issues"
