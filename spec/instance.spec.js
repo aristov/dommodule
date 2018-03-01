@@ -15,7 +15,7 @@ const { Node, document } = window
 const { implementation } = document
 const { assert } = chai
 
-describe('Node instance accessors', () => {
+describe.skip('Node instance accessors', () => {
     it('Node.prototype.hasOwnProperty()', () => {
         assert(Node.prototype.hasOwnProperty(INSTANCE_PROPERTY_NAME), 'Node.prototype.hasOwnProperty()')
     })
