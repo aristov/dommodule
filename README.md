@@ -19,12 +19,6 @@ The **dommodule** is a JavaScript library of DOM node assemblers.
 - [instruction](lib/instruction.js) — `ProcessingInstruction` node assembler (XML: `<?test example?>`)
 - [text](lib/text.js) — `Text` node assembler (XML: `test`)
 
-## Installation
-
-```
-npm install dommodule
-```
-
 ## Example
 
 ```js
@@ -62,6 +56,12 @@ This code generates a document with the following structure:
      <!--Version 1.0.0-->
      Hello world!
 </example>
+```
+
+## Installation
+
+```
+npm install dommodule
 ```
 
 ## Development
