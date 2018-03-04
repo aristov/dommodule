@@ -8,15 +8,15 @@
 
 _work in progress_
 
-The **dommodule** is a JavaScript library of DOM node assemblers.
+This JavaScript library provides a set of [DOM](https://www.w3.org/TR/dom) node assemblers for the following interfaces:
 
-- [attr](lib/attr.js) — `Attr` node assembler (XML: `test="example"`)
-- [comment](lib/comment.js) — `Comment` node assembler (XML: `<!--example-->`)
-- [document](lib/document.js) — `Document` node assembler
-- [doctype](lib/doctype.js) — `DocumentType` node assembler (XML: `<!DOCTYPE test>`)
-- [element](lib/element.js) — `Element` node assembler (XML: `<example/>`)
-- [fragment](lib/fragment.js) — `DocumentFragment` node assembler
-- [text](lib/text.js) — `Text` node assembler (XML: `test`)
+- [Attr](https://www.w3.org/TR/dom/#interface-attr)
+- [Comment](https://www.w3.org/TR/dom/#interface-comment)
+- [Document](https://www.w3.org/TR/dom/#interface-document)
+- [DocumentFragment](https://www.w3.org/TR/dom/#interface-documentfragment)
+- [DocumentType](https://www.w3.org/TR/dom/#interface-documenttype)
+- [Element](https://www.w3.org/TR/dom/#interface-element)
+- [Text](https://www.w3.org/TR/dom/#interface-text)
 
 ## Example
 
@@ -45,9 +45,7 @@ This code generates a document with the following structure:
 ```xml
 <!DOCTYPE example>
 <!--Version 1.0.0-->
-<example role="application">
-     Hello world!
-</example>
+<example role="application">Hello world!</example>
 ```
 
 ## Installation
