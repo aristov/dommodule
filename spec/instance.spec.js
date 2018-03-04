@@ -7,7 +7,7 @@ import {
     DocumentFragmentAssembler,
     DocumentTypeAssembler,
     ElementAssembler,
-    ProcessingInstructionAssembler,
+    // ProcessingInstructionAssembler,
     TextAssembler
 } from '../lib'
 
@@ -69,7 +69,7 @@ describe.skip('Node instance accessors', () => {
             assert.equal(instance.node, node)
         })
     })
-    describe('ProcessingInstructionAssembler', () => {
+    /*describe('ProcessingInstructionAssembler', () => {
         const node = document.createProcessingInstruction('foo', 'bar')
         const instance = node[INSTANCE_PROPERTY_NAME]
         it('instance', () => {
@@ -78,7 +78,7 @@ describe.skip('Node instance accessors', () => {
         it('instance.node', () => {
             assert.equal(instance.node, node)
         })
-    })
+    })*/
     describe('ElementAssembler', () => {
         const node = document.createElementNS('', 'foobar')
         const instance = node[INSTANCE_PROPERTY_NAME]

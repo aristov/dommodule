@@ -6,7 +6,7 @@ import {
     NodeAssembler,
     TargetAssembler,
     attr, comment, doctype, element,
-    fragment, instruction, text
+    fragment, text
 } from '../lib'
 
 const { assert } = chai
@@ -36,14 +36,10 @@ describe('Common', () => {
         })
     })
     describe('Example', () => {
-        let $attr, $doctype, $fragment, $instruction, $element, $comment, $text
+        let $attr, $doctype, $fragment, $element, $comment, $text
         const $document = new DocumentAssembler([
             $doctype = doctype('example'),
             $fragment = fragment([
-                $instruction = instruction({
-                    target : 'xml-stylesheet',
-                    attrset : { href : './example.css' }
-                }),
                 $element = element({
                     localName : 'example',
                     attributes : $attr = attr({
@@ -58,13 +54,13 @@ describe('Common', () => {
             ])
         ])
         it('serializeToString(dom)', () => {
-            const sample = /^<\!DOCTYPE example>\n?<\?xml-stylesheet href="\.\/example\.css"\?>\n?<example role="application"><\!--Version 1\.0\.0-->Hello world\!<\/example>$/
+            const sample = /^<\!DOCTYPE example>\n?<example role="application"><\!--Version 1\.0\.0-->Hello world\!<\/example>$/
             assert.match(serializer.serializeToString($document.node), sample)
         })
         it('index', () => {
             assert.equal($document.index, -1)
             assert.equal($document.firstChild.index, 0)
-            assert.equal($document.lastChild.index, 2)
+            assert.equal($document.lastChild.index, 1)
         })
         it('documentElement', () => {
             assert.equal($document.documentElement, $element)
@@ -76,7 +72,7 @@ describe('Common', () => {
             assert.equal($comment.nextSibling, $text)
         })
         it('previousSibling', () => {
-            assert.equal($element.previousSibling, $instruction)
+            assert.equal($element.previousSibling, $doctype)
         })
         it('fragment.parentNode', () => {
             assert.isNull($fragment.parentNode)
@@ -89,12 +85,10 @@ describe('Common', () => {
         })
         it('contains', () => {
             assert($document.contains($doctype), 'doctype')
-            assert($document.contains($instruction.node), 'instruction')
             assert($document.contains($element), 'element')
             assert($document.contains($comment.node), 'comment')
             assert($document.contains($text), 'text')
             assert.isFalse($document.contains($fragment.node))
-            assert.isFalse($element.contains($instruction))
             assert($element.contains($comment.node), 'element contains comment')
             assert($element.contains($text), 'element contains text')
         })
@@ -112,16 +106,15 @@ describe('Common', () => {
             text('foobar'),
             comment('example'),
             $element = element(),
-            instruction('test')
         ])
         const node = test.node
         $element.remove()
         it('node.childNodes.length', () => {
-            assert.equal(node.childNodes.length, 3)
+            assert.equal(node.childNodes.length, 2)
         })
         it('serializeToString(node)', () => {
             const xml = serializer.serializeToString(node)
-            const sample = '<element>foobar<!--example--><?instruction test?></element>'
+            const sample = '<element>foobar<!--example--></element>'
             assert.equal(xml, sample)
         })
     })

@@ -16,7 +16,6 @@ The **dommodule** is a JavaScript library of DOM node assemblers.
 - [doctype](lib/doctype.js) — `DocumentType` node assembler (XML: `<!DOCTYPE test>`)
 - [element](lib/element.js) — `Element` node assembler (XML: `<example/>`)
 - [fragment](lib/fragment.js) — `DocumentFragment` node assembler
-- [instruction](lib/instruction.js) — `ProcessingInstruction` node assembler (XML: `<?test example?>`)
 - [text](lib/text.js) — `Text` node assembler (XML: `test`)
 
 ## Example
@@ -25,23 +24,17 @@ The **dommodule** is a JavaScript library of DOM node assemblers.
 import {
     DocumentAssembler,
     attr, comment, doctype, element,
-    fragment, instruction, text
+    fragment, text
 } from 'dommodule'
 
 new DocumentAssembler([
     doctype('example'),
     fragment([
-        instruction({
-            target : 'xml-stylesheet',
-            attrset : { href : './example.css' },
-        }),
+        comment('Version 1.0.0'),
         element({
             localName : 'example',
             attributes : attr({ name : 'role', value : 'application' }),
-            childNodes : [
-                comment('Version 1.0.0'),
-                text('Hello world!')
-            ]
+            childNodes : text('Hello world!')
         })
     ])
 ])
@@ -51,9 +44,8 @@ This code generates a document with the following structure:
 
 ```xml
 <!DOCTYPE example>
-<?xml-stylesheet href="./example.css"?>
+<!--Version 1.0.0-->
 <example role="application">
-     <!--Version 1.0.0-->
      Hello world!
 </example>
 ```
