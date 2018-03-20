@@ -7,7 +7,7 @@ import {
 } from '../lib'
 
 const { assert } = chai
-const { DocumentType, XMLSerializer, document } = window
+const { Document, DocumentType, XMLSerializer, document } = window
 const { implementation } = document
 const serializer = new XMLSerializer
 
@@ -68,7 +68,7 @@ describe('DocumentTypeAssembler', () => {
     describe('doctype({ qualifiedName, parentNode : new DocumentAssembler })', () => {
         const doc = new DocumentAssembler
         const test = doctype({
-            qualifiedName : DocumentAssembler.qualifiedName,
+            qualifiedName : 'example',
             parentNode : doc
         })
         const node = test.node
@@ -80,7 +80,20 @@ describe('DocumentTypeAssembler', () => {
         })
         it('serializeToString(document.node)', () => {
             const xml = serializer.serializeToString(doc.node)
-            const sample = /^<\!DOCTYPE document>\n?<document\/>$/
+            const sample = /^<\!DOCTYPE example>$/
+            assert.match(xml, sample)
+        })
+    })
+    describe('doctype({ parentNode : new Document })', () => {
+        const doc = new Document
+        const test = doctype({ parentNode : doc })
+        const node = test.node
+        it('parentNode', () => {
+            assert.equal(node.parentNode, doc)
+        })
+        it('serializeToString(document.node)', () => {
+            const xml = serializer.serializeToString(doc)
+            const sample = /^<\!DOCTYPE element>/
             assert.match(xml, sample)
         })
     })
@@ -94,7 +107,7 @@ describe('DocumentTypeAssembler', () => {
         })
         it('serializeToString(document.node)', () => {
             const xml = serializer.serializeToString(doc)
-            const sample = /^<\!DOCTYPE document>\n?<test\/>/
+            const sample = /^<\!DOCTYPE element>\n?<test\/>/
             assert.match(xml, sample)
         })
     })

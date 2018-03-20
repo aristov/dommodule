@@ -2,15 +2,13 @@ import chai from 'chai'
 import {
     CommentAssembler,
     DocumentFragmentAssembler,
-    ElementAssembler,
-    ProcessingInstructionAssembler,
+    ElementAssembler, NodeAssembler,
     TextAssembler,
 } from '../lib'
 
 const { assert } = chai
 const {
-    Comment, DocumentFragment, Element,
-    ProcessingInstruction, Text,
+    Comment, DocumentFragment, Element, Text,
     XMLSerializer, document
 } = window
 const serializer = new XMLSerializer
@@ -43,7 +41,6 @@ describe('DocumentFragmentAssembler', () => {
             test = new DocumentFragmentAssembler([
                 document.createComment('foobar'),
                 document.createElementNS('', 'bar'),
-                document.createProcessingInstruction('foo', 'bar'),
                 document.createTextNode('foobar'),
             ])
             node = test.node
@@ -55,22 +52,22 @@ describe('DocumentFragmentAssembler', () => {
             assert.equal(node.childElementCount, 1)
         })
         it('node.childNodes.length', () => {
-            assert.equal(node.childNodes.length, 4)
+            assert.equal(node.childNodes.length, 3)
         })
         it('childNodes.length', () => {
-            assert.equal(test.childNodes.length, 4)
+            assert.equal(test.childNodes.length, 3)
         })
         it('childNodes[0]', () => {
-            assert.instanceOf(test.childNodes[0], CommentAssembler)
+            // assert.instanceOf(test.childNodes[0], CommentAssembler)
+            assert.instanceOf(test.childNodes[0], NodeAssembler)
         })
         it('childNodes[1]', () => {
-            assert.instanceOf(test.childNodes[1], ElementAssembler)
+            // assert.instanceOf(test.childNodes[1], ElementAssembler)
+            assert.instanceOf(test.childNodes[1], NodeAssembler)
         })
         it('childNodes[2]', () => {
-            assert.instanceOf(test.childNodes[2], ProcessingInstructionAssembler)
-        })
-        it('childNodes[3]', () => {
-            assert.instanceOf(test.childNodes[3], TextAssembler)
+            // assert.instanceOf(test.childNodes[2], TextAssembler)
+            assert.instanceOf(test.childNodes[2], NodeAssembler)
         })
         it('node.firstChild', () => {
             assert.instanceOf(node.firstChild, Comment)
@@ -82,12 +79,12 @@ describe('DocumentFragmentAssembler', () => {
             assert.instanceOf(node.firstElementChild, Element)
         })
         it('node.childNodes[2]', () => {
-            assert.instanceOf(node.childNodes[2], ProcessingInstruction)
+            assert.instanceOf(node.childNodes[2], Text)
         })
         it('parentNode = element; serializeToString(element)', () => {
             test.parentNode = element
             const xml = serializer.serializeToString(element)
-            const sample = '<foo><!--foobar--><bar/><?foo bar?>foobar</foo>'
+            const sample = '<foo><!--foobar--><bar/>foobar</foo>'
             assert.equal(xml, sample)
             assert.isFalse(node.hasChildNodes())
             assert.equal(node.childElementCount, 0)

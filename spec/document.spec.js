@@ -10,22 +10,14 @@ describe('DocumentAssembler', () => {
     describe('new DocumentAssembler', () => {
         const test = new DocumentAssembler
         const node = test.node
-        const elemNode = node.documentElement
-        const name = DocumentAssembler.qualifiedName
         it('node', () => {
             assert.instanceOf(node, Document)
         })
         it('node.documentElement', () => {
-            assert.instanceOf(node.documentElement, Element)
+            assert.isNull(node.documentElement)
         })
         it('documentElement', () => {
-            assert.instanceOf(test.documentElement, ElementAssembler)
-        })
-        it('elemNode.namespaceURI', () => {
-            assert.isNull(elemNode.namespaceURI)
-        })
-        it('elemNode.tagName', () => {
-            assert.equal(elemNode.tagName, name)
+            assert.isNull(test.documentElement)
         })
         it('node.doctype', () => {
             assert.isNull(node.doctype)
@@ -34,34 +26,7 @@ describe('DocumentAssembler', () => {
             assert.isNull(test.doctype)
         })
         it('serializeToString(node)', () => {
-            assert.equal(serializer.serializeToString(node), '<document/>')
-        })
-    })
-    describe('new DocumentAssembler({ namespace, qualifiedName })', () => {
-        const test = new DocumentAssembler({
-            namespace : 'http://www.w3.org/2000/svg',
-            qualifiedName : 'svg:svg'
-        })
-        const node = test.node
-        const elemNode = node.documentElement
-        it('node', () => {
-            assert.instanceOf(node, Document)
-        })
-        it('node.documentElement', () => {
-            assert.instanceOf(node.documentElement, Element)
-        })
-        it('elemNode.namespaceURI', () => {
-            assert.equal(elemNode.namespaceURI, 'http://www.w3.org/2000/svg')
-        })
-        it('elemNode.tagName', () => {
-            assert.equal(elemNode.tagName, 'svg:svg')
-        })
-        it('node.doctype', () => {
-            assert.isNull(node.doctype)
-        })
-        it('serializeToString(node)', () => {
-            const sample = '<svg:svg xmlns:svg="http://www.w3.org/2000/svg"/>'
-            assert.equal(serializer.serializeToString(node), sample)
+            assert.equal(serializer.serializeToString(node), '')
         })
     })
     describe('new DocumentAssembler({ doctype, documentElement })', () => {
@@ -210,14 +175,8 @@ describe('DocumentAssembler', () => {
         })
         it('serializeToString(node)', () => {
             const xml = serializer.serializeToString(test.node)
-            const sample = '<document>foobar</document>'
+            const sample = '<element>foobar</element>'
             assert.equal(xml, sample)
-        })
-    })
-    describe('class extends DocumentAssembler', () => {
-        class FooBar extends DocumentAssembler {}
-        it('qualifiedName', () => {
-            assert.equal(FooBar.qualifiedName, ElementAssembler.qualifiedName)
         })
     })
 })

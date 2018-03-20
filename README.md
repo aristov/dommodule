@@ -8,22 +8,15 @@
 
 _work in progress_
 
-The **dommodule** is a JavaScript library of DOM node assemblers.
+This JavaScript library provides a set of [DOM](https://www.w3.org/TR/dom) node assemblers for the following interfaces:
 
-- [attr](lib/attr.js) — `Attr` node assembler (XML: `test="example"`)
-- [comment](lib/comment.js) — `Comment` node assembler (XML: `<!--example-->`)
-- [document](lib/document.js) — `Document` node assembler
-- [doctype](lib/doctype.js) — `DocumentType` node assembler (XML: `<!DOCTYPE test>`)
-- [element](lib/element.js) — `Element` node assembler (XML: `<example/>`)
-- [fragment](lib/fragment.js) — `DocumentFragment` node assembler
-- [instruction](lib/instruction.js) — `ProcessingInstruction` node assembler (XML: `<?test example?>`)
-- [text](lib/text.js) — `Text` node assembler (XML: `test`)
-
-## Installation
-
-```
-npm install dommodule
-```
+- [Attr](https://www.w3.org/TR/dom/#interface-attr)
+- [Comment](https://www.w3.org/TR/dom/#interface-comment)
+- [Document](https://www.w3.org/TR/dom/#interface-document)
+- [DocumentFragment](https://www.w3.org/TR/dom/#interface-documentfragment)
+- [DocumentType](https://www.w3.org/TR/dom/#interface-documenttype)
+- [Element](https://www.w3.org/TR/dom/#interface-element)
+- [Text](https://www.w3.org/TR/dom/#interface-text)
 
 ## Example
 
@@ -31,23 +24,17 @@ npm install dommodule
 import {
     DocumentAssembler,
     attr, comment, doctype, element,
-    fragment, instruction, text
+    fragment, text
 } from 'dommodule'
 
 new DocumentAssembler([
     doctype('example'),
     fragment([
-        instruction({
-            target : 'xml-stylesheet',
-            attrset : { href : './example.css' },
-        }),
+        comment('Version 1.0.0'),
         element({
             localName : 'example',
             attributes : attr({ name : 'role', value : 'application' }),
-            childNodes : [
-                comment('Version 1.0.0'),
-                text('Hello world!')
-            ]
+            childNodes : text('Hello world!')
         })
     ])
 ])
@@ -57,11 +44,14 @@ This code generates a document with the following structure:
 
 ```xml
 <!DOCTYPE example>
-<?xml-stylesheet href="./example.css"?>
-<example role="application">
-     <!--Version 1.0.0-->
-     Hello world!
-</example>
+<!--Version 1.0.0-->
+<example role="application">Hello world!</example>
+```
+
+## Installation
+
+```
+npm install dommodule
 ```
 
 ## Development

@@ -1,7 +1,7 @@
 import chai from 'chai'
 import {
     // ElementAssembler, TextAssembler,
-    comment, element, instruction, text
+    comment, element, text
 } from '../lib'
 
 const { assert } = chai
@@ -95,16 +95,15 @@ describe('ChildNodeAssembler', () => {
             text('foobar'),
             comment('example'),
             $element = element(),
-            instruction('test')
         ])
         const node = test.node
         $element.remove()
         it('node.childNodes.length', () => {
-            assert.equal(node.childNodes.length, 3)
+            assert.equal(node.childNodes.length, 2)
         })
         it('serializeToString(node)', () => {
             const xml = serializer.serializeToString(node)
-            const sample = '<element>foobar<!--example--><?instruction test?></element>'
+            const sample = '<element>foobar<!--example--></element>'
             assert.equal(xml, sample)
         })
     })

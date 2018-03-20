@@ -1,7 +1,7 @@
 const {
     DocumentAssembler,
-    attr, comment, doctype, element,
-    fragment, instruction, text
+    attr, comment, doctype,
+    element, fragment, text
 } = dommodule
 
 new DocumentAssembler({
@@ -10,10 +10,7 @@ new DocumentAssembler({
     childNodes : [
         doctype('example'),
         fragment([
-            instruction({
-                target : 'xml-stylesheet',
-                attrset : { href : './example.css' }
-            }),
+            comment(new Date + ' version 1.0.0'),
             element({
                 localName : 'example',
                 attributes : attr({
@@ -21,10 +18,7 @@ new DocumentAssembler({
                     name : 'xml:lang',
                     value : 'en'
                 }),
-                childNodes : [
-                    comment(new Date + ' version 1.0.0'),
-                    text('Hello world!')
-                ]
+                childNodes : text('Hello world!')
             })
         ])
     ]
