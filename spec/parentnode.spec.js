@@ -21,8 +21,8 @@ describe('ParentNodeAssembler', () => {
             assert.equal(test.lastChild, child)
         })
         it('serializeToString(node)', () => {
-            const sample = '<element><element class="new"/><element class="old"/></element>'
-            assert.equal(serializer.serializeToString(test.node), sample)
+            const sample = /^<element><element class="new"\s?\/><element class="old"\s?\/><\/element>$/
+            assert.match(serializer.serializeToString(test.node), sample)
         })
     })
     describe('insertBefore(node, instance)', () => {
@@ -40,8 +40,8 @@ describe('ParentNodeAssembler', () => {
             assert.equal(test.lastChild, child)
         })
         it('serializeToString(node)', () => {
-            const sample = '<element><element class="new"/><element class="old"/></element>'
-            assert.equal(serializer.serializeToString(test.node), sample)
+            const sample = /^<element><element class="new"\s?\/><element class="old"\s?\/><\/element>$/
+            assert.match(serializer.serializeToString(test.node), sample)
         })
     })
     describe('replaceChild(instance, node)', () => {
@@ -59,8 +59,8 @@ describe('ParentNodeAssembler', () => {
             assert.isFalse(test.contains(child))
         })
         it('serializeToString(node)', () => {
-            const sample = '<element><element class="new"/></element>'
-            assert.equal(serializer.serializeToString(test.node), sample)
+            const sample = /^<element><element class="new"\s?\/><\/element>$/
+            assert.match(serializer.serializeToString(test.node), sample)
         })
     })
     describe('replaceChild(node, instance)', () => {
@@ -78,8 +78,8 @@ describe('ParentNodeAssembler', () => {
             assert.isFalse(test.contains(child))
         })
         it('serializeToString(node)', () => {
-            const sample = '<element><element class="new"/></element>'
-            assert.equal(serializer.serializeToString(test.node), sample)
+            const sample = /^<element><element class="new"\s?\/><\/element>$/
+            assert.match(serializer.serializeToString(test.node), sample)
         })
     })
     /*describe('prepend', () => { // todo jsdom

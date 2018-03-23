@@ -107,7 +107,7 @@ describe('AttrAssembler', () => {
         })
         it('serializeToString(element.node)', () => {
             const xml = serializer.serializeToString(ownerElement.node)
-            assert.equal(xml, '<element attr="foobar"/>')
+            assert.match(xml, /^<element attr="foobar"\s?\/>$/)
         })
     })
     describe('ownerElement = document.createElementNS()', () => {
@@ -125,7 +125,7 @@ describe('AttrAssembler', () => {
         })
         it('serializeToString(element)', () => {
             const xml = serializer.serializeToString(elementNode)
-            assert.equal(xml, '<foobar foo="bar"/>')
+            assert.match(xml, /^<foobar foo="bar"\s?\/>$/)
         })
     })
     describe('namespace, ownerElement = document.createElementNS()', () => {
@@ -167,7 +167,7 @@ describe('AttrAssembler', () => {
         })
         it('serializeToString(ownerElement.node)', () => {
             const xml = serializer.serializeToString(test.ownerElement.node)
-            assert.equal(xml, '<test foo="bar"/>')
+            assert.match(xml, /^<test foo="bar"\s?\/>$/)
         })
     })
 
@@ -184,7 +184,7 @@ describe('AttrAssembler', () => {
         })
         it('serializeToString(element.node)', () => {
             const xml = serializer.serializeToString(ownerElement.node)
-            assert.equal(xml, '<element/>')
+            assert.match(xml, /^<element\s?\/>$/)
         })
     })
     describe('ownerElement = true', () => {
