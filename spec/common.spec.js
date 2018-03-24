@@ -15,9 +15,9 @@ const serializer = new XMLSerializer
 
 describe('Common', () => {
     describe('new TargetAssembler', () => {
-        const fn = () => new TargetAssembler
-        it('throws', () => {
-            assert.throws(fn, Error)
+        const assembler = new TargetAssembler
+        it('_target', () => {
+            assert.instanceOf(assembler._target, TargetAssembler.interface)
         })
     })
     describe('NodeAssembler', () => {
