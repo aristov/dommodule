@@ -25,9 +25,7 @@
     "url": "git+https://github.com/aristov/dommodule.git"
   },
   "keywords": [
-    "JavaScript",
     "DOM",
-    "Assembler",
     "Attr",
     "CharacterData",
     "ChildNode",
@@ -39,7 +37,7 @@
     "EventTarget",
     "Node",
     "ParentNode",
-    "ProcessingInstruction",
+    "TargetAssembler",
     "Text",
     "attr",
     "comment",
@@ -47,7 +45,6 @@
     "doctype",
     "fragment",
     "element",
-    "instruction",
     "text"
   ],
   "author": "Vyacheslav Aristov <vv.aristov@gmail.ru> (http://twitter.com/aristov7)",
