@@ -16,7 +16,7 @@
     "karma": "karma start",
     "test-full": "npm run karma && npm test",
     "build": "webpack",
-    "webpack": "webpack -w",
+    "watch": "webpack -w",
     "api": "esdoc",
     "publish": "git push && git push --tags"
   },

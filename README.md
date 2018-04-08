@@ -60,7 +60,7 @@ npm install dommodule
 git clone git@github.com:aristov/dommodule.git
 cd dommodule
 npm install
-npm run webpack
+npm run watch
 ```
 
 ## License
