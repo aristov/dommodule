@@ -4,7 +4,6 @@ import {
     EventTargetAssembler,
     DocumentAssembler,
     NodeAssembler,
-    TargetAssembler,
     attr, comment, doctype, element,
     fragment, text
 } from '../lib'
@@ -14,12 +13,12 @@ const { CharacterData, EventTarget, Node, XMLSerializer } = window
 const serializer = new XMLSerializer
 
 describe('Common', () => {
-    describe('new TargetAssembler', () => {
-        const assembler = new TargetAssembler
+    /*describe('new Assembler', () => {
+        const assembler = new Assembler
         it('_target', () => {
-            assert.instanceOf(assembler._target, TargetAssembler.interface)
+            assert.instanceOf(assembler._target, Assembler.interface)
         })
-    })
+    })*/
     describe('NodeAssembler', () => {
         it('static interface', () => {
             assert.equal(NodeAssembler.interface, Node)
@@ -133,7 +132,7 @@ describe('Common', () => {
             assert(onclick.calledOnce, 'onclick.calledOnce')
         })
     })
-    describe('element({ foobar, undefined })', () => {
+    /*describe('element({ foobar, undefined })', () => {
         const warn = console.warn
         const spy = console.warn = sinon.spy()
         const test = element({ foobar : 'test', undefined })
@@ -147,7 +146,7 @@ describe('Common', () => {
         it('console.warn.calledOnce', () => {
             assert(spy.calledOnce, 'spy.calledOnce')
         })
-    })
+    })*/
     describe('element({ textContent })', () => {
         const test = element({ textContent : 'foobar' })
         it('parent.textContent', () => {
