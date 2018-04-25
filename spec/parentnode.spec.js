@@ -8,7 +8,7 @@ import {
 } from '../lib'
 
 const { assert } = chai
-const { XMLSerializer } = window
+const { XMLSerializer, document } = window
 const serializer = new XMLSerializer
 
 describe('ParentNodeAssembler', () => {
@@ -165,7 +165,7 @@ describe('ParentNodeAssembler', () => {
             assert.equal(result[1], e3)
         })
     })
-    /*describe('prepend', () => { // todo jsdom
+    describe('prepend', () => {
         const textNode = document.createTextNode('bar')
         const test = element(textNode)
         const textInstance = new TextAssembler('foo')
@@ -187,5 +187,5 @@ describe('ParentNodeAssembler', () => {
             const sample = '<element>foo<element/>bar</element>'
             assert.equal(serializer.serializeToString(test.node), sample)
         })
-    })*/
+    })
 })
