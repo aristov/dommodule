@@ -1,6 +1,6 @@
 import chai from 'chai'
 import {
-    // ElementAssembler, TextAssembler,
+    ElementAssembler, TextAssembler,
     comment, element, text
 } from '../lib'
 
@@ -26,7 +26,7 @@ describe('ChildNodeAssembler', () => {
             assert.equal(parentElement.firstChild, test)
         })
     })
-    /*describe('after', () => { // todo jsdom
+    describe('after', () => {
         const ctx = element()
         const test = element(ctx)
         const foo = text('foo')
@@ -49,7 +49,7 @@ describe('ChildNodeAssembler', () => {
             assert.equal(child.data, 'foo')
         })
     })
-    describe('before', () => { // todo jsdom
+    describe('before', () => {
         const ctx = element()
         const test = element(ctx)
         const foo = text('foo')
@@ -71,7 +71,7 @@ describe('ChildNodeAssembler', () => {
             assert.equal(test.childNodes[1].data, 'bar')
         })
     })
-    describe('replaceWith', () => { // todo jsdom
+    describe('replaceWith', () => {
         const ctx = element()
         const test = element(ctx)
         const foo = text('foo')
@@ -88,7 +88,7 @@ describe('ChildNodeAssembler', () => {
         it('contains inseted text', () => {
             assert(test.contains(foo), 'contains inseted text')
         })
-    })*/
+    })
     describe('remove()', () => {
         let $element
         const test = element([

@@ -67,7 +67,7 @@
     "cross-env": "^5.1.0",
     "esdoc": "^1.0.3",
     "esdoc-standard-plugin": "^1.0.0",
-    "jsdom": "^11.3.0",
+    "jsdom": "^11.9.0",
     "karma": "^2.0.0",
     "karma-chrome-launcher": "^2.2.0",
     "karma-coverage": "^1.1.1",

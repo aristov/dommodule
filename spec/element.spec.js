@@ -764,10 +764,10 @@ describe('ElementAssembler', () => {
                 wiz = element('wiz')
             ])
         })
-        it.skip('closest(new String)', () => { // todo jsdom
+        it('closest(new String)', () => {
             assert.equal(foo.closest('element'), foo)
         })
-        it.skip('closest(ElementAssembler)', () => { // todo jsdom
+        it('closest(ElementAssembler)', () => {
             assert.equal(foo.closest(ElementAssembler), foo)
         })
         it('childElementCount', () => {
