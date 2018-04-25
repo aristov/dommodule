@@ -88,7 +88,7 @@ describe('ParentNodeAssembler', () => {
             assert.match(serializer.serializeToString(test.node), sample)
         })
     })
-    describe.skip('find, findAll', () => {
+    describe('find, findAll', () => {
         let test, e1, e2, e3, a1, a2, a3, t1, t2, t3, c1, c2, c3
         beforeEach(() => {
             test = new ElementAssembler([
@@ -122,11 +122,11 @@ describe('ParentNodeAssembler', () => {
         it('find(AttrAssembler)', () => {
             assert.equal(test.find(AttrAssembler), a1)
         })
-        it('find(TextAssembler)', () => {
-            assert.equal(test.find(TextAssembler), t1)
+        it('find(ElementAssembler, new String)', () => {
+            assert.equal(test.find(ElementAssembler, '[attr=a2]'), e2)
         })
-        it('find(CommentAssembler)', () => {
-            assert.equal(test.find(CommentAssembler), c1)
+        it('find(ElementAssembler, new Function)', () => {
+            assert.equal(test.find(ElementAssembler, ({ attributes }) => attributes.includes(a3)), e3)
         })
         it('findAll(new String)', () => {
             const result = test.findAll('element')
@@ -149,19 +149,20 @@ describe('ParentNodeAssembler', () => {
             assert.equal(result[1], a2)
             assert.equal(result[2], a3)
         })
-        it('findAll(TextAssembler)', () => {
-            const result = test.findAll(TextAssembler)
+        it('findAll(ElementAssembler, new String)', () => {
+            const result = test.findAll(ElementAssembler, '[attr]')
             assert.lengthOf(result, 3)
-            assert.equal(result[0], t1)
-            assert.equal(result[1], t2)
-            assert.equal(result[2], t3)
+            assert.equal(result[0], e1)
+            assert.equal(result[1], e2)
+            assert.equal(result[2], e3)
         })
-        it('findAll(CommentAssembler)', () => {
-            const result = test.findAll(CommentAssembler)
-            assert.lengthOf(result, 3)
-            assert.equal(result[0], c1)
-            assert.equal(result[1], c2)
-            assert.equal(result[2], c3)
+        it('findAll(ElementAssembler, new Function)', () => {
+            const result = test.findAll(ElementAssembler, ({ attributes }) => {
+                return attributes.includes(a2) || attributes.includes(a3)
+            })
+            assert.lengthOf(result, 2)
+            assert.equal(result[0], e2)
+            assert.equal(result[1], e3)
         })
     })
     /*describe('prepend', () => { // todo jsdom
