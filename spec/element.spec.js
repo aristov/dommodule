@@ -373,7 +373,7 @@ describe('ElementAssembler', () => {
         })
     })
     describe('removeAttributeNode(new AttrAssembler)', () => {
-        const test = new ElementAssembler()
+        const test = new ElementAssembler
         const node = test.node
         const attr = new AttrAssembler('foobar')
         test.setAttributeNode(attr)
@@ -398,7 +398,7 @@ describe('ElementAssembler', () => {
         })
     })
     describe('node.setAttributeNode(document.createAttribute()); removeAttributeNode()', () => {
-        const test = new ElementAssembler()
+        const test = new ElementAssembler
         const node = test.node
         const attrNode = document.createAttribute('foobar')
         node.setAttributeNode(attrNode)
@@ -458,7 +458,7 @@ describe('ElementAssembler', () => {
         })
     })
     describe('removeAttributeNode(new String)', () => {
-        const test = new ElementAssembler()
+        const test = new ElementAssembler
         const node = test.node
         const name = 'foobar'
         const attrNode = document.createAttribute(name)
@@ -481,7 +481,7 @@ describe('ElementAssembler', () => {
         })
     })
     describe('document.createAttribute(); removeAttributeNode()', () => {
-        const test = new ElementAssembler()
+        const test = new ElementAssembler
         const name = 'foobar'
         const attrNode = document.createAttribute(name)
         const fn = () => test.removeAttributeNode(attrNode)
@@ -740,11 +740,11 @@ describe('ElementAssembler', () => {
         it('tagName', () => {
             assert.equal(test.tagName, Bar.qualifiedName)
         })
-        it('parent.getElementsByClassName', () => {
-            assert.equal(parent.getElementsByClassName('wiz')[0], test)
+        it('parent.find(className)', () => {
+            assert.equal(parent.find('.wiz'), test)
         })
-        it('parent.getElementsByTagName', () => {
-            assert.equal(parent.getElementsByTagName(Bar)[0], test)
+        it.skip('parent.find(Bar)', () => { // todo jsdom
+            assert.equal(parent.find(Bar), test)
         })
         it('static selector', () => {
             assert.equal(Bar.selector, 'bar')
@@ -794,24 +794,24 @@ describe('ElementAssembler', () => {
             assert.equal(bar.previousElementSibling, foo)
             assert.equal(wiz.previousElementSibling, bar)
         })
-        it('querySelector', () => {
-            assert.equal(test.querySelector('element'), foo)
+        it('find', () => {
+            assert.equal(test.find('element'), foo)
         })
-        it('querySelectorAll', () => {
-            const all = test.querySelectorAll('element')
+        it('findAll', () => {
+            const all = test.findAll('element')
             assert.instanceOf(all, Array)
             assert.equal(all[0], foo)
             assert.equal(all[1], bar)
             assert.equal(all[2], wiz)
         })
-        it('getElementsByTagName(new String)', () => {
-            const all = test.getElementsByTagName('element')
+        it('findAll(new String)', () => {
+            const all = test.findAll('element')
             assert.equal(all[0], foo)
             assert.equal(all[1], bar)
             assert.equal(all[2], wiz)
         })
-        it('getElementsByTagName(ElementAssembler)', () => {
-            const all = test.getElementsByTagName(ElementAssembler)
+        it('findAll(ElementAssembler)', () => {
+            const all = test.findAll(ElementAssembler)
             // assert.equal(ElementAssembler.qualifiedName, 'element')
             assert.equal(all[0], foo)
             assert.equal(all[1], bar)
@@ -839,7 +839,7 @@ describe('ElementAssembler', () => {
             assert.equal(xml, sample)
         })
     })
-    /*describe('element({ parentNode : new DocumentAssembler })', () => { // todo MS Edge
+    describe('element({ parentNode : new DocumentAssembler })', () => { // todo MS Edge
         const doc = new DocumentAssembler
         const test = element({ parentNode : doc })
         it('parentNode', () => {
@@ -848,7 +848,7 @@ describe('ElementAssembler', () => {
         it('serializeToString(doc.node)', () => {
             assert.equal(serializer.serializeToString(doc.node), '<element/>')
         })
-    })*/
+    })
     describe('element({ attrset })', () => {
         const test = element({ attrset : { foo : 'bar', cux : 'wiz' } })
         const attrset = test.attrset
