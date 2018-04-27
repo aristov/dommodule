@@ -9,6 +9,7 @@ describe('AttrAssembler', () => {
     describe('new AttrAssembler', () => {
         const name = AttrAssembler.qualifiedName
         const test = new AttrAssembler
+        const node = test.node
         it('node', () => {
             assert.instanceOf(test.node, Attr)
         })
@@ -18,14 +19,14 @@ describe('AttrAssembler', () => {
         it('value', () => {
             assert.equal(test.value, '')
         })
-        it.skip('nodeType', () => { // todo jsdom
-            assert.equal(test.nodeType, Node.ATTRIBUTE_NODE)
+        it.skip('node.nodeType', () => { // todo jsdom
+            assert.equal(node.nodeType, Node.ATTRIBUTE_NODE)
         })
-        it('nodeName', () => {
-            assert.equal(test.nodeName, name)
+        it('node.nodeName', () => {
+            assert.equal(node.nodeName, name)
         })
-        it('nodeValue', () => {
-            assert.equal(test.nodeValue, '')
+        it('node.nodeValue', () => {
+            assert.equal(node.nodeValue, '')
         })
     })
     describe('new AttrAssembler({ name })', () => {

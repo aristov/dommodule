@@ -18,8 +18,8 @@ describe('ElementAssembler', () => {
         it('node', () => {
             assert.instanceOf(node, Element)
         })
-        it('nodeType', () => {
-            assert.equal(test.nodeType, Node.ELEMENT_NODE)
+        it('node.nodeType', () => {
+            assert.equal(node.nodeType, Node.ELEMENT_NODE)
         })
         it('node.constructor', () => {
             assert.equal(node.constructor, Element)
@@ -114,15 +114,6 @@ describe('ElementAssembler', () => {
         })
         it('hasAttributes()', () => {
             assert.isFalse(test.hasAttributes())
-        })
-        it.skip('lookupNamespaceURI()', () => { // todo jsdom
-            assert.equal(test.lookupNamespaceURI('foo'), namespace)
-        })
-        it.skip('lookupPrefix()', () => { // todo jsdom
-            assert.equal(test.lookupPrefix(namespace), 'foo')
-        })
-        it.skip('isDefaultNamespace()', () => { // todo jsdom
-            assert.isFalse(test.isDefaultNamespace(namespace))
         })
         it('serializeToString(node)', () => {
             const sample = /^<foo:bar xmlns:foo="http:\/\/example\.com\/namespace"\s?\/>$/

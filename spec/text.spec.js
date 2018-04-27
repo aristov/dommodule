@@ -12,8 +12,8 @@ describe('TextAssembler', () => {
         it('node', () => {
             assert.instanceOf(node, Text)
         })
-        it('node.data', () => {
-            assert.equal(node.data, '')
+        it('data', () => {
+            assert.equal(test.data, '')
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '')
@@ -25,8 +25,8 @@ describe('TextAssembler', () => {
         it('node', () => {
             assert.instanceOf(node, Text)
         })
-        it('node.data', () => {
-            assert.equal(node.data, '')
+        it('data', () => {
+            assert.equal(test.data, '')
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '')
@@ -35,19 +35,8 @@ describe('TextAssembler', () => {
     describe('new TextAssembler(new String)', () => {
         const test = new TextAssembler('foobar')
         const node = test.node
-        it('node.data', () => {
-            assert.equal(node.data, 'foobar')
-        })
-        it('serializeToString(node)', () => {
-            assert.equal(serializer.serializeToString(node), 'foobar')
-        })
-    })
-    describe('new TextAssembler({ nodeValue })', () => {
-        const nodeValue = 'foobar'
-        const test = new TextAssembler({ nodeValue })
-        const node = test.node
-        it('nodeValue', () => {
-            assert.equal(test.nodeValue, nodeValue)
+        it('data', () => {
+            assert.equal(test.data, 'foobar')
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), 'foobar')
@@ -55,12 +44,11 @@ describe('TextAssembler', () => {
     })
     describe('new TextAssembler({ data })', () => {
         const test = new TextAssembler({ data : 'foobar' })
-        const node = test.node
-        it('node.data', () => {
-            assert.equal(node.data, 'foobar')
+        it('data', () => {
+            assert.equal(test.data, 'foobar')
         })
         it('serializeToString(node)', () => {
-            assert.equal(serializer.serializeToString(node), 'foobar')
+            assert.equal(serializer.serializeToString(test.node), 'foobar')
         })
     })
     describe('new TextAssembler({ node })', () => {
