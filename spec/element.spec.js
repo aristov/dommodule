@@ -761,8 +761,8 @@ describe('ElementAssembler', () => {
         it('closest(ElementAssembler)', () => {
             assert.equal(foo.closest(ElementAssembler), foo)
         })
-        it('childElementCount', () => {
-            assert.equal(test.childElementCount, 3)
+        it('node.childElementCount', () => {
+            assert.equal(test.node.childElementCount, 3)
         })
         it('firstElementChild', () => {
             assert.equal(test.firstElementChild, foo)
@@ -989,7 +989,7 @@ describe('ElementAssembler', () => {
             assert.match(serializer.serializeToString(test.node), sample)
         })
     })
-    describe('normalize', () => {
+    /*describe('normalize', () => {
         const test = element(['text1', 'text2'])
         test.normalize()
         it('childNodes.length', () => {
@@ -999,5 +999,5 @@ describe('ElementAssembler', () => {
             const sample = '<element>text1text2</element>'
             assert.equal(serializer.serializeToString(test.node), sample)
         })
-    })
+    })*/
 })
