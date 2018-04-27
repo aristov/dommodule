@@ -879,12 +879,12 @@ describe('ElementAssembler', () => {
             assert.equal(test.getAttribute('foo'), 'bar')
             assert.equal(test.getAttribute('wiz'), '')
         })
-        it.skip('getAttributeNames()', () => { // todo MSEdge
+        /*it.skip('getAttributeNames()', () => { // todo MSEdge
             const names = test.getAttributeNames()
             assert.lengthOf(names, 2)
             assert.equal(names[0], 'foo')
             assert.equal(names[1], 'wiz')
-        })
+        })*/
         it('attributes', () => {
             assert.equal(attributes[0], foo)
             assert.equal(attributes[1].node, wiz)
