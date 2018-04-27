@@ -1,5 +1,5 @@
 import chai from 'chai'
-import { INSTANCE_PROPERTY_NAME } from '../lib/const'
+import { INSTANCE_PROPERTY_NAME } from 'esmodule'
 import {
     AttrAssembler,
     CommentAssembler,
