@@ -1,7 +1,7 @@
 import chai from 'chai'
 import {
     ElementAssembler, TextAssembler,
-    comment, element, text
+    comment, element, text, AttrAssembler, CommentAssembler
 } from '../lib'
 
 const { assert } = chai
@@ -105,6 +105,57 @@ describe('ChildNodeAssembler', () => {
             const xml = serializer.serializeToString(node)
             const sample = '<element>foobar<!--example--></element>'
             assert.equal(xml, sample)
+        })
+    })
+    describe('before, after, replaceWith', () => {
+        let test, c1, c2, c3, items
+        class Test extends ElementAssembler {}
+        class C1 extends ElementAssembler {}
+        class C2 extends ElementAssembler {}
+        class C3 extends ElementAssembler {}
+        class A1 extends AttrAssembler {}
+        class OE1 extends ElementAssembler {}
+        class E1 extends ElementAssembler {}
+        class E2 extends ElementAssembler {}
+        beforeEach(() => {
+            test = new Test([
+                c1 = new C1,
+                c2 = new C2,
+                c3 = new C3
+            ])
+            items = [
+                'ts1',
+                new E1,
+                null,
+                new A1({ ownerElement : new OE1 }),
+                [
+                    new CommentAssembler('c1'),
+                    new TextAssembler('t1'),
+                    false,
+                    new E2,
+                    'ts2',
+                    [
+                        new CommentAssembler('c2'),
+                        undefined,
+                        new TextAssembler('t2')
+                    ]
+                ]
+            ]
+        })
+        it('before', () => {
+            c2.before(...items)
+            const sample = '<test><c1/>ts1<e1/><oe1 a1=""/><!--c1-->t1<e2/>ts2<!--c2-->t2<c2/><c3/></test>'
+            assert.equal(serializer.serializeToString(test.node), sample)
+        })
+        it('after', () => {
+            c2.after(...items)
+            const sample = '<test><c1/><c2/>ts1<e1/><oe1 a1=""/><!--c1-->t1<e2/>ts2<!--c2-->t2<c3/></test>'
+            assert.equal(serializer.serializeToString(test.node), sample)
+        })
+        it('replaceWith', () => {
+            c2.replaceWith(...items)
+            const sample = '<test><c1/>ts1<e1/><oe1 a1=""/><!--c1-->t1<e2/>ts2<!--c2-->t2<c3/></test>'
+            assert.equal(serializer.serializeToString(test.node), sample)
         })
     })
 })
