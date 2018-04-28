@@ -4,6 +4,8 @@ const {
     element, fragment, text
 } = dommodule
 
+document.documentElement.remove()
+
 new DocumentAssembler({
     node : document,
     title : 'dommodule: example',
