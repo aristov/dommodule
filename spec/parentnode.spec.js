@@ -196,28 +196,32 @@ describe('ParentNodeAssembler', () => {
         })
     })
     describe('prepend', () => {
-        let textNode, test, textInstance, child
+        let a1, a2, c1, c2, e1, e2, t1, t2, test, child
+        class Test extends ElementAssembler {}
+        class Child extends ElementAssembler {}
+        class E1 extends ElementAssembler {}
+        class E2 extends ElementAssembler {}
         beforeEach(() => {
-            textNode = document.createTextNode('bar')
-            test = new ElementAssembler(textNode)
-            textInstance = new TextAssembler('foo')
-            child = new ElementAssembler
-            test.prepend(textInstance, child)
-        })
-        it('childNodes.length', () => {
-            assert.lengthOf(test.childNodes, 3)
-        })
-        it('firstChild', () => {
-            assert.equal(test.firstChild, textInstance)
-        })
-        it('firstElementChild', () => {
-            assert.equal(test.firstElementChild, child)
-        })
-        it('lastChild.node', () => {
-            assert.equal(test.lastChild.node, textNode)
+            test = new Test(child = new Child)
+            test.prepend(
+                'ts1',
+                null,
+                e1 = new E1,
+                [
+                    c1 = new CommentAssembler('c1'),
+                    t1 = new TextAssembler('t1'),
+                    false,
+                    e2 = new E2,
+                    'ts2',
+                    [
+                        c2 = new CommentAssembler('c2'),
+                        undefined,
+                        t2 = new TextAssembler('t2')
+                    ]
+                ])
         })
         it('serializeToString(node)', () => {
-            const sample = '<element>foo<element/>bar</element>'
+            const sample = '<test>ts1<e1/><!--c1-->t1<e2/>ts2<!--c2-->t2<child/></test>'
             assert.equal(serializer.serializeToString(test.node), sample)
         })
     })
