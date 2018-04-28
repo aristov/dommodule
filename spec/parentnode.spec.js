@@ -169,14 +169,17 @@ describe('ParentNodeAssembler', () => {
         let a1, a2, c1, c2, e1, e2, t1, t2, test, child
         class Test extends ElementAssembler {}
         class Child extends ElementAssembler {}
+        class A1 extends AttrAssembler {}
+        class OE1 extends ElementAssembler {}
         class E1 extends ElementAssembler {}
         class E2 extends ElementAssembler {}
         beforeEach(() => {
             test = new Test(child = new Child)
             test.append(
                 'ts1',
-                null,
                 e1 = new E1,
+                null,
+                new A1({ ownerElement : new OE1 }),
                 [
                     c1 = new CommentAssembler('c1'),
                     t1 = new TextAssembler('t1'),
@@ -191,7 +194,7 @@ describe('ParentNodeAssembler', () => {
                 ])
         })
         it('serializeToString(node)', () => {
-            const sample = '<test><child/>ts1<e1/><!--c1-->t1<e2/>ts2<!--c2-->t2</test>'
+            const sample = '<test><child/>ts1<e1/><oe1 a1=""/><!--c1-->t1<e2/>ts2<!--c2-->t2</test>'
             assert.equal(serializer.serializeToString(test.node), sample)
         })
     })
@@ -199,14 +202,17 @@ describe('ParentNodeAssembler', () => {
         let a1, a2, c1, c2, e1, e2, t1, t2, test, child
         class Test extends ElementAssembler {}
         class Child extends ElementAssembler {}
+        class A1 extends AttrAssembler {}
+        class OE1 extends ElementAssembler {}
         class E1 extends ElementAssembler {}
         class E2 extends ElementAssembler {}
         beforeEach(() => {
             test = new Test(child = new Child)
             test.prepend(
                 'ts1',
-                null,
                 e1 = new E1,
+                null,
+                new A1({ ownerElement : new OE1 }),
                 [
                     c1 = new CommentAssembler('c1'),
                     t1 = new TextAssembler('t1'),
@@ -221,7 +227,7 @@ describe('ParentNodeAssembler', () => {
                 ])
         })
         it('serializeToString(node)', () => {
-            const sample = '<test>ts1<e1/><!--c1-->t1<e2/>ts2<!--c2-->t2<child/></test>'
+            const sample = '<test>ts1<e1/><oe1 a1=""/><!--c1-->t1<e2/>ts2<!--c2-->t2<child/></test>'
             assert.equal(serializer.serializeToString(test.node), sample)
         })
     })
