@@ -165,12 +165,45 @@ describe('ParentNodeAssembler', () => {
             assert.equal(result[1], e3)
         })
     })
+    describe('append', () => {
+        let a1, a2, c1, c2, e1, e2, t1, t2, test, child
+        class Test extends ElementAssembler {}
+        class Child extends ElementAssembler {}
+        class E1 extends ElementAssembler {}
+        class E2 extends ElementAssembler {}
+        beforeEach(() => {
+            test = new Test(child = new Child)
+            test.append(
+                'ts1',
+                null,
+                e1 = new E1,
+                [
+                    c1 = new CommentAssembler('c1'),
+                    t1 = new TextAssembler('t1'),
+                    false,
+                    e2 = new E2,
+                    'ts2',
+                    [
+                        c2 = new CommentAssembler('c2'),
+                        undefined,
+                        t2 = new TextAssembler('t2')
+                    ]
+                ])
+        })
+        it('serializeToString(node)', () => {
+            const sample = '<test><child/>ts1<e1/><!--c1-->t1<e2/>ts2<!--c2-->t2</test>'
+            assert.equal(serializer.serializeToString(test.node), sample)
+        })
+    })
     describe('prepend', () => {
-        const textNode = document.createTextNode('bar')
-        const test = element(textNode)
-        const textInstance = new TextAssembler('foo')
-        const child = element()
-        test.prepend(textInstance, child)
+        let textNode, test, textInstance, child
+        beforeEach(() => {
+            textNode = document.createTextNode('bar')
+            test = new ElementAssembler(textNode)
+            textInstance = new TextAssembler('foo')
+            child = new ElementAssembler
+            test.prepend(textInstance, child)
+        })
         it('childNodes.length', () => {
             assert.lengthOf(test.childNodes, 3)
         })
