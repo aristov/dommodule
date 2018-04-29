@@ -17,7 +17,9 @@
     "test-full": "npm run karma && npm test",
     "build": "webpack",
     "watch": "webpack -w",
-    "api": "esdoc",
+    "api": "npm run jsdoc && npm run esdoc",
+    "esdoc": "esdoc",
+    "jsdoc": "jsdoc lib/* -d dist/api/jsdoc --verbose",
     "publish": "git push && git push --tags"
   },
   "repository": {
@@ -67,6 +69,7 @@
     "cross-env": "^5.1.0",
     "esdoc": "^1.0.3",
     "esdoc-standard-plugin": "^1.0.0",
+    "jsdoc": "^3.5.5",
     "jsdom": "^11.9.0",
     "karma": "^2.0.0",
     "karma-chrome-launcher": "^2.2.0",
