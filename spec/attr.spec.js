@@ -1,8 +1,10 @@
 import chai from 'chai'
+import { Assembler } from 'esmodule'
 import { AttrAssembler, ElementAssembler } from '../lib'
 
 const { assert } = chai
-const { Attr, Node, XMLSerializer, document } = window
+const { Attr, DOMParser, Node, XMLSerializer, document } = window
+const parser = new DOMParser
 const serializer = new XMLSerializer
 
 describe('AttrAssembler', () => {
@@ -234,6 +236,89 @@ describe('AttrAssembler', () => {
         })
         it('static selector', () => {
             assert.equal(FooBar.selector, '[foobar]')
+        })
+    })
+    describe('init', () => {
+        class Test extends AttrAssembler {}
+        class A1 extends AttrAssembler {}
+        class A2 extends AttrAssembler {}
+        const sample = '<re test=""><el a1="id1"/><el a2="id2"><el a1="id3"/></el><el a1="id4"><el a2="id5"/></el></re>'
+        let doc, docElement, res, id1, id2, id3, id4, id5
+        beforeEach(() => {
+            doc = parser.parseFromString(sample, 'application/xml')
+            docElement = doc.documentElement
+            id1 = doc.querySelector('[a1=id1]')
+            id2 = doc.querySelector('[a2=id2]')
+            id3 = doc.querySelector('[a1=id3]')
+            id4 = doc.querySelector('[a1=id4]')
+            id5 = doc.querySelector('[a2=id5]')
+        })
+        it('Test.init()', () => {
+            res = Test.init(null, doc)
+            assert.lengthOf(res, 1)
+            assert.instanceOf(res[0], Test)
+            assert.equal(res[0].node, docElement.attributes.test)
+            assert.equal(res[0].node.ownerElement, docElement)
+        })
+        it('Test.init("[test=test]")', () => {
+            res = Test.init('[test=test]', doc)
+            assert.lengthOf(res, 0)
+            assert.isNull(Assembler.getInstanceOf(docElement.attributes.test))
+        })
+        it('A1.init()', () => {
+            res = A1.init(null, doc)
+            assert.lengthOf(res, 3)
+            assert.instanceOf(res[0], A1)
+            assert.instanceOf(res[1], A1)
+            assert.instanceOf(res[2], A1)
+            assert.equal(res[0].node, id1.attributes.a1)
+            assert.equal(res[1].node, id3.attributes.a1)
+            assert.equal(res[2].node, id4.attributes.a1)
+            assert.equal(res[0].node.ownerElement, id1)
+            assert.equal(res[1].node.ownerElement, id3)
+            assert.equal(res[2].node.ownerElement, id4)
+        })
+        it('A1.init(null, #id2)', () => {
+            res = A1.init(null, id2)
+            assert.lengthOf(res, 1)
+            assert.instanceOf(res[0], A1)
+            assert.equal(res[0].node, id3.attributes.a1)
+        })
+        it('A2.init()', () => {
+            res = A2.init(null, doc)
+            assert.lengthOf(res, 2)
+            assert.instanceOf(res[0], A2)
+            assert.instanceOf(res[1], A2)
+            assert.equal(res[0].node, id2.attributes.a2)
+            assert.equal(res[1].node, id5.attributes.a2)
+            assert.equal(res[0].node.ownerElement, id2)
+            assert.equal(res[1].node.ownerElement, id5)
+        })
+        it('A1.init("[a1=id1]")', () => {
+            res = A1.init('[a1=id1]', doc)
+            assert.lengthOf(res, 1)
+            assert.instanceOf(res[0], A1)
+            assert.equal(res[0].node, id1.attributes.a1)
+            assert.equal(res[0].node.ownerElement, id1)
+        })
+        it('A1.init("[a2=id2]")', () => {
+            res = A1.init('[a2=id2]', doc)
+            assert.lengthOf(res, 1)
+            assert.instanceOf(res[0], A1)
+            assert.equal(res[0].node, id2.attributes.a1)
+            assert.equal(res[0].node.ownerElement, id2)
+            assert.lengthOf(id2.attributes, 2)
+            assert.isTrue(id2.hasAttribute('a1'))
+            assert.isTrue(id2.hasAttribute('a2'))
+            assert.equal(id2.getAttribute('a1'), '')
+            assert.equal(id2.getAttribute('a2'), 'id2')
+        })
+        it('A2.init("[a2=id5]")', () => {
+            res = A2.init('[a2=id5]', doc)
+            assert.lengthOf(res, 1)
+            assert.instanceOf(res[0], A2)
+            assert.equal(res[0].node, id5.attributes.a2)
+            assert.equal(res[0].node.ownerElement, id5)
         })
     })
 })
