@@ -1,4 +1,5 @@
 import chai from 'chai'
+import { Assembler } from 'esmodule'
 import {
     AttrAssembler,
     DocumentAssembler,
@@ -8,7 +9,8 @@ import {
 } from '../lib'
 
 const { assert } = chai
-const { Element, Node, Text, XMLSerializer, document } = window
+const { DOMParser, Element, Node, Text, XMLSerializer, document } = window
+const parser = new DOMParser
 const serializer = new XMLSerializer
 
 describe('ElementAssembler', () => {
@@ -987,6 +989,74 @@ describe('ElementAssembler', () => {
         it('serializeToString(node)', () => {
             const sample = /^<element><foo\s?\/><bar\s?\/><wiz\s?\/><\/element>$/
             assert.match(serializer.serializeToString(test.node), sample)
+        })
+    })
+    describe('init', () => {
+        class Test extends ElementAssembler {}
+        class E1 extends ElementAssembler {}
+        class E2 extends ElementAssembler {}
+        const sample = '<test><e1 id="id1"/><e2 id="id2"><e1 id="id3"/></e2><e1 id="id4"><e2 id="id5"/></e1></test>'
+        let test, res, id1, id2, id3, id4, id5
+        beforeEach(() => {
+            test = parser.parseFromString(sample, 'application/xml')
+            id1 = test.getElementById('id1')
+            id2 = test.getElementById('id2')
+            id3 = test.getElementById('id3')
+            id4 = test.getElementById('id4')
+            id5 = test.getElementById('id5')
+        })
+        it('Test.init()', () => {
+            res = Test.init(null, test)
+            assert.lengthOf(res, 1)
+            assert.instanceOf(res[0], Test)
+            assert.equal(res[0].node, test.documentElement)
+        })
+        it('E1.init()', () => {
+            res = E1.init(null, test)
+            assert.lengthOf(res, 3)
+            assert.instanceOf(res[0], E1)
+            assert.instanceOf(res[1], E1)
+            assert.instanceOf(res[2], E1)
+            assert.equal(res[0].node, id1)
+            assert.equal(res[1].node, id3)
+            assert.equal(res[2].node, id4)
+        })
+        it('E1.init(null, #id2)', () => {
+            res = E1.init(null, id2)
+            assert.lengthOf(res, 1)
+            assert.instanceOf(res[0], E1)
+            assert.equal(res[0].node, id3)
+        })
+        it('E2.init()', () => {
+            res = E2.init(null, test)
+            assert.lengthOf(res, 2)
+            assert.instanceOf(res[0], E2)
+            assert.instanceOf(res[1], E2)
+            assert.equal(res[0].node, id2)
+            assert.equal(res[1].node, id5)
+        })
+        it('E1.init("#id1")', () => {
+            res = E1.init('#id1', test)
+            assert.lengthOf(res, 1)
+            assert.instanceOf(res[0], E1)
+            assert.equal(res[0].node, id1)
+        })
+        it('E1.init("#id2")', () => {
+            res = E1.init('#id2', test)
+            assert.lengthOf(res, 1)
+            assert.instanceOf(res[0], E1)
+            assert.equal(res[0].node, id2)
+        })
+        it('E2.init("#id5")', () => {
+            res = E2.init('#id5', test)
+            assert.lengthOf(res, 1)
+            assert.instanceOf(res[0], E2)
+            assert.equal(res[0].node, id5)
+        })
+        it('Test.init("#id0")', () => {
+            res = Test.init('#id0', test)
+            assert.lengthOf(res, 0)
+            assert.isNull(Assembler.getInstanceOf(test.documentElement))
         })
     })
     /*describe('normalize', () => {
