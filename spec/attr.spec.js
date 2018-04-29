@@ -239,11 +239,16 @@ describe('AttrAssembler', () => {
         })
     })
     describe('init', () => {
-        class Test extends AttrAssembler {}
+        class Test extends AttrAssembler {
+            init(init) {
+                spy()
+                super.init(init)
+            }
+        }
         class A1 extends AttrAssembler {}
         class A2 extends AttrAssembler {}
         const sample = '<re test=""><el a1="id1"/><el a2="id2"><el a1="id3"/></el><el a1="id4"><el a2="id5"/></el></re>'
-        let doc, docElement, res, id1, id2, id3, id4, id5
+        let doc, docElement, res, id1, id2, id3, id4, id5, spy
         beforeEach(() => {
             doc = parser.parseFromString(sample, 'application/xml')
             docElement = doc.documentElement
@@ -252,6 +257,7 @@ describe('AttrAssembler', () => {
             id3 = doc.querySelector('[a1=id3]')
             id4 = doc.querySelector('[a1=id4]')
             id5 = doc.querySelector('[a2=id5]')
+            spy = sinon.spy()
         })
         it('Test.init()', () => {
             res = Test.init(null, doc)
@@ -259,11 +265,13 @@ describe('AttrAssembler', () => {
             assert.instanceOf(res[0], Test)
             assert.equal(res[0].node, docElement.attributes.test)
             assert.equal(res[0].node.ownerElement, docElement)
+            assert(spy.calledOnce, 'init called once')
         })
         it('Test.init("[test=test]")', () => {
             res = Test.init('[test=test]', doc)
             assert.lengthOf(res, 0)
             assert.isNull(Assembler.getInstanceOf(docElement.attributes.test))
+            assert(spy.notCalled, 'init not called')
         })
         it('A1.init()', () => {
             res = A1.init(null, doc)

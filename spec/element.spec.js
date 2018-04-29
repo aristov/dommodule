@@ -992,11 +992,16 @@ describe('ElementAssembler', () => {
         })
     })
     describe('init', () => {
-        class Test extends ElementAssembler {}
+        class Test extends ElementAssembler {
+            init(init) {
+                spy()
+                super.init(init)
+            }
+        }
         class E1 extends ElementAssembler {}
         class E2 extends ElementAssembler {}
         const sample = '<test><e1 id="id1"/><e2 id="id2"><e1 id="id3"/></e2><e1 id="id4"><e2 id="id5"/></e1></test>'
-        let doc, res, id1, id2, id3, id4, id5
+        let doc, res, id1, id2, id3, id4, id5, spy
         beforeEach(() => {
             doc = parser.parseFromString(sample, 'application/xml')
             id1 = doc.getElementById('id1')
@@ -1004,17 +1009,20 @@ describe('ElementAssembler', () => {
             id3 = doc.getElementById('id3')
             id4 = doc.getElementById('id4')
             id5 = doc.getElementById('id5')
+            spy = sinon.spy()
         })
         it('Test.init()', () => {
             res = Test.init(null, doc)
             assert.lengthOf(res, 1)
             assert.instanceOf(res[0], Test)
             assert.equal(res[0].node, doc.documentElement)
+            assert(spy.calledOnce, 'init called once')
         })
         it('Test.init("#id0")', () => {
             res = Test.init('#id0', doc)
             assert.lengthOf(res, 0)
             assert.isNull(Assembler.getInstanceOf(doc.documentElement))
+            assert(spy.notCalled, 'init not called')
         })
         it('E1.init()', () => {
             res = E1.init(null, doc)
