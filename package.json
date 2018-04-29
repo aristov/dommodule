@@ -17,7 +17,7 @@
     "test-full": "npm run karma && npm test",
     "build": "webpack",
     "watch": "webpack -w",
-    "api": "npm run jsdoc && npm run esdoc",
+    "api": "rm -rf dist/api && npm run jsdoc && npm run esdoc",
     "esdoc": "esdoc",
     "jsdoc": "jsdoc lib/* -d dist/api/jsdoc --verbose",
     "publish": "git push && git push --tags"
