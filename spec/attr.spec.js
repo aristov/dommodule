@@ -260,7 +260,7 @@ describe('AttrAssembler', () => {
             spy = sinon.spy()
         })
         it('Test.init()', () => {
-            res = Test.init(null, doc)
+            res = Test.init(doc)
             assert.lengthOf(res, 1)
             assert.instanceOf(res[0], Test)
             assert.equal(res[0].node, docElement.attributes.test)
@@ -274,7 +274,7 @@ describe('AttrAssembler', () => {
             assert(spy.notCalled, 'init not called')
         })
         it('A1.init()', () => {
-            res = A1.init(null, doc)
+            res = A1.init(doc)
             assert.lengthOf(res, 3)
             assert.instanceOf(res[0], A1)
             assert.instanceOf(res[1], A1)
@@ -286,14 +286,14 @@ describe('AttrAssembler', () => {
             assert.equal(res[1].node.ownerElement, id3)
             assert.equal(res[2].node.ownerElement, id4)
         })
-        it('A1.init(null, #id2)', () => {
-            res = A1.init(null, id2)
+        it('A1.init(#id2)', () => {
+            res = A1.init(id2)
             assert.lengthOf(res, 1)
             assert.instanceOf(res[0], A1)
             assert.equal(res[0].node, id3.attributes.a1)
         })
         it('A2.init()', () => {
-            res = A2.init(null, doc)
+            res = A2.init(doc)
             assert.lengthOf(res, 2)
             assert.instanceOf(res[0], A2)
             assert.instanceOf(res[1], A2)
