@@ -1012,7 +1012,7 @@ describe('ElementAssembler', () => {
             spy = sinon.spy()
         })
         it('Test.init()', () => {
-            res = Test.init(null, doc)
+            res = Test.init(doc)
             assert.lengthOf(res, 1)
             assert.instanceOf(res[0], Test)
             assert.equal(res[0].node, doc.documentElement)
@@ -1025,7 +1025,7 @@ describe('ElementAssembler', () => {
             assert(spy.notCalled, 'init not called')
         })
         it('E1.init()', () => {
-            res = E1.init(null, doc)
+            res = E1.init(doc)
             assert.lengthOf(res, 3)
             assert.instanceOf(res[0], E1)
             assert.instanceOf(res[1], E1)
@@ -1035,13 +1035,13 @@ describe('ElementAssembler', () => {
             assert.equal(res[2].node, id4)
         })
         it('E1.init(null, #id2)', () => {
-            res = E1.init(null, id2)
+            res = E1.init(id2)
             assert.lengthOf(res, 1)
             assert.instanceOf(res[0], E1)
             assert.equal(res[0].node, id3)
         })
         it('E2.init()', () => {
-            res = E2.init(null, doc)
+            res = E2.init(doc)
             assert.lengthOf(res, 2)
             assert.instanceOf(res[0], E2)
             assert.instanceOf(res[1], E2)
