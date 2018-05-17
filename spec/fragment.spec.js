@@ -1,8 +1,9 @@
 import chai from 'chai'
+import { NodeAssembler } from '../lib/node'
 import {
     CommentAssembler,
     DocumentFragmentAssembler,
-    ElementAssembler, NodeAssembler,
+    ElementAssembler,
     TextAssembler,
 } from '../lib'
 

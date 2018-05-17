@@ -1,9 +1,9 @@
 import chai from 'chai'
+import { CharacterDataAssembler } from '../lib/characterdata'
+import { NodeAssembler } from '../lib/node'
 import {
-    CharacterDataAssembler,
     EventTargetAssembler,
     DocumentAssembler,
-    NodeAssembler,
     attr, comment, doctype, element,
     fragment, text
 } from '../lib'
