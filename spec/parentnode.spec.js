@@ -8,7 +8,8 @@ import {
 } from '../lib'
 
 const { assert } = chai
-const { XMLSerializer, document } = window
+const { DOMParser, XMLSerializer, document } = window
+const parser = new DOMParser
 const serializer = new XMLSerializer
 
 describe('ParentNodeAssembler', () => {
@@ -166,7 +167,7 @@ describe('ParentNodeAssembler', () => {
         })
     })
     describe('append', () => {
-        let a1, a2, c1, c2, e1, e2, t1, t2, test, child
+        let a1, a2, c1, c2, e1, e2, t1, t2, test, child, donor
         class Test extends ElementAssembler {}
         class Child extends ElementAssembler {}
         class A1 extends AttrAssembler {}
@@ -175,6 +176,7 @@ describe('ParentNodeAssembler', () => {
         class E2 extends ElementAssembler {}
         beforeEach(() => {
             test = new Test(child = new Child)
+            donor = parser.parseFromString('<root><qs q="1"/><qs s="2"><qs q="3"/></qs></root>', 'text/xml')
             test.append(
                 'ts1',
                 e1 = new E1,
@@ -182,6 +184,7 @@ describe('ParentNodeAssembler', () => {
                 new A1({ ownerElement : new OE1 }),
                 [
                     c1 = new CommentAssembler('c1'),
+                    donor.querySelectorAll('qs[q]'), // NodeList
                     t1 = new TextAssembler('t1'),
                     false,
                     e2 = new E2,
@@ -194,12 +197,12 @@ describe('ParentNodeAssembler', () => {
                 ])
         })
         it('serializeToString(node)', () => {
-            const sample = '<test><child/>ts1<e1/><oe1 a1=""/><!--c1-->t1<e2/>ts2<!--c2-->t2</test>'
+            const sample = '<test><child/>ts1<e1/><oe1 a1=""/><!--c1--><qs q="1"/><qs q="3"/>t1<e2/>ts2<!--c2-->t2</test>'
             assert.equal(serializer.serializeToString(test.node), sample)
         })
     })
     describe('prepend', () => {
-        let a1, a2, c1, c2, e1, e2, t1, t2, test, child
+        let a1, a2, c1, c2, e1, e2, t1, t2, test, child, donor
         class Test extends ElementAssembler {}
         class Child extends ElementAssembler {}
         class A1 extends AttrAssembler {}
@@ -208,6 +211,7 @@ describe('ParentNodeAssembler', () => {
         class E2 extends ElementAssembler {}
         beforeEach(() => {
             test = new Test(child = new Child)
+            donor = parser.parseFromString('<root><qs q="1"/><qs s="2"><qs q="3"/></qs></root>', 'text/xml')
             test.prepend(
                 'ts1',
                 e1 = new E1,
@@ -215,6 +219,7 @@ describe('ParentNodeAssembler', () => {
                 new A1({ ownerElement : new OE1 }),
                 [
                     c1 = new CommentAssembler('c1'),
+                    donor.documentElement.children, // HTMLCollection
                     t1 = new TextAssembler('t1'),
                     false,
                     e2 = new E2,
@@ -227,7 +232,7 @@ describe('ParentNodeAssembler', () => {
                 ])
         })
         it('serializeToString(node)', () => {
-            const sample = '<test>ts1<e1/><oe1 a1=""/><!--c1-->t1<e2/>ts2<!--c2-->t2<child/></test>'
+            const sample = '<test>ts1<e1/><oe1 a1=""/><!--c1--><qs q="1"/><qs s="2"><qs q="3"/></qs>t1<e2/>ts2<!--c2-->t2<child/></test>'
             assert.equal(serializer.serializeToString(test.node), sample)
         })
     })
