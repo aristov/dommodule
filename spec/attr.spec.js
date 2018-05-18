@@ -179,7 +179,6 @@ describe('AttrAssembler', () => {
             assert.match(xml, /^<test foo="bar"\s?\/>$/)
         })
     })
-
     describe('ownerElement = null', () => {
         const test = new AttrAssembler({ value : 'foobar' })
         const ownerElement = new TestElement
@@ -333,6 +332,40 @@ describe('AttrAssembler', () => {
             assert.instanceOf(res[0], A2)
             assert.equal(res[0].node, id5.attributes.a2)
             assert.equal(res[0].node.ownerElement, id5)
+        })
+    })
+    describe('new TestAttr({ ownerElement = node })', () => {
+        class OE1 extends ElementAssembler {}
+        class OE2 extends ElementAssembler {}
+        class OE3 extends ElementAssembler {}
+        class TestAttr1 extends AttrAssembler {
+            static get elementAssembler() {
+                return OE1
+            }
+        }
+        class TestAttr2 extends AttrAssembler {
+            static get elementAssembler() {
+                return OE3
+            }
+        }
+        OE1.register()
+        OE2.register()
+        const dom = parser.parseFromString('<root><oe1/><oe2/><oe3/><oe4/></root>', 'application/xml')
+        const a1 = new TestAttr1({ ownerElement : dom.querySelector('oe1') })
+        const a2 = new TestAttr1({ ownerElement : dom.querySelector('oe2') })
+        const a3 = new TestAttr2({ ownerElement : dom.querySelector('oe3') })
+        const a4 = new TestAttr2({ ownerElement : dom.querySelector('oe4') })
+        it('ownerElement (registered and the same as elementAssembler)', () => {
+            assert.equal(a1.ownerElement.constructor, OE1)
+        })
+        it('ownerElement (registered and different with elementAssembler)', () => {
+            assert.equal(a2.ownerElement.constructor, OE2)
+        })
+        it('ownerElement (not registered and the same as elementAssembler)', () => {
+            assert.equal(a3.ownerElement.constructor, OE3)
+        })
+        it('ownerElement (not registered and different with elementAssembler)', () => {
+            assert.equal(a4.ownerElement.constructor, ElementAssembler)
         })
     })
 })

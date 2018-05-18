@@ -181,7 +181,7 @@ describe('ParentNodeAssembler', () => {
         class E2 extends ElementAssembler {}
         beforeEach(() => {
             test = new Test(child = new Child)
-            donor = parser.parseFromString('<root><qs q="1"/><qs s="2"><qs q="3"/></qs></root>', 'text/xml')
+            donor = parser.parseFromString('<root><qs q="1"/><qs s="2"><qs q="3"/></qs></root>', 'application/xml')
             test.append(
                 'ts1',
                 e1 = new E1,
@@ -216,7 +216,7 @@ describe('ParentNodeAssembler', () => {
         class E2 extends ElementAssembler {}
         beforeEach(() => {
             test = new Test(child = new Child)
-            donor = parser.parseFromString('<root><qs q="1"/><qs s="2"><qs q="3"/></qs></root>', 'text/xml')
+            donor = parser.parseFromString('<root><qs q="1"/><qs s="2"><qs q="3"/></qs></root>', 'application/xml')
             test.prepend(
                 'ts1',
                 e1 = new E1,
