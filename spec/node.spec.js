@@ -1,5 +1,5 @@
 import chai from 'chai'
-import { INSTANCE_PROPERTY_NAME } from 'esmodule'
+import { NodeAssembler } from '../lib/node'
 import {
     AttrAssembler,
     CommentAssembler,
@@ -7,7 +7,6 @@ import {
     DocumentFragmentAssembler,
     DocumentTypeAssembler,
     ElementAssembler,
-    // ProcessingInstructionAssembler,
     TextAssembler
 } from '../lib'
 
@@ -15,13 +14,10 @@ const { Node, document } = window
 const { implementation } = document
 const { assert } = chai
 
-describe.skip('Node instance accessors', () => {
-    it('Node.prototype.hasOwnProperty()', () => {
-        assert(Node.prototype.hasOwnProperty(INSTANCE_PROPERTY_NAME), 'Node.prototype.hasOwnProperty()')
-    })
+describe('Node type resolving', () => {
     describe('AttrAssembler', () => {
         const node = document.createAttribute('foobar')
-        const instance = node[INSTANCE_PROPERTY_NAME]
+        const instance = NodeAssembler.getInstanceOf(node)
         it('instance', () => {
             assert.instanceOf(instance, AttrAssembler)
         })
@@ -31,7 +27,7 @@ describe.skip('Node instance accessors', () => {
     })
     describe('CommentAssembler', () => {
         const node = document.createComment('foobar')
-        const instance = node[INSTANCE_PROPERTY_NAME]
+        const instance = NodeAssembler.getInstanceOf(node)
         it('instance', () => {
             assert.instanceOf(instance, CommentAssembler)
         })
@@ -41,7 +37,7 @@ describe.skip('Node instance accessors', () => {
     })
     describe('DocumentAssembler', () => {
         const node = implementation.createDocument('', 'foobar', null)
-        const instance = node[INSTANCE_PROPERTY_NAME]
+        const instance = NodeAssembler.getInstanceOf(node)
         it('instance', () => {
             assert.instanceOf(instance, DocumentAssembler)
         })
@@ -51,7 +47,7 @@ describe.skip('Node instance accessors', () => {
     })
     describe('DocumentFragmentAssembler', () => {
         const node = document.createDocumentFragment()
-        const instance = node[INSTANCE_PROPERTY_NAME]
+        const instance = NodeAssembler.getInstanceOf(node)
         it('instance', () => {
             assert.instanceOf(instance, DocumentFragmentAssembler)
         })
@@ -61,7 +57,7 @@ describe.skip('Node instance accessors', () => {
     })
     describe('DocumentTypeAssembler', () => {
         const node = implementation.createDocumentType('foobar', '', '')
-        const instance = node[INSTANCE_PROPERTY_NAME]
+        const instance = NodeAssembler.getInstanceOf(node)
         it('instance', () => {
             assert.instanceOf(instance, DocumentTypeAssembler)
         })
@@ -69,19 +65,9 @@ describe.skip('Node instance accessors', () => {
             assert.equal(instance.node, node)
         })
     })
-    /*describe('ProcessingInstructionAssembler', () => {
-        const node = document.createProcessingInstruction('foo', 'bar')
-        const instance = node[INSTANCE_PROPERTY_NAME]
-        it('instance', () => {
-            assert.instanceOf(instance, ProcessingInstructionAssembler)
-        })
-        it('instance.node', () => {
-            assert.equal(instance.node, node)
-        })
-    })*/
     describe('ElementAssembler', () => {
         const node = document.createElementNS('', 'foobar')
-        const instance = node[INSTANCE_PROPERTY_NAME]
+        const instance = NodeAssembler.getInstanceOf(node)
         it('instance', () => {
             assert.instanceOf(instance, ElementAssembler)
         })
@@ -91,7 +77,7 @@ describe.skip('Node instance accessors', () => {
     })
     describe('TextAssembler', () => {
         const node = document.createTextNode('foobar')
-        const instance = node[INSTANCE_PROPERTY_NAME]
+        const instance = NodeAssembler.getInstanceOf(node)
         it('instance', () => {
             assert.instanceOf(instance, TextAssembler)
         })

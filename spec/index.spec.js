@@ -1,4 +1,5 @@
 import './common.spec'
+import './node.spec'
 import './attr.spec'
 import './childnode.spec'
 import './text.spec'
