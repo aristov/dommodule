@@ -1,10 +1,16 @@
 import chai from 'chai'
-import { DocumentAssembler, ElementAssembler, element, doctype } from '../lib'
+import { DocumentAssembler, ElementAssembler, doctype } from '../lib'
 
 const { assert } = chai
 const { Document, Element, XMLSerializer, document } = window
 const { implementation } = document
 const serializer = new XMLSerializer
+
+class TestElement extends ElementAssembler {
+    static get localName() {
+        return 'element'
+    }
+}
 
 describe('DocumentAssembler', () => {
     describe('new DocumentAssembler', () => {
@@ -33,7 +39,7 @@ describe('DocumentAssembler', () => {
         let $doctype, $element
         const test = new DocumentAssembler({
             doctype : $doctype = doctype('example'),
-            documentElement : $element = element({
+            documentElement : $element = new TestElement({
                 localName : 'example',
                 id : 'test'
             })

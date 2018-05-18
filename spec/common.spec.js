@@ -4,13 +4,19 @@ import { NodeAssembler } from '../lib/node'
 import {
     EventTargetAssembler,
     DocumentAssembler,
-    attr, comment, doctype, element,
-    fragment, text
+    attr, comment, doctype, 
+    fragment, text, ElementAssembler
 } from '../lib'
 
 const { assert } = chai
 const { CharacterData, EventTarget, Node, XMLSerializer } = window
 const serializer = new XMLSerializer
+
+class TestElement extends ElementAssembler {
+    static get localName() {
+        return 'element'
+    }
+}
 
 describe('Common', () => {
     /*describe('new Assembler', () => {
@@ -39,7 +45,7 @@ describe('Common', () => {
         const $document = new DocumentAssembler([
             $doctype = doctype('example'),
             $fragment = fragment([
-                $element = element({
+                $element = new TestElement({
                     localName : 'example',
                     attributes : $attr = attr({
                         name : 'role',
@@ -93,7 +99,7 @@ describe('Common', () => {
         })
     })*/
     describe('ChildNodeAssembler.remove()', () => {
-        const test = element()
+        const test = new TestElement()
         test.remove()
         it('parentNode', () => {
             assert.isNull(test.parentNode)
@@ -101,10 +107,10 @@ describe('Common', () => {
     })
     describe('ChildNodeAssembler.remove()', () => {
         let $element
-        const test = element([
+        const test = new TestElement([
             text('foobar'),
             comment('example'),
-            $element = element(),
+            $element = new TestElement(),
         ])
         const node = test.node
         $element.remove()
@@ -117,9 +123,9 @@ describe('Common', () => {
             assert.equal(xml, sample)
         })
     })
-    describe('element({ onclick })', () => {
+    describe('new TestElement({ onclick })', () => {
         const onclick = sinon.spy()
-        const test = element({
+        const test = new TestElement({
             namespace : 'http://www.w3.org/1999/xhtml',
             localName : 'button',
             onclick
@@ -132,10 +138,10 @@ describe('Common', () => {
             assert(onclick.calledOnce, 'onclick.calledOnce')
         })
     })
-    /*describe('element({ foobar, undefined })', () => {
+    /*describe('new TestElement({ foobar, undefined })', () => {
         const warn = console.warn
         const spy = console.warn = sinon.spy()
-        const test = element({ foobar : 'test', undefined })
+        const test = new TestElement({ foobar : 'test', undefined })
         console.warn = warn
         it('node.foobar', () => {
             assert.isUndefined(test.node.foobar)
@@ -147,8 +153,8 @@ describe('Common', () => {
             assert(spy.calledOnce, 'spy.calledOnce')
         })
     })*/
-    describe('element({ textContent })', () => {
-        const test = element({ textContent : 'foobar' })
+    describe('new TestElement({ textContent })', () => {
+        const test = new TestElement({ textContent : 'foobar' })
         it('parent.textContent', () => {
             assert.equal(test.textContent, 'foobar')
         })
@@ -158,8 +164,8 @@ describe('Common', () => {
         })
     })
     describe('isEqualNode', () => {
-        const e1 = element()
-        const e2 = element()
+        const e1 = new TestElement()
+        const e2 = new TestElement()
         it('isEqualNode', () => {
             assert(e1.isEqualNode(e2), 'isEqualNode')
             assert(e1.isEqualNode(e2.node), 'isEqualNode')

@@ -4,7 +4,6 @@ import {
     TextAssembler,
     CommentAssembler,
     AttrAssembler,
-    element
 } from '../lib'
 
 const { assert } = chai
@@ -12,11 +11,17 @@ const { DOMParser, XMLSerializer, document } = window
 const parser = new DOMParser
 const serializer = new XMLSerializer
 
+class TestElement extends ElementAssembler {
+    static get localName() {
+        return 'element'
+    }
+}
+
 describe('ParentNodeAssembler', () => {
     describe('insertBefore(instance, node)', () => {
-        const child = element({ className : 'old' })
-        const test = element(child)
-        const newChild = element({ className : 'new' })
+        const child = new TestElement({ className : 'old' })
+        const test = new TestElement(child)
+        const newChild = new TestElement({ className : 'new' })
         test.insertBefore(newChild, child.node)
         it('childNodes.length', () => {
             assert.lengthOf(test.childNodes, 2)
@@ -33,9 +38,9 @@ describe('ParentNodeAssembler', () => {
         })
     })
     describe('insertBefore(node, instance)', () => {
-        const child = element({ className : 'old' })
-        const test = element(child)
-        const newChild = element({ className : 'new' })
+        const child = new TestElement({ className : 'old' })
+        const test = new TestElement(child)
+        const newChild = new TestElement({ className : 'new' })
         test.insertBefore(newChild.node, child)
         it('childNodes.length', () => {
             assert.lengthOf(test.childNodes, 2)
@@ -52,9 +57,9 @@ describe('ParentNodeAssembler', () => {
         })
     })
     describe('replaceChild(instance, node)', () => {
-        const child = element({ className : 'old' })
-        const test = element(child)
-        const newChild = element({ className : 'new' })
+        const child = new TestElement({ className : 'old' })
+        const test = new TestElement(child)
+        const newChild = new TestElement({ className : 'new' })
         test.replaceChild(newChild, child.node)
         it('childNodes.length', () => {
             assert.lengthOf(test.childNodes, 1)
@@ -71,9 +76,9 @@ describe('ParentNodeAssembler', () => {
         })
     })
     describe('replaceChild(node, instance)', () => {
-        const child = element({ className : 'old' })
-        const test = element(child)
-        const newChild = element({ className : 'new' })
+        const child = new TestElement({ className : 'old' })
+        const test = new TestElement(child)
+        const newChild = new TestElement({ className : 'new' })
         test.replaceChild(newChild.node, child)
         it('childNodes.length', () => {
             assert.lengthOf(test.childNodes, 1)
@@ -92,17 +97,17 @@ describe('ParentNodeAssembler', () => {
     describe('find, findAll', () => {
         let test, e1, e2, e3, a1, a2, a3, t1, t2, t3, c1, c2, c3
         beforeEach(() => {
-            test = new ElementAssembler([
-                e1 = new ElementAssembler({
+            test = new TestElement([
+                e1 = new TestElement({
                     attributes : a1 = new AttrAssembler('a1'),
                     childNodes : [
                         t2 = new TextAssembler('t1'),
-                        e2 = new ElementAssembler({
+                        e2 = new TestElement({
                             attributes : a2 = new AttrAssembler('a2'),
                             childNodes : [
                                 c3 = new CommentAssembler('c3'),
                                 t3 = new TextAssembler('t3'),
-                                e3 = new ElementAssembler({
+                                e3 = new TestElement({
                                     attributes : a3 = new AttrAssembler('a3')
                                 })
                             ]

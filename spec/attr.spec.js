@@ -7,6 +7,12 @@ const { Attr, DOMParser, Node, XMLSerializer, document } = window
 const parser = new DOMParser
 const serializer = new XMLSerializer
 
+class TestElement extends ElementAssembler {
+    static get localName() {
+        return 'element'
+    }
+}
+
 describe('AttrAssembler', () => {
     describe('new AttrAssembler', () => {
         const name = AttrAssembler.qualifiedName
@@ -98,9 +104,9 @@ describe('AttrAssembler', () => {
             assert.equal(test.value, 'foobar')
         })
     })
-    describe('ownerElement = new ElementAssembler', () => {
+    describe('ownerElement = new TestElement', () => {
         const test = new AttrAssembler({ value : 'foobar' })
-        const ownerElement = new ElementAssembler
+        const ownerElement = new TestElement
         test.ownerElement = ownerElement
         it('node.ownerElement', () => {
             assert.equal(test.node.ownerElement, ownerElement.node)
@@ -176,7 +182,7 @@ describe('AttrAssembler', () => {
 
     describe('ownerElement = null', () => {
         const test = new AttrAssembler({ value : 'foobar' })
-        const ownerElement = new ElementAssembler
+        const ownerElement = new TestElement
         ownerElement.setAttributeNode(test)
         test.ownerElement = null
         it('node.ownerElement', () => {
@@ -198,7 +204,7 @@ describe('AttrAssembler', () => {
         })
     })
     describe('new AttrAssembler({ ownerElement }); remove()', () => {
-        const ownerElement = new ElementAssembler
+        const ownerElement = new TestElement
         const test = new AttrAssembler({ ownerElement })
         test.remove()
         it('ownerElement.node.hasAttribute()', () => {

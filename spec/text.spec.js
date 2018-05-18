@@ -5,6 +5,12 @@ const { assert } = chai
 const { Text, XMLSerializer, document } = window
 const serializer = new XMLSerializer
 
+class TestElement extends ElementAssembler {
+    static get localName() {
+        return 'element'
+    }
+}
+
 describe('TextAssembler', () => {
     describe('new TextAssembler', () => {
         const test = new TextAssembler
@@ -73,7 +79,7 @@ describe('TextAssembler', () => {
         })
     })
     describe('new TextAssembler({ data, parentNode })', () => {
-        const parent = new ElementAssembler
+        const parent = new TestElement
         const test = new TextAssembler({
             data : 'foobar',
             parentNode : parent

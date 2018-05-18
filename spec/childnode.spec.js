@@ -1,24 +1,30 @@
 import chai from 'chai'
 import {
     ElementAssembler, TextAssembler,
-    comment, element, text, AttrAssembler, CommentAssembler
+    comment, text, AttrAssembler, CommentAssembler
 } from '../lib'
 
 const { assert } = chai
 const { XMLSerializer } = window
 const serializer = new XMLSerializer
 
+class TestElement extends ElementAssembler {
+    static get localName() {
+        return 'element'
+    }
+}
+
 describe('ChildNodeAssembler', () => {
     describe('remove(), parentNode', () => {
-        const test = element()
+        const test = new TestElement()
         test.remove()
         it('parentNode', () => {
             assert.isNull(test.parentNode)
         })
     })
     describe('parentElement', () => {
-        const parentElement = element()
-        const test = element({ parentElement })
+        const parentElement = new TestElement()
+        const test = new TestElement({ parentElement })
         it('parentElement', () => {
             assert.equal(test.parentElement, parentElement)
         })
@@ -27,8 +33,8 @@ describe('ChildNodeAssembler', () => {
         })
     })
     describe('after', () => {
-        const ctx = element()
-        const test = element(ctx)
+        const ctx = new TestElement()
+        const test = new TestElement(ctx)
         const foo = text('foo')
         ctx.after(foo, 'bar')
         it('childNodes.length', () => {
@@ -50,8 +56,8 @@ describe('ChildNodeAssembler', () => {
         })
     })
     describe('before', () => {
-        const ctx = element()
-        const test = element(ctx)
+        const ctx = new TestElement()
+        const test = new TestElement(ctx)
         const foo = text('foo')
         ctx.before(foo, 'bar')
         it('childNodes.length', () => {
@@ -72,8 +78,8 @@ describe('ChildNodeAssembler', () => {
         })
     })
     describe('replaceWith', () => {
-        const ctx = element()
-        const test = element(ctx)
+        const ctx = new TestElement()
+        const test = new TestElement(ctx)
         const foo = text('foo')
         ctx.replaceWith(foo)
         it('childNodes.length', () => {
@@ -91,10 +97,10 @@ describe('ChildNodeAssembler', () => {
     })
     describe('remove()', () => {
         let $element
-        const test = element([
+        const test = new TestElement([
             text('foobar'),
             comment('example'),
-            $element = element(),
+            $element = new TestElement(),
         ])
         const node = test.node
         $element.remove()

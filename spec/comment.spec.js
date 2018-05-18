@@ -5,6 +5,12 @@ const { assert } = chai
 const { Comment, XMLSerializer, document } = window
 const serializer = new XMLSerializer
 
+class TestElement extends ElementAssembler {
+    static get localName() {
+        return 'element'
+    }
+}
+
 describe('CommentAssembler', () => {
     describe('new CommentAssembler', () => {
         const test = new CommentAssembler
@@ -74,7 +80,7 @@ describe('CommentAssembler', () => {
         })
     })
     describe('new CommentAssembler({ data, parentNode })', () => {
-        const parent = new ElementAssembler
+        const parent = new TestElement
         const test = new CommentAssembler({
             data : 'foobar',
             parentNode : parent
