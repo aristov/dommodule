@@ -1077,9 +1077,11 @@ describe('ElementAssembler', () => {
         class E1 extends ElementAssembler {}
         E1.register()
         class Ex extends ElementAssembler {
-            static get localName() { return this === Ex? '' : super.localName } // fixme
             static get namespace() {
                 return namespace
+            }
+            static get superAssembler() {
+                return Ex
             }
         }
         Ex.register()
