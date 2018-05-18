@@ -2,8 +2,7 @@ import chai from 'chai'
 import {
     ElementAssembler,
     DocumentAssembler,
-    DocumentTypeAssembler,
-    doctype
+    DocumentTypeAssembler
 } from '../lib'
 
 const { assert } = chai
@@ -11,11 +10,17 @@ const { Document, DocumentType, XMLSerializer, document } = window
 const { implementation } = document
 const serializer = new XMLSerializer
 
+class TestDocumentType extends DocumentTypeAssembler {
+    static get qualifiedName() {
+        return 'element'
+    }
+}
+
 describe('DocumentTypeAssembler', () => {
-    describe('new DocumentTypeAssembler', () => {
-        const test = new DocumentTypeAssembler
+    describe('new TestDocumentType', () => {
+        const test = new TestDocumentType
         const node = test.node
-        const name = DocumentTypeAssembler.qualifiedName
+        const name = TestDocumentType.qualifiedName
         it('node', () => {
             assert.instanceOf(node, DocumentType)
         })
@@ -97,10 +102,10 @@ describe('DocumentTypeAssembler', () => {
             assert.match(xml, sample)
         })
     })*/
-    describe('doctype({ parentNode : implementation.createDocument() })', () => {
+    describe('new TestDocumentType({ parentNode : implementation.createDocument() })', () => {
         const doctypeNode = implementation.createDocumentType('test', '', '')
         const doc = implementation.createDocument('', 'test', doctypeNode)
-        const test = doctype({ parentNode : doc })
+        const test = new TestDocumentType({ parentNode : doc })
         const node = test.node
         it('parentNode', () => {
             assert.equal(node.parentNode, doc)

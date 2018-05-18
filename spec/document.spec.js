@@ -12,6 +12,12 @@ class TestElement extends ElementAssembler {
     }
 }
 
+class TestDocument extends DocumentAssembler {
+    static get elementAssembler() {
+        return TestElement
+    }
+}
+
 describe('DocumentAssembler', () => {
     describe('new DocumentAssembler', () => {
         const test = new DocumentAssembler
@@ -92,10 +98,10 @@ describe('DocumentAssembler', () => {
             assert.equal(xml, '<test/>')
         })
     })
-    describe('new DocumentAssembler({ documentElement : null })', () => {
+    describe('new TestDocument({ documentElement : null })', () => {
         let test, node
         beforeEach(() => {
-            test = new DocumentAssembler({ documentElement : null })
+            test = new TestDocument({ documentElement : null })
             node = test.node
         })
         it('doctype', () => {
@@ -170,8 +176,8 @@ describe('DocumentAssembler', () => {
             assert.equal(xml, sample)
         })
     })
-    describe('new DocumentAssembler({ documentElement : new String })', () => {
-        const test = new DocumentAssembler({ documentElement : 'foobar' })
+    describe('new TestDocument({ documentElement : new String })', () => {
+        const test = new TestDocument({ documentElement : 'foobar' })
         const { documentElement } = test
         it('documentElement', () => {
             assert.instanceOf(documentElement, ElementAssembler)
