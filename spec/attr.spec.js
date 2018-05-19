@@ -179,11 +179,11 @@ describe('AttrAssembler', () => {
             assert.match(xml, /^<test foo="bar"\s?\/>$/)
         })
     })
-    describe('ownerElement = null', () => {
+    describe('remove()', () => {
         const test = new AttrAssembler({ value : 'foobar' })
         const ownerElement = new TestElement
         ownerElement.setAttributeNode(test)
-        test.ownerElement = null
+        test.remove()
         it('node.ownerElement', () => {
             assert.isNull(test.node.ownerElement)
         })
@@ -210,7 +210,7 @@ describe('AttrAssembler', () => {
             assert.isFalse(ownerElement.node.hasAttribute(AttrAssembler.localName))
         })
     })
-    describe('remove()', () => {
+    describe('wrong remove()', () => {
         const test = new AttrAssembler
         const fn = () => test.remove()
         it('throws TypeError', () => {
