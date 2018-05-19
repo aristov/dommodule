@@ -368,4 +368,25 @@ describe('AttrAssembler', () => {
             assert.equal(a4.ownerElement.constructor, ElementAssembler)
         })
     })
+    describe('defaultValue', () => {
+        class Foo extends AttrAssembler {}
+        class Bar extends AttrAssembler {
+            static get defaultValue() {
+                return 'false'
+            }
+        }
+        let test1, test2
+        beforeEach(() => {
+            test1 = new TestElement({ attributes : new Foo('bar') })
+            test2 = new TestElement({ attributes : new Bar('foo') })
+        })
+        it('inherited default value', () => {
+            assert.equal(test1.getAttribute(Foo), 'bar')
+            assert.equal(test2.getAttribute(Foo), null)
+        })
+        it('specified default value', () => {
+            assert.equal(test1.getAttribute(Bar), 'false')
+            assert.equal(test2.getAttribute(Bar), 'foo')
+        })
+    })
 })
