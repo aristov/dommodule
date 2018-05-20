@@ -17,6 +17,11 @@ class TestElement extends ElementAssembler {
         return 'element'
     }
 }
+class TestAttr extends AttrAssembler {
+    static get localName() {
+        return 'attr'
+    }
+}
 
 describe('ElementAssembler', () => {
     describe('new TestElement', () => {
@@ -287,14 +292,14 @@ describe('ElementAssembler', () => {
     describe('getAttributeNode(AttrAssembler)', () => {
         const test = new TestElement
         const node = test.node
-        node.setAttribute(AttrAssembler.localName, 'foobar')
-        const attr = test.getAttributeNode(AttrAssembler)
+        node.setAttribute(TestAttr.localName, 'foobar')
+        const attr = test.getAttributeNode(TestAttr)
         const attrNode = attr.node
         it('instanceof', () => {
-            assert.instanceOf(attr, AttrAssembler)
+            assert.instanceOf(attr, TestAttr)
         })
         it('attrNode.localName', () => {
-            assert.equal(attrNode.localName, AttrAssembler.localName)
+            assert.equal(attrNode.localName, TestAttr.localName)
         })
         it('attrNode.value', () => {
             assert.equal(attrNode.value, 'foobar')
@@ -346,10 +351,10 @@ describe('ElementAssembler', () => {
             assert.match(serializer.serializeToString(node), /^<element foo="bar"\s?\/>$/)
         })
     })
-    describe('setAttributeNode(new AttrAssembler)', () => {
+    describe('setAttributeNode(new TestAttr)', () => {
         const test = new TestElement({ attrset : { foo : 'wiz' } })
         const node = test.node
-        const attr = new AttrAssembler({ name : 'foo', value : 'bar' })
+        const attr = new TestAttr({ name : 'foo', value : 'bar' })
         test.setAttributeNode(attr)
         it('hasAttributes()', () => {
             assert(test.hasAttributes(), 'hasAttributes()')
@@ -370,10 +375,10 @@ describe('ElementAssembler', () => {
             assert.match(serializer.serializeToString(node), /^<element foo="bar"\s?\/>$/)
         })
     })
-    describe('removeAttributeNode(new AttrAssembler)', () => {
+    describe('removeAttributeNode(new TestAttr)', () => {
         const test = new TestElement
         const node = test.node
-        const attr = new AttrAssembler('foobar')
+        const attr = new TestAttr('foobar')
         test.setAttributeNode(attr)
         const removedAttr = test.removeAttributeNode(attr)
         it('attrs equal', () => {
@@ -386,7 +391,7 @@ describe('ElementAssembler', () => {
             assert.lengthOf(test.attributes, 0)
         })
         it('hasAttribute()', () => {
-            assert.isFalse(test.hasAttribute(AttrAssembler.localName))
+            assert.isFalse(test.hasAttribute(TestAttr.localName))
         })
         it('removeAttributeNode()', () => {
             assert.isNull(test.removeAttributeNode('example'))
@@ -417,12 +422,12 @@ describe('ElementAssembler', () => {
             assert.match(serializer.serializeToString(node), /^<element\s?\/>$/)
         })
     })
-    describe('removeAttributeNode(AttrAssembler)', () => {
+    describe('removeAttributeNode(TestAttr)', () => {
         const test = new TestElement
         const node = test.node
         const attrNode = document.createAttribute('attr')
         node.setAttributeNode(attrNode)
-        const removedAttr = test.removeAttributeNode(AttrAssembler)
+        const removedAttr = test.removeAttributeNode(TestAttr)
         it('nodes equal', () => {
             assert.equal(removedAttr.node, attrNode)
         })
@@ -507,10 +512,10 @@ describe('ElementAssembler', () => {
             assert.match(serializer.serializeToString(node), /^<element foo="bar"\s?\/>$/)
         })
     })
-    describe('setAttribute(AttrAssembler, new String)', () => {
+    describe('setAttribute(TestAttr, new String)', () => {
         const test = new TestElement
         const node = test.node
-        test.setAttribute(AttrAssembler, 'foobar')
+        test.setAttribute(TestAttr, 'foobar')
         it('hasAttributes()', () => {
             assert(test.hasAttributes(), 'hasAttributes()')
         })
@@ -518,20 +523,20 @@ describe('ElementAssembler', () => {
             assert.lengthOf(test.attributes, 1)
         })
         it('hasAttribute()', () => {
-            assert(test.hasAttribute(AttrAssembler.localName), 'hasAttribute()')
+            assert(test.hasAttribute(TestAttr.localName), 'hasAttribute()')
         })
         it('getAttribute()', () => {
-            assert.equal(test.getAttribute(AttrAssembler.localName), 'foobar')
+            assert.equal(test.getAttribute(TestAttr.localName), 'foobar')
         })
         it('serializeToString(node)', () => {
             assert.match(serializer.serializeToString(node), /^<element attr="foobar"\s?\/>$/)
         })
     })
-    describe('node.setAttribute(); setAttribute(AttrAssembler, new String)', () => {
+    describe('node.setAttribute(); setAttribute(TestAttr, new String)', () => {
         const test = new TestElement
         const node = test.node
         node.setAttribute('attr', 'test')
-        test.setAttribute(AttrAssembler, 'foobar')
+        test.setAttribute(TestAttr, 'foobar')
         it('hasAttributes()', () => {
             assert(test.hasAttributes(), 'hasAttributes()')
         })
@@ -539,22 +544,22 @@ describe('ElementAssembler', () => {
             assert.lengthOf(test.attributes, 1)
         })
         it('hasAttribute()', () => {
-            assert(test.hasAttribute(AttrAssembler.localName), 'hasAttribute()')
+            assert(test.hasAttribute(TestAttr.localName), 'hasAttribute()')
         })
         it('getAttribute()', () => {
-            assert.equal(test.getAttribute(AttrAssembler.localName), 'foobar')
+            assert.equal(test.getAttribute(TestAttr.localName), 'foobar')
         })
         it('serializeToString(node)', () => {
             assert.match(serializer.serializeToString(node), /^<element attr="foobar"\s?\/>$/)
         })
     })
-    describe('hasAttribute(AttrAssembler); getAttribute(AttrAssembler)', () => {
+    describe('hasAttribute(TestAttr); getAttribute(TestAttr)', () => {
         const test = new TestElement({ attrset : { attr : 'foobar' } })
         it('hasAttribute()', () => {
-            assert(test.hasAttribute(AttrAssembler), 'hasAttribute(AttrAssembler)')
+            assert(test.hasAttribute(TestAttr), 'hasAttribute(TestAttr)')
         })
         it('getAttribute()', () => {
-            assert.equal(test.getAttribute(AttrAssembler), 'foobar')
+            assert.equal(test.getAttribute(TestAttr), 'foobar')
         })
     })
     describe('hasAttribute(class extends AttrAssembler); getAttribute(class extends AttrAssembler)', () => {
@@ -582,10 +587,10 @@ describe('ElementAssembler', () => {
             assert.isFalse(test.hasAttribute('foo'))
         })
     })
-    describe('removeAttribute(AttrAssembler)', () => {
+    describe('removeAttribute(TestAttr)', () => {
         const test = new TestElement({ attrset : { attr : 'foobar' } })
         const node = test.node
-        test.removeAttribute(AttrAssembler)
+        test.removeAttribute(TestAttr)
         it('hasAttribute()', () => {
             assert.isFalse(test.hasAttribute('attr'))
         })
@@ -870,7 +875,7 @@ describe('ElementAssembler', () => {
         let foo, wiz
         const test = new TestElement({
             attributes : [
-                foo = new AttrAssembler({ name : 'foo', value : 'bar' }),
+                foo = new TestAttr({ name : 'foo', value : 'bar' }),
                 wiz = document.createAttribute('wiz')
             ]
         })
@@ -901,8 +906,8 @@ describe('ElementAssembler', () => {
             const sample = '<element foo="bar" wiz=""/>'
             assert.equal(xml, sample)
         })
-        it('setAttributeNode(new AttrAssembler)', () => {
-            const attr = new AttrAssembler({
+        it('setAttributeNode(new TestAttr)', () => {
+            const attr = new TestAttr({
                 name : 'foo',
                 value : 'test'
             })
@@ -916,9 +921,9 @@ describe('ElementAssembler', () => {
             })
         })
     })
-    describe('setAttributeNode(new AttrAssembler({ namespace }))', () => {
+    describe('setAttributeNode(new TestAttr({ namespace }))', () => {
         const test = new TestElement
-        const attr = new AttrAssembler({
+        const attr = new TestAttr({
             namespace : 'http://example.com/ns',
             name : 'foo:bar',
             value : 'test'

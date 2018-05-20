@@ -12,11 +12,16 @@ class TestElement extends ElementAssembler {
         return 'element'
     }
 }
+class TestAttr extends AttrAssembler {
+    static get localName() {
+        return 'attr'
+    }
+}
 
 describe('AttrAssembler', () => {
-    describe('new AttrAssembler', () => {
-        const name = AttrAssembler.qualifiedName
-        const test = new AttrAssembler
+    describe('new TestAttr', () => {
+        const name = TestAttr.qualifiedName
+        const test = new TestAttr
         const node = test.node
         it('node', () => {
             assert.instanceOf(test.node, Attr)
@@ -37,9 +42,9 @@ describe('AttrAssembler', () => {
             assert.equal(node.nodeValue, '')
         })
     })
-    describe('new AttrAssembler({ name })', () => {
+    describe('new TestAttr({ name })', () => {
         const name = 'foobar'
-        const test = new AttrAssembler({ name })
+        const test = new TestAttr({ name })
         it('name', () => {
             assert.equal(test.name, name)
         })
@@ -47,8 +52,8 @@ describe('AttrAssembler', () => {
             assert.equal(test.value, '')
         })
     })
-    describe('new AttrAssembler({ name, value })', () => {
-        const test = new AttrAssembler({ name : 'foo', value : 'bar' })
+    describe('new TestAttr({ name, value })', () => {
+        const test = new TestAttr({ name : 'foo', value : 'bar' })
         it('name', () => {
             assert.equal(test.name, 'foo')
         })
@@ -56,8 +61,8 @@ describe('AttrAssembler', () => {
             assert.equal(test.value, 'bar')
         })
     })
-    describe('new AttrAssembler({ namespace, prefix, localName, value })', () => {
-        const test = new AttrAssembler({
+    describe('new TestAttr({ namespace, prefix, localName, value })', () => {
+        const test = new TestAttr({
             namespace : 'http://www.w3.org/XML/1998/namespace',
             prefix : 'xml',
             localName : 'id',
@@ -75,9 +80,9 @@ describe('AttrAssembler', () => {
             assert.equal(test.value, 'foobar')
         })
     })
-    describe('new AttrAssembler({ node })', () => {
+    describe('new TestAttr({ node })', () => {
         const node = document.createAttribute('foo')
-        const test = new AttrAssembler({ node })
+        const test = new TestAttr({ node })
         it('nodes equal', () => {
             assert.equal(test.node, node)
         })
@@ -85,8 +90,8 @@ describe('AttrAssembler', () => {
             assert.isNull(test.ownerElement)
         })
     })
-    describe('new AttrAssembler(new String)', () => {
-        const test = new AttrAssembler('foobar')
+    describe('new TestAttr(new String)', () => {
+        const test = new TestAttr('foobar')
         it('name', () => {
             assert.equal(test.name, 'attr')
         })
@@ -95,7 +100,7 @@ describe('AttrAssembler', () => {
         })
     })
     describe('value = new String', () => {
-        const test = new AttrAssembler
+        const test = new TestAttr
         test.value = 'foobar'
         it('node.value', () => {
             assert.equal(test.node.value, 'foobar')
@@ -105,7 +110,7 @@ describe('AttrAssembler', () => {
         })
     })
     describe('ownerElement = new TestElement', () => {
-        const test = new AttrAssembler({ value : 'foobar' })
+        const test = new TestAttr({ value : 'foobar' })
         const ownerElement = new TestElement
         test.ownerElement = ownerElement
         it('node.ownerElement', () => {
@@ -120,7 +125,7 @@ describe('AttrAssembler', () => {
         })
     })
     describe('ownerElement = document.createElementNS()', () => {
-        const test = new AttrAssembler({ name : 'foo', value : 'bar' })
+        const test = new TestAttr({ name : 'foo', value : 'bar' })
         const elementNode = document.createElementNS('', 'foobar')
         test.ownerElement = elementNode
         it('node.ownerElement', () => {
@@ -138,7 +143,7 @@ describe('AttrAssembler', () => {
         })
     })
     describe('namespace, ownerElement = document.createElementNS()', () => {
-        const test = new AttrAssembler({
+        const test = new TestAttr({
             namespace : 'http://example.com/ns',
             name : 'foo:bar',
             value : 'wiz'
@@ -163,7 +168,7 @@ describe('AttrAssembler', () => {
         })
     })
     describe('ownerElement = { localName }', () => {
-        const test = new AttrAssembler({
+        const test = new TestAttr({
             ownerElement : { localName : 'test' },
             name : 'foo',
             value : 'bar'
@@ -180,7 +185,7 @@ describe('AttrAssembler', () => {
         })
     })
     describe('remove()', () => {
-        const test = new AttrAssembler({ value : 'foobar' })
+        const test = new TestAttr({ value : 'foobar' })
         const ownerElement = new TestElement
         ownerElement.setAttributeNode(test)
         test.remove()
@@ -196,22 +201,22 @@ describe('AttrAssembler', () => {
         })
     })
     describe('ownerElement = true', () => {
-        const test = new AttrAssembler
+        const test = new TestAttr
         const fn = () => test.ownerElement = true
         it('throws TypeError', () => {
             assert.throws(fn, TypeError)
         })
     })
-    describe('new AttrAssembler({ ownerElement }); remove()', () => {
+    describe('new TestAttr({ ownerElement }); remove()', () => {
         const ownerElement = new TestElement
-        const test = new AttrAssembler({ ownerElement })
+        const test = new TestAttr({ ownerElement })
         test.remove()
         it('ownerElement.node.hasAttribute()', () => {
-            assert.isFalse(ownerElement.node.hasAttribute(AttrAssembler.localName))
+            assert.isFalse(ownerElement.node.hasAttribute(TestAttr.localName))
         })
     })
     describe('wrong remove()', () => {
-        const test = new AttrAssembler
+        const test = new TestAttr
         const fn = () => test.remove()
         it('throws TypeError', () => {
             assert.throws(fn, TypeError)
