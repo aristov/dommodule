@@ -95,20 +95,21 @@ describe('ParentNodeAssembler', () => {
         })
     })
     describe('find, findAll', () => {
+        class TestAttr extends AttrAssembler {}
         let test, e1, e2, e3, a1, a2, a3, t1, t2, t3, c1, c2, c3
         beforeEach(() => {
             test = new TestElement([
                 e1 = new TestElement({
-                    attributes : a1 = new AttrAssembler('a1'),
+                    attributes : a1 = new TestAttr('a1'),
                     childNodes : [
                         t2 = new TextAssembler('t1'),
                         e2 = new TestElement({
-                            attributes : a2 = new AttrAssembler('a2'),
+                            attributes : a2 = new TestAttr('a2'),
                             childNodes : [
                                 c3 = new CommentAssembler('c3'),
                                 t3 = new TextAssembler('t3'),
                                 e3 = new TestElement({
-                                    attributes : a3 = new AttrAssembler('a3')
+                                    attributes : a3 = new TestAttr('a3')
                                 })
                             ]
                         }),
@@ -126,10 +127,10 @@ describe('ParentNodeAssembler', () => {
             assert.equal(test.find(TestElement), e1)
         })
         it('find(AttrAssembler)', () => {
-            assert.equal(test.find(AttrAssembler), a1)
+            assert.equal(test.find(TestAttr), a1)
         })
         it('find(TestElement, new String)', () => {
-            assert.equal(test.find(TestElement, '[attr=a2]'), e2)
+            assert.equal(test.find(TestElement, '[testattr=a2]'), e2)
         })
         it('find(TestElement, new Function)', () => {
             assert.equal(test.find(TestElement, ({ attributes }) => attributes.includes(a3)), e3)
@@ -149,14 +150,14 @@ describe('ParentNodeAssembler', () => {
             assert.equal(result[2], e3)
         })
         it('findAll(AttrAssembler)', () => {
-            const result = test.findAll(AttrAssembler)
+            const result = test.findAll(TestAttr)
             assert.lengthOf(result, 3)
             assert.equal(result[0], a1)
             assert.equal(result[1], a2)
             assert.equal(result[2], a3)
         })
         it('findAll(TestElement, new String)', () => {
-            const result = test.findAll(TestElement, '[attr]')
+            const result = test.findAll(TestElement, '[testattr]')
             assert.lengthOf(result, 3)
             assert.equal(result[0], e1)
             assert.equal(result[1], e2)
