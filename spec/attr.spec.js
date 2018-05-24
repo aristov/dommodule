@@ -215,13 +215,6 @@ describe('AttrAssembler', () => {
             assert.isFalse(ownerElement.node.hasAttribute(TestAttr.localName))
         })
     })
-    describe('wrong remove()', () => {
-        const test = new TestAttr
-        const fn = () => test.remove()
-        it('throws TypeError', () => {
-            assert.throws(fn, TypeError)
-        })
-    })
     describe('class extends AttrAssembler', () => {
         class FooBar extends AttrAssembler {
             static get namespace() {
