@@ -387,4 +387,20 @@ describe('AttrAssembler', () => {
             assert.equal(test2.getAttribute(Bar), 'foo')
         })
     })
+    describe('getValueOf', () => {
+        class SomeAttr extends AttrAssembler {}
+        let elem, attr
+        beforeEach(() => {
+            attr = new TestAttr({
+                ownerElement : elem = new TestElement,
+                value : 'foobar'
+            })
+        })
+        it('existing attr', () => {
+            assert.equal(TestAttr.getValueOf(elem), attr.value)
+        })
+        it('non existing attr', () => {
+            assert.equal(SomeAttr.getValueOf(elem), SomeAttr.defaultValue)
+        })
+    })
 })
