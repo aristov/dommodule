@@ -1121,6 +1121,15 @@ describe('ElementAssembler', () => {
             assert.equal(ElementAssembler.resolveElement(element2), ElementAssembler)
         })
     })
+    describe('generateId', () => {
+        const id = ElementAssembler.generateId()
+        it('matches', () => {
+            assert.match(id, /^ID\d{13,}$/)
+        })
+        it('unique', () => {
+            assert.notEqual(ElementAssembler.generateId(), id)
+        })
+    })
     /*describe('normalize', () => {
         const test = new TestElement(['text1', 'text2'])
         test.normalize()
