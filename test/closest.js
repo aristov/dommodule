@@ -1,11 +1,9 @@
-module.exports = function(selectors) {
-    let parentNode = this, matches
-    while(
-        // document has no .matches
-    (matches = parentNode && parentNode.matches) &&
-    !parentNode.matches(selectors)
-        ) {
-        parentNode = parentNode.parentNode
+module.exports = function(selector) {
+    let element = this
+    while(element) {
+        if(element.matches(selector)) {
+            return element
+        }
+        element = element.parentElement
     }
-    return matches? parentNode : null
 }
