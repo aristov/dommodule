@@ -1077,7 +1077,7 @@ describe('ElementAssembler', () => {
             assert.equal(res[0].node, id5)
         })
     })
-    describe('resolveElement', () => {
+    describe('resolveNodeType', () => {
         const namespace = 'http://example.com/ns#'
         class E1 extends ElementAssembler {}
         E1.register()
@@ -1096,29 +1096,29 @@ describe('ElementAssembler', () => {
         E3.register()
         it('localName only', () => {
             const element = document.createElementNS('', 'e1')
-            assert.equal(ElementAssembler.resolveElement(element), E1)
+            assert.equal(ElementAssembler.resolveNodeType(element), E1)
         })
         it('unknown localName', () => {
             const element = document.createElementNS('', 'e0')
-            assert.equal(ElementAssembler.resolveElement(element), ElementAssembler)
+            assert.equal(ElementAssembler.resolveNodeType(element), ElementAssembler)
         })
         it('namespace + localName', () => {
             const element = document.createElementNS(namespace, 'e2')
-            assert.equal(ElementAssembler.resolveElement(element), E2)
+            assert.equal(ElementAssembler.resolveNodeType(element), E2)
         })
         it('namespace + localName', () => {
             const element = document.createElementNS(namespace, 'e3')
-            assert.equal(ElementAssembler.resolveElement(element), E3)
+            assert.equal(ElementAssembler.resolveNodeType(element), E3)
         })
         it('namespace + unknown localName', () => {
             const element = document.createElementNS(namespace, 'e4')
-            assert.equal(ElementAssembler.resolveElement(element), Ex)
+            assert.equal(ElementAssembler.resolveNodeType(element), Ex)
         })
         it('unknown namespace + any localName', () => {
             const element1 = document.createElementNS('http://example.org/ns#', 'e1')
             const element2 = document.createElementNS('http://example.org/ns#', 'e0')
-            assert.equal(ElementAssembler.resolveElement(element1), ElementAssembler)
-            assert.equal(ElementAssembler.resolveElement(element2), ElementAssembler)
+            assert.equal(ElementAssembler.resolveNodeType(element1), ElementAssembler)
+            assert.equal(ElementAssembler.resolveNodeType(element2), ElementAssembler)
         })
     })
     describe('generateId', () => {
