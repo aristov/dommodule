@@ -1124,7 +1124,7 @@ describe('ElementAssembler', () => {
     describe('generateId', () => {
         const id = ElementAssembler.generateId()
         it('matches', () => {
-            assert.match(id, /^ID\d{13,}$/)
+            assert.match(id, /^ElementAssembler\d{13,}$/)
         })
         it('unique', () => {
             assert.notEqual(ElementAssembler.generateId(), id)
