@@ -110,8 +110,8 @@ describe('ElementAssembler', () => {
         it('hasAttributes()', () => {
             assert.isFalse(test.hasAttributes())
         })
-        it('hasChildNodes()', () => {
-            assert.isFalse(test.hasChildNodes())
+        it('node.hasChildNodes()', () => {
+            assert.isFalse(node.hasChildNodes())
         })
         it('serializeToString(node)', () => {
             assert.match(serializer.serializeToString(node), /^<foobar\s?\/>$/)
@@ -131,8 +131,8 @@ describe('ElementAssembler', () => {
         it('tagName', () => {
             assert.equal(test.tagName, 'element')
         })
-        it('hasChildNodes()', () => {
-            assert(test.hasChildNodes(), 'hasChildNodes()')
+        it('node.hasChildNodes()', () => {
+            assert(node.hasChildNodes(), 'node.hasChildNodes()')
         })
         it('childNodes.length', () => {
             assert.equal(test.childNodes.length, 1)
@@ -152,8 +152,8 @@ describe('ElementAssembler', () => {
         it('tagName', () => {
             assert.equal(test.tagName, 'element')
         })
-        it('hasChildNodes()', () => {
-            assert(test.hasChildNodes(), 'hasChildNodes()')
+        it('node.hasChildNodes()', () => {
+            assert(node.hasChildNodes(), 'node.hasChildNodes()')
         })
         it('childNodes.length', () => {
             assert.equal(test.childNodes.length, 1)
@@ -174,8 +174,8 @@ describe('ElementAssembler', () => {
         it('tagName', () => {
             assert.equal(test.tagName, 'element')
         })
-        it('hasChildNodes()', () => {
-            assert(test.hasChildNodes(), 'hasChildNodes()')
+        it('node.hasChildNodes()', () => {
+            assert(node.hasChildNodes(), 'node.hasChildNodes()')
         })
         it('childNodes.length', () => {
             assert.lengthOf(test.childNodes, 1)
@@ -198,8 +198,8 @@ describe('ElementAssembler', () => {
         it('tagName', () => {
             assert.equal(test.tagName, 'element')
         })
-        it('hasChildNodes()', () => {
-            assert(test.hasChildNodes(), 'hasChildNodes()')
+        it('node.hasChildNodes()', () => {
+            assert(node.hasChildNodes(), 'node.hasChildNodes()')
         })
         it('childNodes.length', () => {
             assert.lengthOf(test.childNodes, 1)
@@ -222,8 +222,8 @@ describe('ElementAssembler', () => {
         it('tagName', () => {
             assert.equal(test.tagName, 'element')
         })
-        it('hasChildNodes()', () => {
-            assert(test.hasChildNodes(), 'hasChildNodes()')
+        it('node.hasChildNodes()', () => {
+            assert(node.hasChildNodes(), 'node.hasChildNodes()')
         })
         it('childNodes.length', () => {
             assert.equal(test.childNodes.length, 1)
