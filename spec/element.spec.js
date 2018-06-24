@@ -273,22 +273,15 @@ describe('ElementAssembler', () => {
     describe('getAttributeNode(class extends AttrAssembler)', () => {
         const test = new TestElement
         const node = test.node
-        class Bar extends AttrAssembler {
-            static get prefix() {
-                return 'foo'
-            }
-            static get namespace() {
-                return 'http://example.com/ns'
-            }
-        }
-        node.setAttributeNS(Bar.namespace, Bar.qualifiedName, 'test')
+        class Bar extends AttrAssembler {}
+        node.setAttribute(Bar.localName, 'test')
         const attr = test.getAttributeNode(Bar)
         const attrNode = attr.node
         it('instanceof', () => {
             assert.instanceOf(attr, Bar)
         })
         it('attrNode.name', () => {
-            assert.equal(attrNode.name, Bar.qualifiedName)
+            assert.equal(attrNode.name, Bar.localName)
         })
         it('attrNode.value', () => {
             assert.equal(attrNode.value, 'test')
@@ -317,9 +310,10 @@ describe('ElementAssembler', () => {
         })
     })
     describe('setAttributeNode(new TestAttr)', () => {
+        class Foo extends AttrAssembler {}
         const test = new TestElement({ attrset : { foo : 'wiz' } })
         const node = test.node
-        const attr = new TestAttr({ name : 'foo', value : 'bar' })
+        const attr = new Foo({ value : 'bar' })
         test.setAttributeNode(attr)
         it('hasAttributes()', () => {
             assert(test.hasAttributes(), 'hasAttributes()')
@@ -527,15 +521,8 @@ describe('ElementAssembler', () => {
             assert.equal(test.getAttribute(TestAttr), 'foobar')
         })
     })
-    describe('hasAttribute(class extends AttrAssembler); getAttribute(class extends AttrAssembler)', () => {
-        class Bar extends AttrAssembler {
-            static get namespace() {
-                return 'http://example.com/ns'
-            }
-            static get prefix() {
-                return 'foo'
-            }
-        }
+    describe('hasAttribute and getAttribute', () => {
+        class Bar extends AttrAssembler {}
         const test = new TestElement({ attributes : new Bar('test') })
         it('hasAttribute()', () => {
             assert(test.hasAttribute(Bar), 'hasAttribute(Bar)')
@@ -561,14 +548,7 @@ describe('ElementAssembler', () => {
         })
     })
     describe('removeAttribute(class extends AttrAssembler)', () => {
-        class Bar extends AttrAssembler {
-            static get namespace() {
-                return 'http://example.com/ns'
-            }
-            static get prefix() {
-                return 'foo'
-            }
-        }
+        class Bar extends AttrAssembler {}
         const test = new TestElement({ attributes : new Bar('test') })
         const node = test.node
         it('hasAttributes()', () => {
@@ -837,10 +817,11 @@ describe('ElementAssembler', () => {
         })
     })
     describe('new TestElement({ attributes : new Array })', () => {
+        class Foo extends AttrAssembler {}
         let foo, wiz
         const test = new TestElement({
             attributes : [
-                foo = new TestAttr({ name : 'foo', value : 'bar' }),
+                foo = new Foo({ value : 'bar' }),
                 wiz = document.createAttribute('wiz')
             ]
         })
@@ -872,10 +853,7 @@ describe('ElementAssembler', () => {
             assert.equal(xml, sample)
         })
         it('setAttributeNode(new TestAttr)', () => {
-            const attr = new TestAttr({
-                name : 'foo',
-                value : 'test'
-            })
+            const attr = new Foo({ value : 'test' })
             test.setAttributeNode(attr)
             it('attributes', () => {
                 assert.equal(attributes.length, 2)
@@ -884,22 +862,6 @@ describe('ElementAssembler', () => {
             it('getAttribute', () => {
                 assert.equal(test.getAttribute('foo'), 'test')
             })
-        })
-    })
-    describe('setAttributeNode(new TestAttr({ namespace }))', () => {
-        const test = new TestElement
-        const attr = new TestAttr({
-            namespace : 'http://example.com/ns',
-            name : 'foo:bar',
-            value : 'test'
-        })
-        test.setAttributeNode(attr)
-        it('attributes', () => {
-            assert.equal(test.attributes.length, 1)
-            assert.equal(test.attributes[0], attr)
-        })
-        it('node.getAttributeNS', () => {
-            assert.equal(test.node.getAttributeNS('http://example.com/ns', 'bar'), 'test')
         })
     })
     describe('setAttributeNode(document.createAttributeNS())', () => {

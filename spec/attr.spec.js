@@ -42,42 +42,24 @@ describe('AttrAssembler', () => {
             assert.equal(node.nodeValue, '')
         })
     })
-    describe('new TestAttr({ name })', () => {
-        const name = 'foobar'
-        const test = new TestAttr({ name })
+    describe('Create attribute with localName from class name', () => {
+        class Foobar extends AttrAssembler {}
+        const test = new Foobar
         it('name', () => {
-            assert.equal(test.name, name)
+            assert.equal(test.name, Foobar.localName)
         })
         it('value', () => {
             assert.equal(test.value, '')
         })
     })
-    describe('new TestAttr({ name, value })', () => {
-        const test = new TestAttr({ name : 'foo', value : 'bar' })
+    describe('Create attribute with value', () => {
+        class Foo extends AttrAssembler {}
+        const test = new Foo({ value : 'bar' })
         it('name', () => {
-            assert.equal(test.name, 'foo')
+            assert.equal(test.name, Foo.localName)
         })
         it('value', () => {
             assert.equal(test.value, 'bar')
-        })
-    })
-    describe('new TestAttr({ namespace, prefix, localName, value })', () => {
-        const test = new TestAttr({
-            namespace : 'http://www.w3.org/XML/1998/namespace',
-            prefix : 'xml',
-            localName : 'id',
-            value : 'foobar'
-        })
-        it('namespaceURI', () => {
-            assert.equal(test.namespaceURI, 'http://www.w3.org/XML/1998/namespace')
-        })
-        it('prefix, localName, name', () => {
-            assert.equal(test.prefix, 'xml')
-            assert.equal(test.localName, 'id')
-            assert.equal(test.name, 'xml:id')
-        })
-        it('value', () => {
-            assert.equal(test.value, 'foobar')
         })
     })
     describe('new TestAttr({ node })', () => {
@@ -125,7 +107,8 @@ describe('AttrAssembler', () => {
         })
     })
     describe('ownerElement = document.createElementNS()', () => {
-        const test = new TestAttr({ name : 'foo', value : 'bar' })
+        class Foo extends AttrAssembler {}
+        const test = new Foo({ value : 'bar' })
         const elementNode = document.createElementNS('', 'foobar')
         test.ownerElement = elementNode
         it('node.ownerElement', () => {
@@ -140,31 +123,6 @@ describe('AttrAssembler', () => {
         it('serializeToString(element)', () => {
             const xml = serializer.serializeToString(elementNode)
             assert.match(xml, /^<foobar foo="bar"\s?\/>$/)
-        })
-    })
-    describe('namespace, ownerElement = document.createElementNS()', () => {
-        const test = new TestAttr({
-            namespace : 'http://example.com/ns',
-            name : 'foo:bar',
-            value : 'wiz'
-        })
-        const elementNode = document.createElementNS('', 'foobar')
-        test.ownerElement = elementNode
-        it('node.ownerElement', () => {
-            assert.equal(test.node.ownerElement, elementNode)
-        })
-        it('ownerElement', () => {
-            assert.instanceOf(test.ownerElement, ElementAssembler)
-        })
-        it('ownerElement.node', () => {
-            assert.equal(test.ownerElement.node, elementNode)
-        })
-        it('serializeToString(element)', () => {
-            const xml = serializer.serializeToString(elementNode)
-            const sample = /^<foobar .+\/>$/
-            assert.match(xml, sample)
-            assert.match(xml, / xmlns\:foo="http\:\/\/example.com\/ns"/)
-            assert.match(xml, / foo\:bar="wiz"/)
         })
     })
     /*describe('ownerElement = { localName }', () => {
@@ -213,32 +171,6 @@ describe('AttrAssembler', () => {
         test.remove()
         it('ownerElement.node.hasAttribute()', () => {
             assert.isFalse(ownerElement.node.hasAttribute(TestAttr.localName))
-        })
-    })
-    describe('class extends AttrAssembler', () => {
-        class FooBar extends AttrAssembler {
-            static get namespace() {
-                return 'http://example.com/ns'
-            }
-            static get prefix() {
-                return 'wiz'
-            }
-        }
-        const test = new FooBar
-        it('static qualifiedName', () => {
-            assert.equal(FooBar.qualifiedName, 'wiz:foobar')
-        })
-        it('name', () => {
-            assert.equal(test.name, 'wiz:foobar')
-        })
-        it('namespaceURI', () => {
-            assert.equal(test.namespaceURI, 'http://example.com/ns')
-        })
-        it('value', () => {
-            assert.equal(test.value, '')
-        })
-        it('static selector', () => {
-            assert.equal(FooBar.selector, '[foobar]')
         })
     })
     describe('init', () => {
