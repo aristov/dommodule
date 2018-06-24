@@ -1,30 +1,38 @@
 'use strict'
 
 const path = require('path')
-const { optimize : { UglifyJsPlugin } } = require('webpack')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const distPath = path.join(__dirname, 'dist')
-const babelLoader = {
-    test : /\.js$/,
-    loader : 'babel-loader'
-}
+const rules = [
+    {
+        test : /\.js$/,
+        use : { loader : 'babel-loader' }
+    }
+]
 const uglifyJsPlugin = new UglifyJsPlugin({
-    compress : { warnings : false },
-    mangle : { keep_fnames : true },
-    comments : false
+    uglifyOptions : {
+        keep_fnames : true,
+        keep_classnames : true,
+        output : {
+            comments : false
+        }
+    }
 })
 
 module.exports = [
     {
+        mode : 'none',
         entry : './lib/index.js',
         output : {
             path : distPath,
             filename : 'dist.dommodule.js',
             libraryTarget : 'commonjs'
         },
-        module : { loaders : [babelLoader] }
+        module : { rules }
     },
     {
+        mode : 'none',
         entry : './lib/index.js',
         output : {
             path : distPath,
@@ -32,15 +40,16 @@ module.exports = [
             library : 'dommodule',
             libraryTarget : 'window'
         },
-        module : { loaders : [babelLoader] },
+        module : { rules },
         plugins : [uglifyJsPlugin]
     },
     {
+        mode : 'none',
         entry : './spec/index.spec.js',
         output : {
             path : path.join(__dirname, 'docs', 'build'),
             filename : 'build.spec.js'
         },
-        module : { loaders : [babelLoader] }
+        module : { rules }
     }
 ]
