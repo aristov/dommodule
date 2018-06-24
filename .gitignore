@@ -1,9 +1,8 @@
 .DS_Store
-.idea/
-node_modules
-npm-debug.log
-/dist
-/docs/build
-/coverage
+.idea
 .nyc_output
-/tmp
+npm-debug.log
+node_modules
+dist
+docs/build
+tmp
