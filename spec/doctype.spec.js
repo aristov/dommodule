@@ -31,22 +31,19 @@ describe('DocumentTypeAssembler', () => {
             assert.match(serializer.serializeToString(node), /^<!DOCTYPE element(?: PUBLIC "" "")?>$/)
         })
     })
-    describe('new DocumentTypeAssembler(new String)', () => {
-        const test = new DocumentTypeAssembler('html')
-        const node = test.node
-        it('node.name', () => {
-            assert.equal(node.name, 'html')
-        })
-        it('serializeToString(node)', () => {
-            assert.match(serializer.serializeToString(node), /^<!DOCTYPE html(?: PUBLIC "" "")?>$/)
-        })
-    })
-    describe('new DocumentTypeAssembler({ qualifiedName, publicId, systemId })', () => {
-        const test = new DocumentTypeAssembler({
-            qualifiedName : 'html',
-            publicId : '-//W3C//DTD XHTML 1.1//EN',
-            systemId : 'http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd'
-        })
+    describe('Create document type with specified publicId and systemId', () => {
+        class XHtml11 extends DocumentTypeAssembler {
+            static get qualifiedName() {
+                return 'html'
+            }
+            static get publicId() {
+                return '-//W3C//DTD XHTML 1.1//EN'
+            }
+            static get systemId() {
+                return 'http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd'
+            }
+        }
+        const test = new XHtml11
         const node = test.node
         it('node.name', () => {
             assert.equal(node.name, 'html')
@@ -70,12 +67,9 @@ describe('DocumentTypeAssembler', () => {
             assert.equal(test.node, node)
         })
     })
-    /*describe('doctype({ qualifiedName, parentNode : new DocumentAssembler })', () => { // todo MS Edge
+    describe('new TestDocumentType({ parentNode : new DocumentAssembler })', () => {
         const doc = new DocumentAssembler
-        const test = doctype({
-            qualifiedName : 'example',
-            parentNode : doc
-        })
+        const test = new TestDocumentType({ parentNode : doc })
         const node = test.node
         it('node.parentNode', () => {
             assert.equal(node.parentNode, doc.node)
@@ -85,26 +79,13 @@ describe('DocumentTypeAssembler', () => {
         })
         it('serializeToString(document.node)', () => {
             const xml = serializer.serializeToString(doc.node)
-            const sample = /^<\!DOCTYPE example>$/
+            const sample = /^<\!DOCTYPE element>$/
             assert.match(xml, sample)
         })
-    })*/
-    /*describe('doctype({ parentNode : new Document })', () => { // todo MS Edge
-        const doc = new Document
-        const test = doctype({ parentNode : doc })
-        const node = test.node
-        it('parentNode', () => {
-            assert.equal(node.parentNode, doc)
-        })
-        it('serializeToString(document.node)', () => {
-            const xml = serializer.serializeToString(doc)
-            const sample = /^<\!DOCTYPE element>/
-            assert.match(xml, sample)
-        })
-    })*/
-    describe('new TestDocumentType({ parentNode : implementation.createDocument() })', () => {
+    })
+    describe('new TestDocumentType({ parentNode : new Document })', () => {
         const doctypeNode = implementation.createDocumentType('test', '', '')
-        const doc = implementation.createDocument('', 'test', doctypeNode)
+        const doc = new Document
         const test = new TestDocumentType({ parentNode : doc })
         const node = test.node
         it('parentNode', () => {
@@ -112,7 +93,7 @@ describe('DocumentTypeAssembler', () => {
         })
         it('serializeToString(document.node)', () => {
             const xml = serializer.serializeToString(doc)
-            const sample = /^<\!DOCTYPE element(?: PUBLIC "" "")?>\n?<test\s?\/>/
+            const sample = /^<\!DOCTYPE element(?: PUBLIC "" "")?>$/
             assert.match(xml, sample)
         })
     })
