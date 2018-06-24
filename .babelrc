@@ -9,7 +9,8 @@
           "istanbul",
           {
             "exclude": [
-              "**/*.spec.js"
+              "spec",
+              "shim"
             ]
           }
         ]
