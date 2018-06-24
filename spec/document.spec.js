@@ -94,8 +94,8 @@ describe('DocumentAssembler', () => {
             assert.match(xml, sample)
         })
     })
-    describe('new DocumentAssembler({ documentElement : null }); documentElement = document.createElementNS()', () => {
-        const test = new DocumentAssembler({ documentElement : null })
+    describe('new DocumentAssembler; documentElement = document.createElementNS()', () => {
+        const test = new DocumentAssembler
         const element = document.createElementNS('', 'test')
         test.documentElement = element
         it('documentElement.node', () => {
@@ -106,10 +106,10 @@ describe('DocumentAssembler', () => {
             assert.equal(xml, '<test/>')
         })
     })
-    describe('new TestDocument({ documentElement : null })', () => {
+    describe('new TestDocument', () => {
         let test, node
         beforeEach(() => {
-            test = new TestDocument({ documentElement : null })
+            test = new TestDocument
             node = test.node
         })
         it('doctype', () => {
@@ -120,50 +120,6 @@ describe('DocumentAssembler', () => {
         })
         it('serializeToString(node)', () => {
             assert.equal(serializer.serializeToString(node), '')
-        })
-        it('<...>; serializeToString(node)', () => {
-            {
-                const $doctype = implementation.createDocumentType('test', '', '')
-                test.doctype = $doctype
-                assert.equal(test.doctype.node, $doctype)
-            }
-            ''
-            {
-                assert.equal(serializer.serializeToString(node), '<!DOCTYPE test>')
-            }
-            'documentElement = new String; documentElement.textContent'
-            {
-                test.documentElement = 'foobar'
-                assert.equal(test.documentElement.textContent, 'foobar')
-            }
-            'serializeToString(node)'
-            {
-                const sample = /^<\!DOCTYPE test>\n?<element>foobar<\/element>$/
-                assert.match(serializer.serializeToString(node), sample)
-            }
-            'doctype = implementation.createDocumentType(); doctype.node'
-            {
-                const $doctype = implementation.createDocumentType('example', '', '')
-                test.doctype = $doctype
-                assert.equal(test.doctype.node, $doctype)
-            }
-            'serializeToString(node)'
-            {
-                const sample = /^<\!DOCTYPE example>\n?<element>foobar<\/element>$/
-                assert.match(serializer.serializeToString(node), sample)
-            }
-            'doctype.remove(); doctype = implementation.createDocumentType(); doctype.node'
-            {
-                const $doctype = implementation.createDocumentType('element', '', '')
-                test.doctype.remove()
-                test.doctype = $doctype
-                assert.equal(test.doctype.node, $doctype)
-            }
-            'serializeToString(node)'
-            {
-                const sample = /^<\!DOCTYPE element>\n?<element>foobar<\/element>$/
-                assert.match(serializer.serializeToString(node), sample)
-            }
         })
     })
     describe('new DocumentAssembler({ node })', () => {
