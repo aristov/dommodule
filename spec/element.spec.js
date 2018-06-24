@@ -774,8 +774,8 @@ describe('ElementAssembler', () => {
                 '</element>'
             assert.equal(xml, sample)
         })
-        it('removeChild(child); childNodes.length; elementIndex', () => {
-            test.removeChild(bar)
+        it('child.remove(); childNodes.length; elementIndex', () => {
+            bar.remove()
             assert.equal(test.childNodes.length, 2)
             assert.equal(bar.elementIndex, -1)
             assert.equal(wiz.elementIndex, 1)

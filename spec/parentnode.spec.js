@@ -18,11 +18,11 @@ class TestElement extends ElementAssembler {
 }
 
 describe('ParentNodeAssembler', () => {
-    describe('insertBefore(instance, node)', () => {
+    describe('prepend(instance)', () => {
         const child = new TestElement({ className : 'old' })
         const test = new TestElement(child)
         const newChild = new TestElement({ className : 'new' })
-        test.insertBefore(newChild, child.node)
+        test.prepend(newChild)
         it('childNodes.length', () => {
             assert.lengthOf(test.childNodes, 2)
         })
@@ -37,11 +37,11 @@ describe('ParentNodeAssembler', () => {
             assert.match(serializer.serializeToString(test.node), sample)
         })
     })
-    describe('insertBefore(node, instance)', () => {
+    describe('prepend(node)', () => {
         const child = new TestElement({ className : 'old' })
         const test = new TestElement(child)
         const newChild = new TestElement({ className : 'new' })
-        test.insertBefore(newChild.node, child)
+        test.prepend(newChild.node)
         it('childNodes.length', () => {
             assert.lengthOf(test.childNodes, 2)
         })
@@ -56,11 +56,11 @@ describe('ParentNodeAssembler', () => {
             assert.match(serializer.serializeToString(test.node), sample)
         })
     })
-    describe('replaceChild(instance, node)', () => {
+    describe('replaceWith(instance)', () => {
         const child = new TestElement({ className : 'old' })
         const test = new TestElement(child)
         const newChild = new TestElement({ className : 'new' })
-        test.replaceChild(newChild, child.node)
+        child.replaceWith(newChild)
         it('childNodes.length', () => {
             assert.lengthOf(test.childNodes, 1)
         })
@@ -75,11 +75,11 @@ describe('ParentNodeAssembler', () => {
             assert.match(serializer.serializeToString(test.node), sample)
         })
     })
-    describe('replaceChild(node, instance)', () => {
+    describe('replaceWith(node)', () => {
         const child = new TestElement({ className : 'old' })
         const test = new TestElement(child)
         const newChild = new TestElement({ className : 'new' })
-        test.replaceChild(newChild.node, child)
+        child.replaceWith(newChild.node)
         it('childNodes.length', () => {
             assert.lengthOf(test.childNodes, 1)
         })
