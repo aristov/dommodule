@@ -18,4 +18,15 @@ if(Object.getPrototypeOf(window.Attr) !== window.Node) {
     })
 }
 
+/*
+ * https://github.com/jsdom/jsdom/issues/2273
+ */
+const { TextAssembler, CommentAssembler } = require('../lib/index')
+TextAssembler.create = function() {
+    return window.document.createTextNode(this.data)
+}
+CommentAssembler.create = function() {
+    return window.document.createComment(this.data)
+}
+
 require('../spec/index.spec.js')
