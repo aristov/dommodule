@@ -2,23 +2,25 @@
 
 const path = require('path')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-
 const distPath = path.join(__dirname, 'dist')
-const rules = [
-    {
+const rules = []
+const plugins = []
+
+if(process.env.NODE_ENV === 'production') {
+    rules.push({
         test : /\.js$/,
         use : { loader : 'babel-loader' }
-    }
-]
-const uglifyJsPlugin = new UglifyJsPlugin({
-    uglifyOptions : {
-        keep_fnames : true,
-        keep_classnames : true,
-        output : {
-            comments : false
+    })
+    plugins.push(new UglifyJsPlugin({
+        uglifyOptions : {
+            keep_fnames : true,
+            keep_classnames : true,
+            output : {
+                comments : false
+            }
         }
-    }
-})
+    }))
+}
 
 module.exports = [
     {
@@ -41,7 +43,7 @@ module.exports = [
             libraryTarget : 'window'
         },
         module : { rules },
-        plugins : [uglifyJsPlugin]
+        plugins
     },
     {
         mode : 'none',

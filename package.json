@@ -15,7 +15,7 @@
     "mocha": "mocha",
     "karma": "karma start",
     "test-full": "npm run karma && npm test",
-    "build": "webpack",
+    "build": "NODE_ENV=production webpack",
     "watch": "webpack -w",
     "api": "rm -rf dist/api && npm run jsdoc && npm run esdoc",
     "esdoc": "esdoc",
