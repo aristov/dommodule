@@ -24,7 +24,7 @@ class TestAttr extends AttrAssembler {
 }
 
 describe('ElementAssembler', () => {
-    describe('new TestElement', () => {
+    describe('Create element with custom localName', () => {
         const test = new TestElement
         const node = test.node
         it('node', () => {
@@ -46,21 +46,9 @@ describe('ElementAssembler', () => {
             assert.match(serializer.serializeToString(node), /^<element\s?\/>$/)
         })
     })
-    describe('new TestElement({ localName })', () => {
-        const test = new TestElement({ localName : 'foobar' })
-        const node = test.node
-        it('localName', () => {
-            assert.equal(test.localName, 'foobar')
-        })
-        it('prefix', () => {
-            assert.isNull(test.prefix)
-        })
-        it('serializeToString(node)', () => {
-            assert.match(serializer.serializeToString(node), /^<foobar\s?\/>$/)
-        })
-    })
-    describe('new TestElement({ qualifiedName })', () => {
-        const test = new TestElement({ qualifiedName : 'foobar' })
+    describe('Create element without namespace', () => {
+        class Foobar extends ElementAssembler {}
+        const test = new Foobar
         const node = test.node
         it('namespaceURI', () => {
             assert.isNull(test.namespaceURI)
@@ -78,12 +66,16 @@ describe('ElementAssembler', () => {
             assert.match(serializer.serializeToString(node), /^<foobar\s?\/>$/)
         })
     })
-    describe('new TestElement({ namespace, prefix, localName })', () => {
-        const test = new TestElement({
-            namespace : 'http://example.com/namespace',
-            prefix : 'foo',
-            localName : 'bar'
-        })
+    describe('Create element with namespace and prefix', () => {
+        class Bar extends ElementAssembler {
+            static get namespace() {
+                return 'http://example.com/namespace'
+            }
+            static get prefix() {
+                return 'foo'
+            }
+        }
+        const test = new Bar
         const node = test.node
         it('namespaceURI', () => {
             assert.equal(test.namespaceURI, 'http://example.com/namespace')
@@ -105,34 +97,7 @@ describe('ElementAssembler', () => {
             assert.match(serializer.serializeToString(node), sample)
         })
     })
-    describe('new TestElement({ namespace, qualifiedName })', () => {
-        const namespace = 'http://example.com/namespace'
-        const test = new TestElement({
-            namespace,
-            qualifiedName : 'foo:bar'
-        })
-        const node = test.node
-        it('namespaceURI', () => {
-            assert.equal(test.namespaceURI, namespace)
-        })
-        it('prefix', () => {
-            assert.equal(test.prefix, 'foo')
-        })
-        it('localName', () => {
-            assert.equal(test.localName, 'bar')
-        })
-        it('tagName', () => {
-            assert.equal(test.tagName, 'foo:bar')
-        })
-        it('hasAttributes()', () => {
-            assert.isFalse(test.hasAttributes())
-        })
-        it('serializeToString(node)', () => {
-            const sample = /^<foo:bar xmlns:foo="http:\/\/example\.com\/namespace"\s?\/>$/
-            assert.match(serializer.serializeToString(node), sample)
-        })
-    })
-    describe('new TestElement({ node : document.createElementNS() })', () => {
+    describe('Create element with explicitly specified node', () => {
         const foobar = document.createElementNS('', 'foobar')
         const test = new TestElement({ node : foobar })
         const node = test.node
@@ -152,7 +117,7 @@ describe('ElementAssembler', () => {
             assert.match(serializer.serializeToString(node), /^<foobar\s?\/>$/)
         })
     })
-    describe('new TestElement({ node : document.createTextNode() })', () => {
+    describe('Create element with incorrectly specified node', () => {
         const foobar = document.createTextNode('foobar')
         const fn = () => new TestElement({ node : foobar })
         it('throws TypeError', () => {
@@ -972,12 +937,13 @@ describe('ElementAssembler', () => {
         })
     })
     describe('children', () => {
+        class Bar extends ElementAssembler {}
         let test, foo, bar, wiz, children
         beforeEach(() => {
             test = new TestElement({
                 children : [
                     foo = document.createElementNS('', 'foo'),
-                    bar = new TestElement({ localName : 'bar' }),
+                    bar = new Bar,
                     wiz = document.createElementNS('', 'wiz'),
                 ]
             })

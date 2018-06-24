@@ -1,5 +1,5 @@
 import chai from 'chai'
-import { DocumentAssembler, ElementAssembler, doctype } from '../lib'
+import { DocumentAssembler, ElementAssembler, DocumentTypeAssembler } from '../lib'
 
 const { assert } = chai
 const { Document, Element, XMLSerializer, document } = window
@@ -42,13 +42,21 @@ describe('DocumentAssembler', () => {
         })
     })
     describe('new DocumentAssembler({ doctype, documentElement })', () => {
+        class Example extends ElementAssembler {}
+        class ExampleDocument extends DocumentAssembler {
+            static get elementAssembler() {
+                return Example
+            }
+        }
+        class ExampleDoctype extends DocumentTypeAssembler {
+            static get documentAssembler() {
+                return ExampleDocument
+            }
+        }
         let $doctype, $element
         const test = new DocumentAssembler({
-            doctype : $doctype = doctype('example'),
-            documentElement : $element = new TestElement({
-                localName : 'example',
-                id : 'test'
-            })
+            doctype : $doctype = new ExampleDoctype,
+            documentElement : $element = new Example({ id : 'test' })
         })
         it('doctype', () => {
             assert.equal(test.doctype, $doctype)

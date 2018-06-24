@@ -123,13 +123,14 @@ describe('Common', () => {
             assert.equal(xml, sample)
         })
     })
-    describe('new TestElement({ onclick })', () => {
+    describe('new Button({ onclick })', () => {
+        class Button extends ElementAssembler {
+            static get namespace() {
+                return 'http://www.w3.org/1999/xhtml'
+            }
+        }
         const onclick = sinon.spy()
-        const test = new TestElement({
-            namespace : 'http://www.w3.org/1999/xhtml',
-            localName : 'button',
-            onclick
-        })
+        const test = new Button({ onclick })
         test.node.click()
         it('node.onclick', () => {
             assert.equal(test.node.onclick, onclick)

@@ -167,7 +167,7 @@ describe('AttrAssembler', () => {
             assert.match(xml, / foo\:bar="wiz"/)
         })
     })
-    describe('ownerElement = { localName }', () => {
+    /*describe('ownerElement = { localName }', () => {
         const test = new TestAttr({
             ownerElement : { localName : 'test' },
             name : 'foo',
@@ -183,7 +183,7 @@ describe('AttrAssembler', () => {
             const xml = serializer.serializeToString(test.ownerElement.node)
             assert.match(xml, /^<test foo="bar"\s?\/>$/)
         })
-    })
+    })*/
     describe('remove()', () => {
         const test = new TestAttr({ value : 'foobar' })
         const ownerElement = new TestElement
