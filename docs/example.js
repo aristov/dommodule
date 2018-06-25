@@ -1,24 +1,42 @@
 const {
     DocumentAssembler,
-    attr, comment, doctype,
-    element, fragment, text
+    AttrAssembler, CommentAssembler, DocumentTypeAssembler,
+    ElementAssembler, DocumentFragmentAssembler, TextAssembler
 } = dommodule
 
-new DocumentAssembler({
+class Example extends ElementAssembler {}
+
+class ExampleDocument extends DocumentAssembler {
+    static get elementAssembler() {
+        return Example
+    }
+}
+
+class ExampleDoctype extends DocumentTypeAssembler {
+    static get documentAssembler() {
+        return ExampleDocument
+    }
+}
+
+class Lang extends AttrAssembler {
+    static get namespace() {
+        return 'http://www.w3.org/XML/1998/namespace'
+    }
+    static get prefix() {
+        return 'xml'
+    }
+}
+
+new ExampleDocument({
     node : document,
     title : 'dommodule: example',
-    childNodes : [
-        doctype('example'),
-        fragment([
-            comment(new Date + ' version 1.0.0'),
-            element({
-                localName : 'example',
-                attributes : attr({
-                    namespace : 'http://www.w3.org/XML/1998/namespace',
-                    name : 'xml:lang',
-                    value : 'en'
-                }),
-                childNodes : text('Hello world!')
+    children : [
+        new ExampleDoctype,
+        new DocumentFragmentAssembler([
+            new CommentAssembler(new Date + ' version 1.0.0'),
+            new Example({
+                attributes : new Lang('en'),
+                children : new TextAssembler('Hello world!')
             })
         ])
     ]
