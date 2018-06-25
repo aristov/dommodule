@@ -20,7 +20,7 @@ class TestAttr extends AttrAssembler {
 
 describe('AttrAssembler', () => {
     describe('new TestAttr', () => {
-        const name = TestAttr.qualifiedName
+        const name = TestAttr.localName
         const test = new TestAttr
         const node = test.node
         it('node', () => {
@@ -32,7 +32,7 @@ describe('AttrAssembler', () => {
         it('value', () => {
             assert.equal(test.value, '')
         })
-        it.skip('node.nodeType', () => { // todo jsdom
+        it('node.nodeType', () => { 
             assert.equal(node.nodeType, Node.ATTRIBUTE_NODE)
         })
         it('node.nodeName', () => {
