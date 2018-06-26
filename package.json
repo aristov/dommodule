@@ -56,7 +56,7 @@
   },
   "homepage": "https://github.com/aristov/dommodule#readme",
   "dependencies": {
-    "esmodule": "github:aristov/esmodule"
+    "esmodule": "^0.0.3"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
