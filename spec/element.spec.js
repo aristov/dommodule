@@ -287,12 +287,12 @@ describe('ElementAssembler', () => {
             assert.equal(attrNode.value, 'test')
         })
     })
-    describe('setAttributeNode(document.createAttribute())', () => {
+    describe('setAttr(document.createAttribute())', () => {
         const test = new TestElement
         const node = test.node
         const attrNode = document.createAttribute('foo')
         attrNode.value = 'bar'
-        test.setAttributeNode(attrNode)
+        test.setAttr(attrNode)
         it('node.hasAttributes()', () => {
             assert(node.hasAttributes(), 'node.hasAttributes()')
         })
@@ -309,12 +309,12 @@ describe('ElementAssembler', () => {
             assert.match(serializer.serializeToString(node), /^<element foo="bar"\s?\/>$/)
         })
     })
-    describe('setAttributeNode(new TestAttr)', () => {
+    describe('setAttr(new TestAttr)', () => {
         class Foo extends AttrAssembler {}
         const test = new TestElement({ attrset : { foo : 'wiz' } })
         const node = test.node
         const attr = new Foo({ value : 'bar' })
-        test.setAttributeNode(attr)
+        test.setAttr(attr)
         it('node.hasAttributes()', () => {
             assert(node.hasAttributes(), 'node.hasAttributes()')
         })
@@ -338,7 +338,7 @@ describe('ElementAssembler', () => {
         const test = new TestElement
         const node = test.node
         const attr = new TestAttr('foobar')
-        test.setAttributeNode(attr)
+        test.setAttr(attr)
         const removedAttr = test.removeAttributeNode(attr)
         it('attrs equal', () => {
             assert.equal(removedAttr, attr)
@@ -451,10 +451,10 @@ describe('ElementAssembler', () => {
             assert.throws(fn)
         })
     })
-    describe('setAttribute(new String, new String)', () => {
+    describe('setAttr(new String, new String)', () => {
         const test = new TestElement
         const node = test.node
-        test.setAttribute('foo', 'bar')
+        test.setAttr('foo', 'bar')
         it('node.hasAttributes()', () => {
             assert(node.hasAttributes(), 'node.hasAttributes()')
         })
@@ -471,10 +471,10 @@ describe('ElementAssembler', () => {
             assert.match(serializer.serializeToString(node), /^<element foo="bar"\s?\/>$/)
         })
     })
-    describe('setAttribute(TestAttr, new String)', () => {
+    describe('setAttr(TestAttr, new String)', () => {
         const test = new TestElement
         const node = test.node
-        test.setAttribute(TestAttr, 'foobar')
+        test.setAttr(TestAttr, 'foobar')
         it('node.hasAttributes()', () => {
             assert(node.hasAttributes(), 'node.hasAttributes()')
         })
@@ -491,11 +491,11 @@ describe('ElementAssembler', () => {
             assert.match(serializer.serializeToString(node), /^<element attr="foobar"\s?\/>$/)
         })
     })
-    describe('node.setAttribute(); setAttribute(TestAttr, new String)', () => {
+    describe('node.setAttribute(); setAttr(TestAttr, new String)', () => {
         const test = new TestElement
         const node = test.node
         node.setAttribute('attr', 'test')
-        test.setAttribute(TestAttr, 'foobar')
+        test.setAttr(TestAttr, 'foobar')
         it('node.hasAttributes()', () => {
             assert(node.hasAttributes(), 'node.hasAttributes()')
         })
@@ -852,9 +852,9 @@ describe('ElementAssembler', () => {
             const sample = '<element foo="bar" wiz=""/>'
             assert.equal(xml, sample)
         })
-        it('setAttributeNode(new TestAttr)', () => {
+        it('setAttr(new TestAttr)', () => {
             const attr = new Foo({ value : 'test' })
-            test.setAttributeNode(attr)
+            test.setAttr(attr)
             it('attributes', () => {
                 assert.equal(attributes.length, 2)
                 assert.equal(attributes[0], attr)
@@ -864,10 +864,10 @@ describe('ElementAssembler', () => {
             })
         })
     })
-    describe('setAttributeNode(document.createAttributeNS())', () => {
+    describe('setAttr(document.createAttributeNS())', () => {
         const test = new TestElement
         const attrNode = document.createAttributeNS('http://example.com/ns', 'foo:bar')
-        test.setAttributeNode(attrNode)
+        test.setAttr(attrNode)
         it('attributes', () => {
             assert.equal(test.attributes.length, 1)
             assert.equal(test.attributes[0].node, attrNode)

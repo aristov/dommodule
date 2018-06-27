@@ -145,7 +145,7 @@ describe('AttrAssembler', () => {
     describe('remove()', () => {
         const test = new TestAttr({ value : 'foobar' })
         const ownerElement = new TestElement
-        ownerElement.setAttributeNode(test)
+        ownerElement.setAttr(test)
         test.remove()
         it('node.ownerElement', () => {
             assert.isNull(test.node.ownerElement)
