@@ -1,7 +1,11 @@
 const {
+    AttrAssembler,
+    CommentAssembler,
     DocumentAssembler,
-    AttrAssembler, CommentAssembler, DocumentTypeAssembler,
-    ElementAssembler, DocumentFragmentAssembler, TextAssembler
+    DocumentFragmentAssembler,
+    DocumentTypeAssembler,
+    ElementAssembler,
+    TextAssembler
 } = dommodule
 
 class Example extends ElementAssembler {}
