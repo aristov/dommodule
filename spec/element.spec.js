@@ -564,9 +564,6 @@ describe('ElementAssembler', () => {
         it('className', () => {
             assert.equal(test.className, 'foo bar')
         })
-        it('matches selector', () => {
-            assert(test.matches('.foo'), 'matches selector')
-        })
         it('serializeToString(node)', () => {
             const xml = serializer.serializeToString(test.node)
             assert.match(xml, /^<element class="foo bar"\s?\/>$/)
@@ -1021,7 +1018,7 @@ describe('ElementAssembler', () => {
     })
     describe('generateId', () => {
         const id = ElementAssembler.generateId()
-        it('matches', () => {
+        it('match', () => {
             assert.match(id, /^ElementAssembler\d{13,}$/)
         })
         it('unique', () => {
