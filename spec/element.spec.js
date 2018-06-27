@@ -311,7 +311,7 @@ describe('ElementAssembler', () => {
     })
     describe('setAttr(new TestAttr)', () => {
         class Foo extends AttrAssembler {}
-        const test = new TestElement({ attrset : { foo : 'wiz' } })
+        const test = new TestElement({ attributes : { foo : 'wiz' } })
         const node = test.node
         const attr = new Foo({ value : 'bar' })
         test.setAttr(attr)
@@ -486,7 +486,7 @@ describe('ElementAssembler', () => {
         })
     })
     describe('hasAttr(TestAttr); getAttribute(TestAttr)', () => {
-        const test = new TestElement({ attrset : { attr : 'foobar' } })
+        const test = new TestElement({ attributes : { attr : 'foobar' } })
         it('hasAttr()', () => {
             assert(test.hasAttr(TestAttr), 'hasAttr(TestAttr)')
         })
@@ -505,7 +505,7 @@ describe('ElementAssembler', () => {
         })
     })
     describe('removeAttr(new String)', () => {
-        const test = new TestElement({ attrset : { foo : 'bar' } })
+        const test = new TestElement({ attributes : { foo : 'bar' } })
         const node = test.node
         test.removeAttr('foo')
         it('hasAttr()', () => {
@@ -513,7 +513,7 @@ describe('ElementAssembler', () => {
         })
     })
     describe('removeAttr(TestAttr)', () => {
-        const test = new TestElement({ attrset : { attr : 'foobar' } })
+        const test = new TestElement({ attributes : { attr : 'foobar' } })
         const node = test.node
         test.removeAttr(TestAttr)
         it('hasAttr()', () => {
@@ -764,9 +764,8 @@ describe('ElementAssembler', () => {
             assert.equal(serializer.serializeToString(doc.node), '<element/>')
         })
     })
-    describe('new TestElement({ attrset })', () => {
-        const test = new TestElement({ attrset : { foo : 'bar', cux : 'wiz' } })
-        const attrset = test.attrset
+    describe('new TestElement({ attributes })', () => {
+        const test = new TestElement({ attributes : { foo : 'bar', cux : 'wiz' } })
         it('attributes.length', () => {
             assert.equal(test.attributes.length, 2)
         })
@@ -777,10 +776,6 @@ describe('ElementAssembler', () => {
         it('node.getAttribute()', () => {
             assert.equal(test.node.getAttribute('foo'), 'bar')
             assert.equal(test.node.getAttribute('cux'), 'wiz')
-        })
-        it('attrset', () => {
-            assert.equal(attrset.foo, 'bar')
-            assert.equal(attrset.cux, 'wiz')
         })
     })
     describe('new TestElement({ attributes : new Array })', () => {
