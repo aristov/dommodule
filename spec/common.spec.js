@@ -7,7 +7,7 @@ import {
     AttrAssembler,
     CommentAssembler,
     DocumentTypeAssembler,
-    DocumentFragmentAssemblerfragment,
+    DocumentFragmentAssembler,
     TextAssembler,
     ElementAssembler
 } from '../lib'
@@ -23,12 +23,12 @@ class TestElement extends ElementAssembler {
 }
 
 describe('Common', () => {
-    /*describe('new Assembler', () => {
-        const assembler = new Assembler
-        it('_target', () => {
-            assert.instanceOf(assembler._target, Assembler.interface)
+    describe('new EventTargetAssembler', () => {
+        const instance = new EventTargetAssembler
+        it('getTargetOf', () => {
+            assert.instanceOf(EventTargetAssembler.getTargetOf(instance), EventTarget)
         })
-    })*/
+    })
     describe('NodeAssembler', () => {
         it('static interface', () => {
             assert.equal(NodeAssembler.interface, Node)
@@ -44,17 +44,20 @@ describe('Common', () => {
             assert.equal(CharacterDataAssembler.interface, CharacterData)
         })
     })
-    /*describe('Example', () => { // todo MS Edge
+    describe('Example', () => { 
+        class Example extends ElementAssembler {}
+        class TestDoctype extends DocumentTypeAssembler {
+            static get qualifiedName() {
+                return Example.qualifiedName
+            }
+        }
+        class Role extends AttrAssembler {}
         let $attr, $doctype, $fragment, $element, $comment, $text
         const $document = new DocumentAssembler([
-            $doctype = new DocumentType('example'),
+            $doctype = new TestDoctype,
             $fragment = new DocumentFragmentAssembler([
-                $element = new TestElement({
-                    localName : 'example',
-                    attributes : $attr = new AttrAssembler({
-                        name : 'role',
-                        value : 'application'
-                    }),
+                $element = new Example({
+                    attributes : $attr = new Role('application'),
                     childNodes : [
                         $comment = new CommentAssembler('Version 1.0.0'),
                         $text = new TextAssembler('Hello world!')
@@ -101,7 +104,7 @@ describe('Common', () => {
             assert($element.contains($comment.node), 'element contains comment')
             assert($element.contains($text), 'element contains text')
         })
-    })*/
+    })
     describe('ChildNodeAssembler.remove()', () => {
         const test = new TestElement()
         test.remove()
