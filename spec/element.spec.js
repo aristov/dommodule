@@ -36,8 +36,8 @@ describe('ElementAssembler', () => {
         it('node.constructor', () => {
             assert.equal(node.constructor, Element)
         })
-        it('tagName', () => {
-            assert.equal(test.tagName, 'element')
+        it('node.tagName', () => {
+            assert.equal(node.tagName, 'element')
         })
         it('node.hasAttributes()', () => {
             assert.isFalse(node.hasAttributes())
@@ -50,17 +50,17 @@ describe('ElementAssembler', () => {
         class Foobar extends ElementAssembler {}
         const test = new Foobar
         const node = test.node
-        it('namespaceURI', () => {
-            assert.isNull(test.namespaceURI)
+        it('node.namespaceURI', () => {
+            assert.isNull(node.namespaceURI)
         })
-        it('prefix', () => {
-            assert.isNull(test.prefix)
+        it('node.prefix', () => {
+            assert.isNull(node.prefix)
         })
-        it('localName', () => {
-            assert.equal(test.localName, 'foobar')
+        it('node.localName', () => {
+            assert.equal(node.localName, 'foobar')
         })
-        it('tagName', () => {
-            assert.equal(test.tagName, 'foobar')
+        it('node.tagName', () => {
+            assert.equal(node.tagName, 'foobar')
         })
         it('serializeToString(node)', () => {
             assert.match(serializer.serializeToString(node), /^<foobar\s?\/>$/)
@@ -77,17 +77,17 @@ describe('ElementAssembler', () => {
         }
         const test = new Bar
         const node = test.node
-        it('namespaceURI', () => {
-            assert.equal(test.namespaceURI, 'http://example.com/namespace')
+        it('node.namespaceURI', () => {
+            assert.equal(node.namespaceURI, 'http://example.com/namespace')
         })
-        it('prefix', () => {
-            assert.equal(test.prefix, 'foo')
+        it('node.prefix', () => {
+            assert.equal(node.prefix, 'foo')
         })
-        it('localName', () => {
-            assert.equal(test.localName, 'bar')
+        it('node.localName', () => {
+            assert.equal(node.localName, 'bar')
         })
-        it('tagName', () => {
-            assert.equal(test.tagName, 'foo:bar')
+        it('node.tagName', () => {
+            assert.equal(node.tagName, 'foo:bar')
         })
         it('node.hasAttributes()', () => {
             assert.isFalse(node.hasAttributes())
@@ -104,8 +104,8 @@ describe('ElementAssembler', () => {
         it('node', () => {
             assert.equal(node, foobar)
         })
-        it('tagName', () => {
-            assert.equal(test.tagName, 'foobar')
+        it('node.tagName', () => {
+            assert.equal(node.tagName, 'foobar')
         })
         it('node.hasAttributes()', () => {
             assert.isFalse(node.hasAttributes())
@@ -128,8 +128,8 @@ describe('ElementAssembler', () => {
         const child = new TestElement
         const test = new TestElement(child)
         const node = test.node
-        it('tagName', () => {
-            assert.equal(test.tagName, 'element')
+        it('node.tagName', () => {
+            assert.equal(node.tagName, 'element')
         })
         it('node.hasChildNodes()', () => {
             assert(node.hasChildNodes(), 'node.hasChildNodes()')
@@ -149,8 +149,8 @@ describe('ElementAssembler', () => {
         const childNode = document.createElementNS('', 'child')
         const test = new TestElement(childNode)
         const node = test.node
-        it('tagName', () => {
-            assert.equal(test.tagName, 'element')
+        it('node.tagName', () => {
+            assert.equal(node.tagName, 'element')
         })
         it('node.hasChildNodes()', () => {
             assert(node.hasChildNodes(), 'node.hasChildNodes()')
@@ -171,8 +171,8 @@ describe('ElementAssembler', () => {
         const text = new TextAssembler(data)
         const test = new TestElement(text)
         const node = test.node
-        it('tagName', () => {
-            assert.equal(test.tagName, 'element')
+        it('node.tagName', () => {
+            assert.equal(node.tagName, 'element')
         })
         it('node.hasChildNodes()', () => {
             assert(node.hasChildNodes(), 'node.hasChildNodes()')
@@ -195,8 +195,8 @@ describe('ElementAssembler', () => {
         const textNode = document.createTextNode('foobar')
         const test = new TestElement(textNode)
         const node = test.node
-        it('tagName', () => {
-            assert.equal(test.tagName, 'element')
+        it('node.tagName', () => {
+            assert.equal(node.tagName, 'element')
         })
         it('node.hasChildNodes()', () => {
             assert(node.hasChildNodes(), 'node.hasChildNodes()')
@@ -219,8 +219,8 @@ describe('ElementAssembler', () => {
         const textContent = 'foobar'
         const test = new TestElement(textContent)
         const node = test.node
-        it('tagName', () => {
-            assert.equal(test.tagName, 'element')
+        it('node.tagName', () => {
+            assert.equal(node.tagName, 'element')
         })
         it('node.hasChildNodes()', () => {
             assert(node.hasChildNodes(), 'node.hasChildNodes()')
@@ -649,11 +649,11 @@ describe('ElementAssembler', () => {
         }
         const parent = new TestElement()
         const test = new Bar({ parentNode : parent, className : 'wiz' })
-        it('namespaceURI', () => {
-            assert.equal(test.namespaceURI, 'http://example.com/ns')
+        it('node.namespaceURI', () => {
+            assert.equal(test.node.namespaceURI, 'http://example.com/ns')
         })
-        it('tagName', () => {
-            assert.equal(test.tagName, Bar.qualifiedName)
+        it('node.tagName', () => {
+            assert.equal(test.node.tagName, Bar.qualifiedName)
         })
         it('parent.find(className)', () => {
             assert.equal(parent.find('.wiz'), test)
