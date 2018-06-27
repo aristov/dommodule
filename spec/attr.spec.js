@@ -158,13 +158,6 @@ describe('AttrAssembler', () => {
             assert.match(xml, /^<element\s?\/>$/)
         })
     })
-    describe('ownerElement = true', () => {
-        const test = new TestAttr
-        const fn = () => test.ownerElement = true
-        it('throws TypeError', () => {
-            assert.throws(fn, TypeError)
-        })
-    })
     describe('new TestAttr({ ownerElement }); remove()', () => {
         const ownerElement = new TestElement
         const test = new TestAttr({ ownerElement })
