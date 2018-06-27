@@ -334,15 +334,12 @@ describe('ElementAssembler', () => {
             assert.match(serializer.serializeToString(node), /^<element foo="bar"\s?\/>$/)
         })
     })
-    describe('removeAttributeNode(new TestAttr)', () => {
+    describe('removeAttr(new TestAttr)', () => {
         const test = new TestElement
         const node = test.node
         const attr = new TestAttr('foobar')
         test.setAttr(attr)
-        const removedAttr = test.removeAttributeNode(attr)
-        it('attrs equal', () => {
-            assert.equal(removedAttr, attr)
-        })
+        test.removeAttr(attr)
         it('node.hasAttributes()', () => {
             assert.isFalse(node.hasAttributes())
         })
@@ -352,22 +349,16 @@ describe('ElementAssembler', () => {
         it('hasAttr()', () => {
             assert.isFalse(test.hasAttr(TestAttr.localName))
         })
-        it('removeAttributeNode()', () => {
-            assert.isNull(test.removeAttributeNode('example'))
-        })
         it('serializeToString(node)', () => {
             assert.match(serializer.serializeToString(node), /^<element\s?\/>$/)
         })
     })
-    describe('node.setAttributeNode(document.createAttribute()); removeAttributeNode()', () => {
+    describe('node.setAttributeNode(document.createAttribute()); removeAttr()', () => {
         const test = new TestElement
         const node = test.node
         const attrNode = document.createAttribute('foobar')
         node.setAttributeNode(attrNode)
-        const removedAttr = test.removeAttributeNode(attrNode)
-        it('nodes equal', () => {
-            assert.equal(removedAttr.node, attrNode)
-        })
+        test.removeAttr(attrNode)
         it('node.hasAttributes()', () => {
             assert.isFalse(node.hasAttributes())
         })
@@ -381,15 +372,12 @@ describe('ElementAssembler', () => {
             assert.match(serializer.serializeToString(node), /^<element\s?\/>$/)
         })
     })
-    describe('removeAttributeNode(TestAttr)', () => {
+    describe('removeAttr(TestAttr)', () => {
         const test = new TestElement
         const node = test.node
         const attrNode = document.createAttribute('attr')
         node.setAttributeNode(attrNode)
-        const removedAttr = test.removeAttributeNode(TestAttr)
-        it('nodes equal', () => {
-            assert.equal(removedAttr.node, attrNode)
-        })
+        test.removeAttr(TestAttr)
         it('node.hasAttributes()', () => {
             assert.isFalse(node.hasAttributes())
         })
@@ -400,15 +388,12 @@ describe('ElementAssembler', () => {
             assert.match(serializer.serializeToString(node), /^<element\s?\/>$/)
         })
     })
-    describe('removeAttributeNode(class extends AttrAssembler)', () => {
+    describe('removeAttr(class extends AttrAssembler)', () => {
         const test = new TestElement
         const node = test.node
         node.setAttribute('foo', 'bar')
         class Foo extends AttrAssembler {}
-        const removedAttr = test.removeAttributeNode(Foo)
-        it('instanceof', () => {
-            assert.instanceOf(removedAttr, Foo)
-        })
+        test.removeAttr(Foo)
         it('node.hasAttributes()', () => {
             assert.isFalse(node.hasAttributes())
         })
@@ -419,16 +404,13 @@ describe('ElementAssembler', () => {
             assert.match(serializer.serializeToString(node), /^<element\s?\/>$/)
         })
     })
-    describe('removeAttributeNode(new String)', () => {
+    describe('removeAttr(new String)', () => {
         const test = new TestElement
         const node = test.node
         const name = 'foobar'
         const attrNode = document.createAttribute(name)
         node.setAttributeNode(attrNode)
-        const removedAttr = test.removeAttributeNode(name)
-        it('nodes equal', () => {
-            assert.equal(removedAttr.node, attrNode)
-        })
+        test.removeAttr(name)
         it('node.hasAttributes()', () => {
             assert.isFalse(node.hasAttributes())
         })
@@ -440,15 +422,6 @@ describe('ElementAssembler', () => {
         })
         it('serializeToString(node)', () => {
             assert.match(serializer.serializeToString(node), /^<element\s?\/>$/)
-        })
-    })
-    describe('document.createAttribute(); removeAttributeNode()', () => {
-        const test = new TestElement
-        const name = 'foobar'
-        const attrNode = document.createAttribute(name)
-        const fn = () => test.removeAttributeNode(attrNode)
-        it('throws', () => {
-            assert.throws(fn)
         })
     })
     describe('setAttr(new String, new String)', () => {
@@ -531,31 +504,31 @@ describe('ElementAssembler', () => {
             assert.equal(test.getAttribute(Bar), 'test')
         })
     })
-    describe('removeAttribute(new String)', () => {
+    describe('removeAttr(new String)', () => {
         const test = new TestElement({ attrset : { foo : 'bar' } })
         const node = test.node
-        test.removeAttribute('foo')
+        test.removeAttr('foo')
         it('hasAttr()', () => {
             assert.isFalse(test.hasAttr('foo'))
         })
     })
-    describe('removeAttribute(TestAttr)', () => {
+    describe('removeAttr(TestAttr)', () => {
         const test = new TestElement({ attrset : { attr : 'foobar' } })
         const node = test.node
-        test.removeAttribute(TestAttr)
+        test.removeAttr(TestAttr)
         it('hasAttr()', () => {
             assert.isFalse(test.hasAttr('attr'))
         })
     })
-    describe('removeAttribute(class extends AttrAssembler)', () => {
+    describe('removeAttr(class extends AttrAssembler)', () => {
         class Bar extends AttrAssembler {}
         const test = new TestElement({ attributes : new Bar('test') })
         const node = test.node
         it('node.hasAttributes()', () => {
             assert(node.hasAttributes(), 'node.hasAttributes()')
         })
-        it('removeAttribute; hasAttributes()', () => {
-            test.removeAttribute(Bar)
+        it('removeAttr; node.hasAttributes()', () => {
+            test.removeAttr(Bar)
             assert.isFalse(node.hasAttributes())
         })
     })
@@ -599,14 +572,11 @@ describe('ElementAssembler', () => {
             assert.match(xml, /^<element class="foo bar"\s?\/>$/)
         })
     })
-    describe('className', () => {
+    describe('className = ""', () => {
         const test = new TestElement({ className : 'foo bar' })
         test.className = ''
         it('className', () => {
             assert.equal(test.className, '')
-        })
-        it('hasAttr()', () => {
-            assert.equal(test.hasAttr('class'), false)
         })
     })
     describe('classList = new Array', () => {
