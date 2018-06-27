@@ -1,4 +1,4 @@
-# dommodule
+# DOM module
 
 [![NPM Version](https://img.shields.io/npm/v/dommodule.svg)](https://www.npmjs.com/package/dommodule)
 [![Build Status](https://travis-ci.org/aristov/dommodule.svg?branch=master)](https://travis-ci.org/aristov/dommodule)
@@ -18,35 +18,9 @@ This JavaScript library provides a set of [DOM](https://www.w3.org/TR/dom) node 
 - [Element](https://www.w3.org/TR/dom/#interface-element)
 - [Text](https://www.w3.org/TR/dom/#interface-text)
 
-## Example
+## Examples
 
-```js
-import {
-    DocumentAssembler,
-    attr, comment, doctype, element,
-    fragment, text
-} from 'dommodule'
-
-new DocumentAssembler([
-    doctype('example'),
-    fragment([
-        comment('Version 1.0.0'),
-        element({
-            localName : 'example',
-            attributes : attr({ name : 'role', value : 'application' }),
-            childNodes : text('Hello world!')
-        })
-    ])
-])
-```
-
-This code generates a document with the following structure:
-
-```xml
-<!DOCTYPE example>
-<!--Version 1.0.0-->
-<example role="application">Hello world!</example>
-```
+See the source code of the DOM module based libraries: [HTML module](https://github.com/aristov/htmlmodule), [ARIA module](https://github.com/aristov/ariamodule), [XML module](https://github.com/aristov/xmlmodule)
 
 ## Installation
 
