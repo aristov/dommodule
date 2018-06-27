@@ -22,14 +22,14 @@ describe('ChildNodeAssembler', () => {
             assert.isNull(test.parentNode)
         })
     })
-    describe('parentElement', () => {
-        const parentElement = new TestElement()
-        const test = new TestElement({ parentElement })
-        it('parentElement', () => {
-            assert.equal(test.parentElement, parentElement)
+    describe('parentNode', () => {
+        const parentNode = new TestElement()
+        const test = new TestElement({ parentNode })
+        it('parentNode', () => {
+            assert.equal(test.parentNode, parentNode)
         })
-        it('parentElement.firstChild', () => {
-            assert.equal(parentElement.firstChild, test)
+        it('parentNode.firstChild', () => {
+            assert.equal(parentNode.firstChild, test)
         })
     })
     describe('after', () => {
