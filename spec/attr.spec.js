@@ -134,7 +134,7 @@ describe('AttrAssembler', () => {
         it('ownerElement', () => {
             assert.instanceOf(test.ownerElement, ElementAssembler)
         })
-        it('ownerElement.hasAttribute()', () => {
+        it('ownerElement.hasAttr()', () => {
             assert.equal(test.ownerElement.getAttribute('foo'), 'bar')
         })
         it('serializeToString(ownerElement.node)', () => {
@@ -169,8 +169,8 @@ describe('AttrAssembler', () => {
         const ownerElement = new TestElement
         const test = new TestAttr({ ownerElement })
         test.remove()
-        it('ownerElement.node.hasAttribute()', () => {
-            assert.isFalse(ownerElement.node.hasAttribute(TestAttr.localName))
+        it('ownerElement.hasAttr()', () => {
+            assert.isFalse(ownerElement.hasAttr(TestAttr.localName))
         })
     })
     describe('init', () => {

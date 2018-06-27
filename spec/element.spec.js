@@ -299,8 +299,8 @@ describe('ElementAssembler', () => {
         it('attributes.length', () => {
             assert.lengthOf(test.attributes, 1)
         })
-        it('hasAttribute()', () => {
-            assert(test.hasAttribute('foo'), 'hasAttribute()')
+        it('hasAttr()', () => {
+            assert(test.hasAttr('foo'), 'hasAttr()')
         })
         it('getAttribute()', () => {
             assert.equal(test.getAttribute('foo'), 'bar')
@@ -321,8 +321,8 @@ describe('ElementAssembler', () => {
         it('attributes.length', () => {
             assert.lengthOf(test.attributes, 1)
         })
-        it('hasAttribute()', () => {
-            assert(test.hasAttribute('foo'), 'hasAttribute()')
+        it('hasAttr()', () => {
+            assert(test.hasAttr('foo'), 'hasAttr()')
         })
         it('getAttribute()', () => {
             assert.equal(test.getAttribute('foo'), 'bar')
@@ -349,8 +349,8 @@ describe('ElementAssembler', () => {
         it('attributes.length', () => {
             assert.lengthOf(test.attributes, 0)
         })
-        it('hasAttribute()', () => {
-            assert.isFalse(test.hasAttribute(TestAttr.localName))
+        it('hasAttr()', () => {
+            assert.isFalse(test.hasAttr(TestAttr.localName))
         })
         it('removeAttributeNode()', () => {
             assert.isNull(test.removeAttributeNode('example'))
@@ -374,8 +374,8 @@ describe('ElementAssembler', () => {
         it('attributes.length', () => {
             assert.lengthOf(test.attributes, 0)
         })
-        it('hasAttribute()', () => {
-            assert.isFalse(test.hasAttribute('foobar'))
+        it('hasAttr()', () => {
+            assert.isFalse(test.hasAttr('foobar'))
         })
         it('serializeToString(node)', () => {
             assert.match(serializer.serializeToString(node), /^<element\s?\/>$/)
@@ -393,8 +393,8 @@ describe('ElementAssembler', () => {
         it('node.hasAttributes()', () => {
             assert.isFalse(node.hasAttributes())
         })
-        it('hasAttribute()', () => {
-            assert.isFalse(test.hasAttribute('attr'))
+        it('hasAttr()', () => {
+            assert.isFalse(test.hasAttr('attr'))
         })
         it('serializeToString(node)', () => {
             assert.match(serializer.serializeToString(node), /^<element\s?\/>$/)
@@ -412,8 +412,8 @@ describe('ElementAssembler', () => {
         it('node.hasAttributes()', () => {
             assert.isFalse(node.hasAttributes())
         })
-        it('hasAttribute()', () => {
-            assert.isFalse(test.hasAttribute('foo'))
+        it('hasAttr()', () => {
+            assert.isFalse(test.hasAttr('foo'))
         })
         it('serializeToString(node)', () => {
             assert.match(serializer.serializeToString(node), /^<element\s?\/>$/)
@@ -435,8 +435,8 @@ describe('ElementAssembler', () => {
         it('attributes.length', () => {
             assert.lengthOf(test.attributes, 0)
         })
-        it('hasAttribute()', () => {
-            assert.isFalse(test.hasAttribute(name))
+        it('hasAttr()', () => {
+            assert.isFalse(test.hasAttr(name))
         })
         it('serializeToString(node)', () => {
             assert.match(serializer.serializeToString(node), /^<element\s?\/>$/)
@@ -461,8 +461,8 @@ describe('ElementAssembler', () => {
         it('attributes.length', () => {
             assert.lengthOf(test.attributes, 1)
         })
-        it('hasAttribute()', () => {
-            assert(test.hasAttribute('foo'), 'hasAttribute()')
+        it('hasAttr()', () => {
+            assert(test.hasAttr('foo'), 'hasAttr()')
         })
         it('getAttribute()', () => {
             assert.equal(test.getAttribute('foo'), 'bar')
@@ -481,8 +481,8 @@ describe('ElementAssembler', () => {
         it('attributes.length', () => {
             assert.lengthOf(test.attributes, 1)
         })
-        it('hasAttribute()', () => {
-            assert(test.hasAttribute(TestAttr.localName), 'hasAttribute()')
+        it('hasAttr()', () => {
+            assert(test.hasAttr(TestAttr.localName), 'hasAttr()')
         })
         it('getAttribute()', () => {
             assert.equal(test.getAttribute(TestAttr.localName), 'foobar')
@@ -502,8 +502,8 @@ describe('ElementAssembler', () => {
         it('attributes.length', () => {
             assert.lengthOf(test.attributes, 1)
         })
-        it('hasAttribute()', () => {
-            assert(test.hasAttribute(TestAttr.localName), 'hasAttribute()')
+        it('hasAttr()', () => {
+            assert(test.hasAttr(TestAttr.localName), 'hasAttr()')
         })
         it('getAttribute()', () => {
             assert.equal(test.getAttribute(TestAttr.localName), 'foobar')
@@ -512,20 +512,20 @@ describe('ElementAssembler', () => {
             assert.match(serializer.serializeToString(node), /^<element attr="foobar"\s?\/>$/)
         })
     })
-    describe('hasAttribute(TestAttr); getAttribute(TestAttr)', () => {
+    describe('hasAttr(TestAttr); getAttribute(TestAttr)', () => {
         const test = new TestElement({ attrset : { attr : 'foobar' } })
-        it('hasAttribute()', () => {
-            assert(test.hasAttribute(TestAttr), 'hasAttribute(TestAttr)')
+        it('hasAttr()', () => {
+            assert(test.hasAttr(TestAttr), 'hasAttr(TestAttr)')
         })
         it('getAttribute()', () => {
             assert.equal(test.getAttribute(TestAttr), 'foobar')
         })
     })
-    describe('hasAttribute and getAttribute', () => {
+    describe('hasAttr and getAttribute', () => {
         class Bar extends AttrAssembler {}
         const test = new TestElement({ attributes : new Bar('test') })
-        it('hasAttribute()', () => {
-            assert(test.hasAttribute(Bar), 'hasAttribute(Bar)')
+        it('hasAttr()', () => {
+            assert(test.hasAttr(Bar), 'hasAttr(Bar)')
         })
         it('getAttribute()', () => {
             assert.equal(test.getAttribute(Bar), 'test')
@@ -535,16 +535,16 @@ describe('ElementAssembler', () => {
         const test = new TestElement({ attrset : { foo : 'bar' } })
         const node = test.node
         test.removeAttribute('foo')
-        it('hasAttribute()', () => {
-            assert.isFalse(test.hasAttribute('foo'))
+        it('hasAttr()', () => {
+            assert.isFalse(test.hasAttr('foo'))
         })
     })
     describe('removeAttribute(TestAttr)', () => {
         const test = new TestElement({ attrset : { attr : 'foobar' } })
         const node = test.node
         test.removeAttribute(TestAttr)
-        it('hasAttribute()', () => {
-            assert.isFalse(test.hasAttribute('attr'))
+        it('hasAttr()', () => {
+            assert.isFalse(test.hasAttr('attr'))
         })
     })
     describe('removeAttribute(class extends AttrAssembler)', () => {
@@ -605,8 +605,8 @@ describe('ElementAssembler', () => {
         it('className', () => {
             assert.equal(test.className, '')
         })
-        it('hasAttribute()', () => {
-            assert.equal(test.hasAttribute('class'), false)
+        it('hasAttr()', () => {
+            assert.equal(test.hasAttr('class'), false)
         })
     })
     describe('classList = new Array', () => {
@@ -803,9 +803,9 @@ describe('ElementAssembler', () => {
         it('attributes.length', () => {
             assert.equal(test.attributes.length, 2)
         })
-        it('hasAttribute()', () => {
-            assert(test.hasAttribute('foo'), 'hasAttribute("foo")')
-            assert(test.hasAttribute('cux'), 'hasAttribute("cux")')
+        it('hasAttr()', () => {
+            assert(test.hasAttr('foo'), 'hasAttr("foo")')
+            assert(test.hasAttr('cux'), 'hasAttr("cux")')
         })
         it('getAttribute()', () => {
             assert.equal(test.getAttribute('foo'), 'bar')
@@ -829,9 +829,9 @@ describe('ElementAssembler', () => {
         it('attributes.length', () => {
             assert.equal(test.attributes.length, 2)
         })
-        it('hasAttribute()', () => {
-            assert(test.hasAttribute('foo'), 'hasAttribute("foo")')
-            assert(test.hasAttribute('wiz'), 'hasAttribute("wiz")')
+        it('hasAttr()', () => {
+            assert(test.hasAttr('foo'), 'hasAttr("foo")')
+            assert(test.hasAttr('wiz'), 'hasAttr("wiz")')
         })
         it('getAttribute()', () => {
             assert.equal(test.getAttribute('foo'), 'bar')
@@ -883,8 +883,8 @@ describe('ElementAssembler', () => {
         it('attributes.length', () => {
             assert.equal(test.attributes.length, 1)
         })
-        it('hasAttribute()', () => {
-            assert(test.hasAttribute('foobar'), 'hasAttribute()')
+        it('hasAttr()', () => {
+            assert(test.hasAttr('foobar'), 'hasAttr()')
         })
         it('getAttribute()', () => {
             assert.equal(test.getAttribute('foobar'), '')
