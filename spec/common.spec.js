@@ -58,7 +58,7 @@ describe('Common', () => {
             $fragment = new DocumentFragmentAssembler([
                 $element = new Example({
                     attributes : $attr = new Role('application'),
-                    childNodes : [
+                    children : [
                         $comment = new CommentAssembler('Version 1.0.0'),
                         $text = new TextAssembler('Hello world!')
                     ]

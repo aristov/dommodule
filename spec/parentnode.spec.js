@@ -101,11 +101,11 @@ describe('ParentNodeAssembler', () => {
             test = new TestElement([
                 e1 = new TestElement({
                     attributes : a1 = new TestAttr('a1'),
-                    childNodes : [
+                    children : [
                         t2 = new TextAssembler('t1'),
                         e2 = new TestElement({
                             attributes : a2 = new TestAttr('a2'),
-                            childNodes : [
+                            children : [
                                 c3 = new CommentAssembler('c3'),
                                 t3 = new TextAssembler('t3'),
                                 e3 = new TestElement({
