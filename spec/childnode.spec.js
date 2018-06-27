@@ -35,7 +35,7 @@ describe('ChildNodeAssembler', () => {
     describe('after', () => {
         const ctx = new TestElement()
         const test = new TestElement(ctx)
-        const foo = text('foo')
+        const foo = new TextAssembler('foo')
         ctx.after(foo, 'bar')
         it('childNodes.length', () => {
             assert.equal(test.childNodes.length, 3)
@@ -58,7 +58,7 @@ describe('ChildNodeAssembler', () => {
     describe('before', () => {
         const ctx = new TestElement()
         const test = new TestElement(ctx)
-        const foo = text('foo')
+        const foo = new TextAssembler('foo')
         ctx.before(foo, 'bar')
         it('childNodes.length', () => {
             assert.equal(test.childNodes.length, 3)
@@ -80,7 +80,7 @@ describe('ChildNodeAssembler', () => {
     describe('replaceWith', () => {
         const ctx = new TestElement()
         const test = new TestElement(ctx)
-        const foo = text('foo')
+        const foo = new TextAssembler('foo')
         ctx.replaceWith(foo)
         it('childNodes.length', () => {
             assert.equal(test.childNodes.length, 1)
@@ -98,8 +98,8 @@ describe('ChildNodeAssembler', () => {
     describe('remove()', () => {
         let $element
         const test = new TestElement([
-            text('foobar'),
-            comment('example'),
+            new TextAssembler('foobar'),
+            new CommentAssembler('example'),
             $element = new TestElement(),
         ])
         const node = test.node

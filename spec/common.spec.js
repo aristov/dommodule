@@ -4,8 +4,12 @@ import { NodeAssembler } from '../lib/node'
 import {
     EventTargetAssembler,
     DocumentAssembler,
-    attr, comment, doctype, 
-    fragment, text, ElementAssembler
+    AttrAssembler,
+    CommentAssembler,
+    DocumentTypeAssembler,
+    DocumentFragmentAssemblerfragment,
+    TextAssembler,
+    ElementAssembler
 } from '../lib'
 
 const { assert } = chai
@@ -43,17 +47,17 @@ describe('Common', () => {
     /*describe('Example', () => { // todo MS Edge
         let $attr, $doctype, $fragment, $element, $comment, $text
         const $document = new DocumentAssembler([
-            $doctype = doctype('example'),
-            $fragment = fragment([
+            $doctype = new DocumentType('example'),
+            $fragment = new DocumentFragmentAssembler([
                 $element = new TestElement({
                     localName : 'example',
-                    attributes : $attr = attr({
+                    attributes : $attr = new AttrAssembler({
                         name : 'role',
                         value : 'application'
                     }),
                     childNodes : [
-                        $comment = comment('Version 1.0.0'),
-                        $text = text('Hello world!')
+                        $comment = new CommentAssembler('Version 1.0.0'),
+                        $text = new TextAssembler('Hello world!')
                     ]
                 })
             ])
@@ -108,8 +112,8 @@ describe('Common', () => {
     describe('ChildNodeAssembler.remove()', () => {
         let $element
         const test = new TestElement([
-            text('foobar'),
-            comment('example'),
+            new TextAssembler('foobar'),
+            new CommentAssembler('example'),
             $element = new TestElement(),
         ])
         const node = test.node
