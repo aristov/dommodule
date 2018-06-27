@@ -171,12 +171,4 @@ describe('Common', () => {
             assert.equal(xml, '<element>foobar</element>')
         })
     })
-    describe('isEqualNode', () => {
-        const e1 = new TestElement()
-        const e2 = new TestElement()
-        it('isEqualNode', () => {
-            assert(e1.isEqualNode(e2), 'isEqualNode')
-            assert(e1.isEqualNode(e2.node), 'isEqualNode')
-        })
-    })
 })
