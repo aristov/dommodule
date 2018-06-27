@@ -7,7 +7,7 @@ import {
 } from '../lib'
 
 const { assert } = chai
-const { DOMParser, XMLSerializer, document } = window
+const { DOMParser, XMLSerializer } = window
 const parser = new DOMParser
 const serializer = new XMLSerializer
 

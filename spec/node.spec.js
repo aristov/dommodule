@@ -10,7 +10,7 @@ import {
     TextAssembler
 } from '../lib'
 
-const { Node, document } = window
+const { document } = window
 const { implementation } = document
 const { assert } = chai
 

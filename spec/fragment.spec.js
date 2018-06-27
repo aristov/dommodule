@@ -1,5 +1,4 @@
 import chai from 'chai'
-import { NodeAssembler } from '../lib/node'
 import {
     CommentAssembler,
     DocumentFragmentAssembler,
@@ -24,7 +23,7 @@ describe('DocumentFragmentAssembler', () => {
         it('node.hasChildNodes()', () => {
             assert.isFalse(node.hasChildNodes())
         })
-        it.skip('node.childElementCount', () => { // todo MS Edge
+        it('node.childElementCount', () => { // todo MS Edge
             assert.equal(node.childElementCount, 0)
         })
     })
@@ -49,7 +48,7 @@ describe('DocumentFragmentAssembler', () => {
         it('node.hasChildNodes()', () => {
             assert(node.hasChildNodes(), 'node.hasChildNodes()')
         })
-        it.skip('node.childElementCount', () => { // todo MS Edge
+        it('node.childElementCount', () => { // todo MS Edge
             assert.equal(node.childElementCount, 1)
         })
         it('node.childNodes.length', () => {
@@ -59,16 +58,13 @@ describe('DocumentFragmentAssembler', () => {
             assert.equal(test.childNodes.length, 3)
         })
         it('childNodes[0]', () => {
-            // assert.instanceOf(test.childNodes[0], CommentAssembler)
-            assert.instanceOf(test.childNodes[0], NodeAssembler)
+            assert.instanceOf(test.childNodes[0], CommentAssembler)
         })
         it('childNodes[1]', () => {
-            // assert.instanceOf(test.childNodes[1], ElementAssembler)
-            assert.instanceOf(test.childNodes[1], NodeAssembler)
+            assert.instanceOf(test.childNodes[1], ElementAssembler)
         })
         it('childNodes[2]', () => {
-            // assert.instanceOf(test.childNodes[2], TextAssembler)
-            assert.instanceOf(test.childNodes[2], NodeAssembler)
+            assert.instanceOf(test.childNodes[2], TextAssembler)
         })
         it('node.firstChild', () => {
             assert.instanceOf(node.firstChild, Comment)
@@ -76,7 +72,7 @@ describe('DocumentFragmentAssembler', () => {
         it('node.lastChild', () => {
             assert.instanceOf(node.lastChild, Text)
         })
-        it.skip('node.firstElementChild', () => { // todo MS Edge
+        it('node.firstElementChild', () => { // todo MS Edge
             assert.instanceOf(node.firstElementChild, Element)
         })
         it('node.childNodes[2]', () => {
@@ -88,7 +84,7 @@ describe('DocumentFragmentAssembler', () => {
             const sample = /^<foo><!--foobar--><bar\s?\/>foobar<\/foo>$/
             assert.match(xml, sample)
             assert.isFalse(node.hasChildNodes())
-            // assert.equal(node.childElementCount, 0) // todo MS Edge
+            assert.equal(node.childElementCount, 0) // todo MS Edge
         })
     })
 })

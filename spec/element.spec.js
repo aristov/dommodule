@@ -754,7 +754,7 @@ describe('ElementAssembler', () => {
             assert.equal(xml, sample)
         })
     })
-    describe('new TestElement({ parentNode : new DocumentAssembler })', () => { // todo MS Edge
+    describe('new TestElement({ parentNode : new DocumentAssembler })', () => {
         const doc = new DocumentAssembler
         const test = new TestElement({ parentNode : doc })
         it('parentNode', () => {
@@ -799,12 +799,6 @@ describe('ElementAssembler', () => {
             assert.equal(test.node.getAttribute('foo'), 'bar')
             assert.equal(test.node.getAttribute('wiz'), '')
         })
-        /*it.skip('getAttributeNames()', () => { // todo MSEdge
-            const names = test.getAttributeNames()
-            assert.lengthOf(names, 2)
-            assert.equal(names[0], 'foo')
-            assert.equal(names[1], 'wiz')
-        })*/
         it('attributes', () => {
             assert.equal(attributes[0], foo)
             assert.equal(attributes[1].node, wiz)
@@ -1020,15 +1014,4 @@ describe('ElementAssembler', () => {
             assert.notEqual(ElementAssembler.generateId(), id)
         })
     })
-    /*describe('normalize', () => {
-        const test = new TestElement(['text1', 'text2'])
-        test.normalize()
-        it('childNodes.length', () => {
-            assert.lengthOf(test.childNodes, 1)
-        })
-        it('serializeToString(node)', () => {
-            const sample = '<element>text1text2</element>'
-            assert.equal(serializer.serializeToString(test.node), sample)
-        })
-    })*/
 })
