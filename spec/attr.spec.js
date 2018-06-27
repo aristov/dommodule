@@ -287,15 +287,15 @@ describe('AttrAssembler', () => {
             test2 = new TestElement({ attributes : new Bar('foo') })
         })
         it('inherited default value', () => {
-            assert.equal(Foo.getValueOf(test1), 'bar')
-            assert.equal(Foo.getValueOf(test2), null)
+            assert.equal(test1.getAttr(Foo), 'bar')
+            assert.equal(test2.getAttr(Foo), null)
         })
         it('specified default value', () => {
-            assert.equal(Bar.getValueOf(test1), 'false')
-            assert.equal(Bar.getValueOf(test2), 'foo')
+            assert.equal(test1.getAttr(Bar), 'false')
+            assert.equal(test2.getAttr(Bar), 'foo')
         })
     })
-    describe('getValueOf', () => {
+    describe('getAttrOf', () => {
         class SomeAttr extends AttrAssembler {}
         let elem, attr
         beforeEach(() => {
@@ -305,10 +305,10 @@ describe('AttrAssembler', () => {
             })
         })
         it('existing attr', () => {
-            assert.equal(TestAttr.getValueOf(elem), attr.value)
+            assert.equal(TestAttr.getAttrOf(elem), attr)
         })
         it('non existing attr', () => {
-            assert.equal(SomeAttr.getValueOf(elem), SomeAttr.defaultValue)
+            assert.equal(SomeAttr.getAttrOf(elem), null)
         })
     })
 })
