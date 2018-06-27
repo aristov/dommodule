@@ -125,23 +125,6 @@ describe('AttrAssembler', () => {
             assert.match(xml, /^<foobar foo="bar"\s?\/>$/)
         })
     })
-    /*describe('ownerElement = { localName }', () => {
-        const test = new TestAttr({
-            ownerElement : { localName : 'test' },
-            name : 'foo',
-            value : 'bar'
-        })
-        it('ownerElement', () => {
-            assert.instanceOf(test.ownerElement, ElementAssembler)
-        })
-        it('ownerElement.hasAttr()', () => {
-            assert.equal(test.ownerElement.getAttribute('foo'), 'bar')
-        })
-        it('serializeToString(ownerElement.node)', () => {
-            const xml = serializer.serializeToString(test.ownerElement.node)
-            assert.match(xml, /^<test foo="bar"\s?\/>$/)
-        })
-    })*/
     describe('remove()', () => {
         const test = new TestAttr({ value : 'foobar' })
         const ownerElement = new TestElement
@@ -304,12 +287,12 @@ describe('AttrAssembler', () => {
             test2 = new TestElement({ attributes : new Bar('foo') })
         })
         it('inherited default value', () => {
-            assert.equal(test1.getAttribute(Foo), 'bar')
-            assert.equal(test2.getAttribute(Foo), null)
+            assert.equal(Foo.getValueOf(test1), 'bar')
+            assert.equal(Foo.getValueOf(test2), null)
         })
         it('specified default value', () => {
-            assert.equal(test1.getAttribute(Bar), 'false')
-            assert.equal(test2.getAttribute(Bar), 'foo')
+            assert.equal(Bar.getValueOf(test1), 'false')
+            assert.equal(Bar.getValueOf(test2), 'foo')
         })
     })
     describe('getValueOf', () => {
