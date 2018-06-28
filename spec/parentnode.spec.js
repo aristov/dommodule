@@ -173,7 +173,7 @@ describe('ParentNodeAssembler', () => {
         })
     })
     describe('append', () => {
-        let a1, a2, c1, c2, e1, e2, t1, t2, test, child, donor
+        let c1, c2, e1, e2, t1, t2, test, child, donor
         class Test extends ElementAssembler {}
         class Child extends ElementAssembler {}
         class A1 extends AttrAssembler {}
@@ -208,7 +208,7 @@ describe('ParentNodeAssembler', () => {
         })
     })
     describe('prepend', () => {
-        let a1, a2, c1, c2, e1, e2, t1, t2, test, child, donor
+        let c1, c2, e1, e2, t1, t2, test, child, donor
         class Test extends ElementAssembler {}
         class Child extends ElementAssembler {}
         class A1 extends AttrAssembler {}

@@ -146,21 +146,6 @@ describe('Common', () => {
             assert(onclick.calledOnce, 'onclick.calledOnce')
         })
     })
-    /*describe('new TestElement({ foobar, undefined })', () => {
-        const warn = console.warn
-        const spy = console.warn = sinon.spy()
-        const test = new TestElement({ foobar : 'test', undefined })
-        console.warn = warn
-        it('node.foobar', () => {
-            assert.isUndefined(test.node.foobar)
-        })
-        it('node.undefined', () => {
-            assert.isUndefined(test.node.undefined)
-        })
-        it('console.warn.calledOnce', () => {
-            assert(spy.calledOnce, 'spy.calledOnce')
-        })
-    })*/
     describe('new TestElement({ textContent })', () => {
         const test = new TestElement({ textContent : 'foobar' })
         it('parent.textContent', () => {

@@ -1,167 +1,145 @@
 import chai from 'chai'
-import {
-    ElementAssembler, TextAssembler,
-    comment, text, AttrAssembler, CommentAssembler
-} from '../lib'
+import { ElementAssembler, TextAssembler, AttrAssembler, CommentAssembler } from '../lib'
+
+let undefined
 
 const { assert } = chai
 const { XMLSerializer } = window
 const serializer = new XMLSerializer
 
-class TestElement extends ElementAssembler {
-    static get localName() {
-        return 'element'
-    }
+function serialize({ node }) {
+    return serializer.serializeToString(node)
 }
 
+class Parent extends ElementAssembler {}
+class Child extends ElementAssembler {}
+class Prev extends ElementAssembler {}
+class Next extends ElementAssembler {}
+class A1 extends AttrAssembler {}
+class OE1 extends ElementAssembler {}
+class E1 extends ElementAssembler {}
+class E2 extends ElementAssembler {}
+
+let parent, child, prev, next, children
+
+beforeEach(() => parent = child = prev = next = children = undefined)
+
 describe('ChildNodeAssembler', () => {
-    describe('remove(), parentNode', () => {
-        const test = new TestElement()
-        test.remove()
-        it('parentNode', () => {
-            assert.isNull(test.parentNode)
-        })
-    })
-    describe('parentNode', () => {
-        const parentNode = new TestElement()
-        const test = new TestElement({ parentNode })
-        it('parentNode', () => {
-            assert.equal(test.parentNode, parentNode)
-        })
-        it('parentNode.firstChild', () => {
-            assert.equal(parentNode.firstChild, test)
-        })
-    })
-    describe('after', () => {
-        const ctx = new TestElement()
-        const test = new TestElement(ctx)
-        const foo = new TextAssembler('foo')
-        ctx.after(foo, 'bar')
-        it('childNodes.length', () => {
-            assert.equal(test.childNodes.length, 3)
-        })
-        it('firstChild', () => {
-            assert.instanceOf(test.firstChild, ElementAssembler)
-            assert.equal(test.firstChild, ctx)
-        })
-        it('lastChild', () => {
-            assert.instanceOf(test.lastChild, TextAssembler)
-            assert.equal(test.lastChild.data, 'bar')
-        })
-        it('childNodes[1]', () => {
-            const child = test.childNodes[1]
-            assert.instanceOf(child, TextAssembler)
-            assert.equal(child, foo)
-            assert.equal(child.data, 'foo')
-        })
-    })
-    describe('before', () => {
-        const ctx = new TestElement()
-        const test = new TestElement(ctx)
-        const foo = new TextAssembler('foo')
-        ctx.before(foo, 'bar')
-        it('childNodes.length', () => {
-            assert.equal(test.childNodes.length, 3)
-        })
-        it('firstChild', () => {
-            assert.instanceOf(test.firstChild, TextAssembler)
-            assert.equal(test.firstChild, foo)
-            assert.equal(test.firstChild.data, 'foo')
-        })
-        it('lastChild', () => {
-            assert.instanceOf(test.lastChild, ElementAssembler)
-            assert.equal(test.lastChild, ctx)
-        })
-        it('childNodes[1]', () => {
-            assert.instanceOf(test.childNodes[1], TextAssembler)
-            assert.equal(test.childNodes[1].data, 'bar')
-        })
-    })
-    describe('replaceWith', () => {
-        const ctx = new TestElement()
-        const test = new TestElement(ctx)
-        const foo = new TextAssembler('foo')
-        ctx.replaceWith(foo)
-        it('childNodes.length', () => {
-            assert.equal(test.childNodes.length, 1)
-        })
-        it('firstChild', () => {
-            assert.equal(test.firstChild, foo)
-        })
-        it('not contains replaced element', () => {
-            assert.isFalse(test.contains(ctx))
-        })
-        it('contains inseted text', () => {
-            assert(test.contains(foo), 'contains inseted text')
-        })
-    })
-    describe('remove()', () => {
-        let $element
-        const test = new TestElement([
-            new TextAssembler('foobar'),
-            new CommentAssembler('example'),
-            $element = new TestElement(),
-        ])
-        const node = test.node
-        $element.remove()
-        it('node.childNodes.length', () => {
-            assert.equal(node.childNodes.length, 2)
-        })
-        it('serializeToString(node)', () => {
-            const xml = serializer.serializeToString(node)
-            const sample = '<element>foobar<!--example--></element>'
-            assert.equal(xml, sample)
-        })
-    })
     describe('before, after, replaceWith', () => {
-        let test, c1, c2, c3, items
-        class Test extends ElementAssembler {}
-        class C1 extends ElementAssembler {}
-        class C2 extends ElementAssembler {}
-        class C3 extends ElementAssembler {}
-        class A1 extends AttrAssembler {}
-        class OE1 extends ElementAssembler {}
-        class E1 extends ElementAssembler {}
-        class E2 extends ElementAssembler {}
         beforeEach(() => {
-            test = new Test([
-                c1 = new C1,
-                c2 = new C2,
-                c3 = new C3
-            ])
-            items = [
+            parent = new Parent([new Prev, child = new Child, new Next])
+            children = [
                 'ts1',
+                0,
                 new E1,
                 null,
                 new A1({ ownerElement : new OE1 }),
                 [
+                    42,
                     new CommentAssembler('c1'),
                     new TextAssembler('t1'),
                     false,
                     new E2,
                     'ts2',
-                    [
-                        new CommentAssembler('c2'),
-                        undefined,
-                        new TextAssembler('t2')
-                    ]
+                    [new CommentAssembler('c2'), undefined, new TextAssembler('t2')]
                 ]
             ]
         })
         it('before', () => {
-            c2.before(...items)
-            const sample = '<test><c1/>ts1<e1/><oe1 a1=""/><!--c1-->t1<e2/>ts2<!--c2-->t2<c2/><c3/></test>'
-            assert.equal(serializer.serializeToString(test.node), sample)
+            child.before(...children)
+            assert.equal(serialize(parent),
+                '<parent><prev/>ts1<e1/><oe1 a1=""/>42<!--c1-->t1<e2/>ts2<!--c2-->t2<child/><next/></parent>')
         })
         it('after', () => {
-            c2.after(...items)
-            const sample = '<test><c1/><c2/>ts1<e1/><oe1 a1=""/><!--c1-->t1<e2/>ts2<!--c2-->t2<c3/></test>'
-            assert.equal(serializer.serializeToString(test.node), sample)
+            child.after(...children)
+            assert.equal(serialize(parent),
+                '<parent><prev/><child/>ts1<e1/><oe1 a1=""/>42<!--c1-->t1<e2/>ts2<!--c2-->t2<next/></parent>')
         })
         it('replaceWith', () => {
-            c2.replaceWith(...items)
-            const sample = '<test><c1/>ts1<e1/><oe1 a1=""/><!--c1-->t1<e2/>ts2<!--c2-->t2<c3/></test>'
-            assert.equal(serializer.serializeToString(test.node), sample)
+            child.replaceWith(...children)
+            assert.equal(serialize(parent),
+                '<parent><prev/>ts1<e1/><oe1 a1=""/>42<!--c1-->t1<e2/>ts2<!--c2-->t2<next/></parent>')
+        })
+    })
+    describe('parentNode, parentElement, remove, nextSibling, previousSibling', () => {
+        it('parentNode, parentElement', () => {
+            child = new Child({ parentNode : parent = new Parent })
+            assert.equal(child.parentNode, parent)
+            assert.equal(child.parentElement, parent)
+            assert.lengthOf(parent.children, 1)
+            assert.equal(parent.firstChild, child)
+            assert.equal(parent.lastChild, child)
+            assert.equal(serialize(parent), '<parent><child/></parent>')
+        })
+        it('parentNode = null', () => {
+            parent = new Parent(child = new Child)
+            child.parentNode = null
+            assert.lengthOf(parent.children, 0)
+            assert.isNull(child.parentNode)
+            assert.equal(serialize(parent), '<parent/>')
+        })
+        it('remove', () => {
+            parent = new Parent(child = new Child)
+            child.remove()
+            assert.lengthOf(parent.children, 0)
+            assert.isNull(child.parentNode)
+            assert.equal(serialize(parent), '<parent/>')
+        })
+        it('set not appended nextSibling of appended element', () => {
+            parent = new Parent(prev = new Prev)
+            prev.nextSibling = next = new Next
+            assert.lengthOf(parent.children, 2)
+            assert.equal(parent.firstChild, prev)
+            assert.equal(parent.lastChild, next)
+            assert.equal(prev.nextSibling, next)
+            assert.equal(serialize(parent), '<parent><prev/><next/></parent>')
+        })
+        it('set appended nextSibling of not appended element', () => {
+            parent = new Parent(next = new Next)
+            prev = new Prev({ nextSibling : next })
+            assert.lengthOf(parent.children, 2)
+            assert.equal(parent.firstChild, prev)
+            assert.equal(parent.lastChild, next)
+            assert.equal(prev.nextSibling, next)
+            assert.equal(serialize(parent), '<parent><prev/><next/></parent>')
+        })
+        it('set not appended previousSibling of appended element', () => {
+            parent = new Parent(next = new Next)
+            next.previousSibling = prev = new Prev
+            assert.lengthOf(parent.children, 2)
+            assert.equal(parent.firstChild, prev)
+            assert.equal(parent.lastChild, next)
+            assert.equal(prev.nextSibling, next)
+            assert.equal(serialize(parent), '<parent><prev/><next/></parent>')
+        })
+        it('set appended previousSibling of not appended element', () => {
+            parent = new Parent(prev = new Prev)
+            next = new Next({ previousSibling : prev })
+            assert.lengthOf(parent.children, 2)
+            assert.equal(parent.firstChild, prev)
+            assert.equal(parent.lastChild, next)
+            assert.equal(prev.nextSibling, next)
+            assert.equal(serialize(parent), '<parent><prev/><next/></parent>')
+        })
+        it('set not appended nextSibling of not appended element', () => {
+            parent = new Parent(prev = new Prev({
+                nextSibling : next = new Next
+            }))
+            assert.lengthOf(parent.children, 2)
+            assert.equal(parent.firstChild, prev)
+            assert.equal(parent.lastChild, next)
+            assert.equal(prev.nextSibling, next)
+            assert.equal(serialize(parent), '<parent><prev/><next/></parent>')
+        })
+        it('set not appended previousSibling of not appended element', () => {
+            parent = new Parent(next = new Next({
+                previousSibling : prev = new Prev
+            }))
+            assert.lengthOf(parent.children, 2)
+            assert.equal(parent.firstChild, prev)
+            assert.equal(parent.lastChild, next)
+            assert.equal(next.previousSibling, prev)
+            assert.equal(serialize(parent), '<parent><prev/><next/></parent>')
         })
     })
 })

@@ -10,7 +10,8 @@
           {
             "exclude": [
               "spec",
-              "shim"
+              "shim",
+              "lib/index.js"
             ]
           }
         ]

@@ -639,7 +639,7 @@ describe('ElementAssembler', () => {
         it('static selector', () => {
             assert.equal(Bar.selector, 'bar')
         })
-        it.skip('serializeToString(node)', () => {
+        it('serializeToString(node)', () => {
             const xml = serializer.serializeToString(test.node)
             assert.equal(xml, '<foo:bar xmlns:foo="http://example.com/ns" class="wiz"/>')
         })
