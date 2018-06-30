@@ -1,5 +1,4 @@
 import chai from 'chai'
-import { Assembler } from 'esmodule'
 import {
     AttrAssembler,
     DocumentAssembler,
@@ -525,7 +524,7 @@ describe('ElementAssembler', () => {
         })
     })
     if(window.MutationObserver) { // fixme jsdom
-        describe.only('Observe attribute changes', () => {
+        describe('Observe attribute changes', () => {
             class Example extends ElementAssembler {}
             class Child extends ElementAssembler {}
             class Foo extends AttrAssembler {}
