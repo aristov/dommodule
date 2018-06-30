@@ -890,7 +890,6 @@ describe('ElementAssembler', () => {
         it('Test.init("#id0")', () => {
             res = Test.init('#id0', doc)
             assert.lengthOf(res, 0)
-            assert.isNull(Assembler.getInstanceOf(doc.documentElement))
             assert(spy.notCalled, 'init not called')
         })
         it('E1.init()', () => {

@@ -1,5 +1,4 @@
 import chai from 'chai'
-import { NodeAssembler } from '../lib/node'
 import {
     AttrAssembler,
     CommentAssembler,
@@ -10,14 +9,14 @@ import {
     TextAssembler
 } from '../lib'
 
-const { document } = window
+const { Document, document } = window
 const { implementation } = document
 const { assert } = chai
 
 describe('Node type resolving', () => {
     describe('AttrAssembler', () => {
         const node = document.createAttribute('foobar')
-        const instance = NodeAssembler.getInstanceOf(node)
+        const instance = AttrAssembler.getInstanceOf(node)
         it('instance', () => {
             assert.instanceOf(instance, AttrAssembler)
         })
@@ -27,7 +26,7 @@ describe('Node type resolving', () => {
     })
     describe('CommentAssembler', () => {
         const node = document.createComment('foobar')
-        const instance = NodeAssembler.getInstanceOf(node)
+        const instance = CommentAssembler.getInstanceOf(node)
         it('instance', () => {
             assert.instanceOf(instance, CommentAssembler)
         })
@@ -36,8 +35,8 @@ describe('Node type resolving', () => {
         })
     })
     describe('DocumentAssembler', () => {
-        const node = implementation.createDocument('', 'foobar', null)
-        const instance = NodeAssembler.getInstanceOf(node)
+        const node = new Document
+        const instance = DocumentAssembler.getInstanceOf(node)
         it('instance', () => {
             assert.instanceOf(instance, DocumentAssembler)
         })
@@ -47,7 +46,7 @@ describe('Node type resolving', () => {
     })
     describe('DocumentFragmentAssembler', () => {
         const node = document.createDocumentFragment()
-        const instance = NodeAssembler.getInstanceOf(node)
+        const instance = DocumentFragmentAssembler.getInstanceOf(node)
         it('instance', () => {
             assert.instanceOf(instance, DocumentFragmentAssembler)
         })
@@ -57,7 +56,7 @@ describe('Node type resolving', () => {
     })
     describe('DocumentTypeAssembler', () => {
         const node = implementation.createDocumentType('foobar', '', '')
-        const instance = NodeAssembler.getInstanceOf(node)
+        const instance = DocumentTypeAssembler.getInstanceOf(node)
         it('instance', () => {
             assert.instanceOf(instance, DocumentTypeAssembler)
         })
@@ -67,7 +66,7 @@ describe('Node type resolving', () => {
     })
     describe('ElementAssembler', () => {
         const node = document.createElementNS('', 'foobar')
-        const instance = NodeAssembler.getInstanceOf(node)
+        const instance = ElementAssembler.getInstanceOf(node)
         it('instance', () => {
             assert.instanceOf(instance, ElementAssembler)
         })
@@ -77,7 +76,7 @@ describe('Node type resolving', () => {
     })
     describe('TextAssembler', () => {
         const node = document.createTextNode('foobar')
-        const instance = NodeAssembler.getInstanceOf(node)
+        const instance = TextAssembler.getInstanceOf(node)
         it('instance', () => {
             assert.instanceOf(instance, TextAssembler)
         })

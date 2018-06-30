@@ -170,7 +170,7 @@ describe('AttrAssembler', () => {
             id5 = doc.querySelector('[a2=id5]')
             spy = sinon.spy()
         })
-        it('Test.init()', () => {
+        it('Init root without selector', () => {
             res = Test.init(doc)
             assert.lengthOf(res, 1)
             assert.instanceOf(res[0], Test)
@@ -178,13 +178,12 @@ describe('AttrAssembler', () => {
             assert.equal(res[0].node.ownerElement, docElement)
             assert(spy.calledOnce, 'init called once')
         })
-        it('Test.init("[test=test]")', () => {
+        it('Init root by not matching selector', () => {
             res = Test.init('[test=test]', doc)
             assert.lengthOf(res, 0)
-            assert.isNull(Assembler.getInstanceOf(docElement.attributes.test))
             assert(spy.notCalled, 'init not called')
         })
-        it('A1.init()', () => {
+        it('Init multiple nested items on root without selector (1)', () => {
             res = A1.init(doc)
             assert.lengthOf(res, 3)
             assert.instanceOf(res[0], A1)
@@ -197,13 +196,13 @@ describe('AttrAssembler', () => {
             assert.equal(res[1].node.ownerElement, id3)
             assert.equal(res[2].node.ownerElement, id4)
         })
-        it('A1.init(#id2)', () => {
+        it('Init on specified element without selector', () => {
             res = A1.init(id2)
             assert.lengthOf(res, 1)
             assert.instanceOf(res[0], A1)
             assert.equal(res[0].node, id3.attributes.a1)
         })
-        it('A2.init()', () => {
+        it('Init multiple nested items on root without selector (2)', () => {
             res = A2.init(doc)
             assert.lengthOf(res, 2)
             assert.instanceOf(res[0], A2)
@@ -213,14 +212,14 @@ describe('AttrAssembler', () => {
             assert.equal(res[0].node.ownerElement, id2)
             assert.equal(res[1].node.ownerElement, id5)
         })
-        it('A1.init("[a1=id1]")', () => {
+        it('Init by selector with specified attribute value (1)', () => {
             res = A1.init('[a1=id1]', doc)
             assert.lengthOf(res, 1)
             assert.instanceOf(res[0], A1)
             assert.equal(res[0].node, id1.attributes.a1)
             assert.equal(res[0].node.ownerElement, id1)
         })
-        it('A1.init("[a2=id2]")', () => {
+        it('Init by selector and set the created attribute', () => {
             res = A1.init('[a2=id2]', doc)
             assert.lengthOf(res, 1)
             assert.instanceOf(res[0], A1)
@@ -232,7 +231,7 @@ describe('AttrAssembler', () => {
             assert.equal(id2.getAttribute('a1'), '')
             assert.equal(id2.getAttribute('a2'), 'id2')
         })
-        it('A2.init("[a2=id5]")', () => {
+        it('Init by selector with specified attribute value (2)', () => {
             res = A2.init('[a2=id5]', doc)
             assert.lengthOf(res, 1)
             assert.instanceOf(res[0], A2)
