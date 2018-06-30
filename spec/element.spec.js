@@ -524,6 +524,82 @@ describe('ElementAssembler', () => {
             assert(handler.calledOnce, 'handler.calledOnce')
         })
     })
+    if(window.MutationObserver) { // fixme jsdom
+        describe.only('Observe attribute changes', () => {
+            class Example extends ElementAssembler {}
+            class Child extends ElementAssembler {}
+            class Foo extends AttrAssembler {}
+            class Bar extends AttrAssembler {}
+            let example, child, callback, value
+            it('Observe an attribute change and check a mutation record', done => {
+                example = new Example
+                callback = function({ type, target, attributeName }) {
+                    if(this !== example) {
+                        done(Error('The callback is called in a wrong context.'))
+                    }
+                    else if(type === 'attributes' && target === example.node && attributeName === Foo.localName) {
+                        done()
+                    }
+                    else done(Error('The MutationRecord is not valid.'))
+                }
+                example.on(Foo, callback)
+                example.setAttr(Foo, '123')
+            })
+            it('Observe an attribute change of a nested element (subtree)', done => {
+                example = new Example(child = new Child)
+                callback = function({ target }) {
+                    if(this !== example) {
+                        done(Error('The callback is called in a wrong context.'))
+                    }
+                    else if(target !== child.node) {
+                        done(Error('The record target is not valid'))
+                    }
+                    else done()
+                }
+                example.on(Foo, callback, { subtree : true })
+                child.setAttr(Foo, '123')
+            })
+            it('Observe an attribute change and check an old value (attributeOldValue)', done => {
+                example = new Example({ attributes : new Foo(value = '123') })
+                callback = ({ oldValue }) => {
+                    done(oldValue !== value && Error(`The old value is not valid: expected '${ oldValue }' to equal '${ value }'.`))
+                }
+                example.on(Foo, callback, { attributeOldValue : true })
+                example.setAttr(Foo, '456')
+            })
+            it('Do not observe an attribute change after disconnect', done => {
+                example = new Example
+                callback = sinon.spy()
+                example.on(Foo, callback)
+                example.setAttr(Foo, '123')
+                example.un(Foo, callback)
+                example.setAttr(Foo, '456')
+                setTimeout(() => {
+                    done(!callback.calledOnce && Error(`The callback function is called for ${ callback.callCount } times, but must be called once.`))
+                })
+            })
+            it('Setting another attribute does not invoke the callback function', done => {
+                example = new Example
+                callback = sinon.spy()
+                example.on(Foo, callback)
+                example.setAttr(Foo, '123')
+                example.setAttr(Bar, '456')
+                setTimeout(() => {
+                    done(!callback.calledOnce && Error(`The callback function is called for ${ callback.callCount } times, but must be called once.`))
+                })
+            })
+            it('Setting an attribute multiple times (twice)', done => {
+                example = new Example
+                callback = sinon.spy()
+                example.on(Foo, callback)
+                example.setAttr(Foo, '123')
+                example.setAttr(Foo, '456')
+                setTimeout(() => {
+                    done(!callback.calledTwice && Error(`The callback function is called for ${ callback.callCount } times, but must be called twice.`))
+                })
+            })
+        })
+    }
     describe('id', () => {
         const test = new TestElement({ id : 'foobar' })
         it('id', () => {
