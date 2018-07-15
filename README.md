@@ -1,4 +1,4 @@
-# DOM Module
+# dommodule
 
 [![NPM Version](https://img.shields.io/npm/v/dommodule.svg)](https://www.npmjs.com/package/dommodule)
 [![Build Status](https://travis-ci.org/aristov/dommodule.svg?branch=master)](https://travis-ci.org/aristov/dommodule)
@@ -20,7 +20,7 @@ This JavaScript library provides a set of [DOM](https://www.w3.org/TR/dom) node 
 
 ## Examples
 
-See the source code of the DOM Module based libraries: [HTML Module](https://github.com/aristov/htmlmodule), [ARIA Module](https://github.com/aristov/ariamodule) and [XML Module](https://github.com/aristov/xmlmodule)
+See the source code of the dommodule based libraries: [htmlmodule](https://github.com/aristov/htmlmodule), [ariamodule](https://github.com/aristov/ariamodule) and [xmlmodule](https://github.com/aristov/xmlmodule)
 
 ## Installation
 
@@ -28,12 +28,27 @@ See the source code of the DOM Module based libraries: [HTML Module](https://git
 npm install dommodule
 ```
 
+## Tests
+
+Run tests using [jsdom](https://github.com/jsdom/jsdom):
+
+```
+npm test
+```
+
 ## Development
+
+Clone the project and install dependencies:
 
 ```
 git clone git@github.com:aristov/dommodule.git
 cd dommodule
 npm install
+```
+
+Run Webpack in watch mode:
+
+```
 npm run watch
 ```
 
