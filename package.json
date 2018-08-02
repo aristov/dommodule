@@ -39,15 +39,7 @@
     "EventTarget",
     "Node",
     "ParentNode",
-    "TargetAssembler",
-    "Text",
-    "attr",
-    "comment",
-    "document",
-    "doctype",
-    "fragment",
-    "element",
-    "text"
+    "Text"
   ],
   "author": "Vyacheslav Aristov <vv.aristov@gmail.ru>",
   "license": "MIT",

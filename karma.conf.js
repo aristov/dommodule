@@ -1,7 +1,5 @@
 'use strict'
 
-const path = require('path')
-
 const localBrowserSet = {
     chrome : {
         base : 'Chrome',
