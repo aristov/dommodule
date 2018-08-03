@@ -116,13 +116,6 @@ describe('ElementAssembler', () => {
             assert.match(serializer.serializeToString(node), /^<foobar\s?\/>$/)
         })
     })
-    describe('Create element with incorrectly specified node', () => {
-        const foobar = document.createTextNode('foobar')
-        const fn = () => new TestElement({ node : foobar })
-        it('throws TypeError', () => {
-            assert.throws(fn, TypeError)
-        })
-    })
     describe('new TestElement(new TestElement)', () => {
         const child = new TestElement
         const test = new TestElement(child)
