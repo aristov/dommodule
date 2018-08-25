@@ -6,7 +6,7 @@ const localBrowserSet = {
         browserName : 'chrome',
         displayName : 'chrome'
     },
-    firefox : {
+    /*firefox : {
         base : 'Firefox',
         browserName : 'firefox',
         displayName : 'firefox'
@@ -15,7 +15,7 @@ const localBrowserSet = {
         base : 'Safari',
         browserName : 'safari',
         displayName : 'safari'
-    },
+    },*/
     opera : {
         base : 'Opera',
         browserName : 'opera',
