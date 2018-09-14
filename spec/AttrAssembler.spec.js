@@ -1,5 +1,4 @@
 import chai from 'chai'
-import { Assembler } from 'esmodule'
 import { AttrAssembler, ElementAssembler } from '../lib'
 
 const { assert } = chai

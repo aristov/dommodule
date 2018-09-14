@@ -1,6 +1,6 @@
 import chai from 'chai'
-import { CharacterDataAssembler } from '../lib/characterdata'
-import { NodeAssembler } from '../lib/node'
+import { CharacterDataAssembler } from '../lib/CharacterDataAssembler'
+import { NodeAssembler } from '../lib/NodeAssembler'
 import {
     EventTargetAssembler,
     DocumentAssembler,
