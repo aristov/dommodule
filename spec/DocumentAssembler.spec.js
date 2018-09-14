@@ -72,7 +72,7 @@ describe('DocumentAssembler', () => {
         })
         it('serializeToString(node)', () => {
             const xml = serializer.serializeToString(test.node)
-            const sample = /^<\!DOCTYPE example>\n?<example id="test"\/>$/
+            const sample = /^<\!DOCTYPE Example>\n?<Example id="test"\/>$/
             assert.match(xml, sample)
         })
     })

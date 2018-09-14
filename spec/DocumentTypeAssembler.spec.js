@@ -111,7 +111,7 @@ describe('DocumentTypeAssembler', () => {
         }
         const test = new FoobarDoctype
         it('node.name', () => {
-            assert.equal(test.node.name, 'foobar')
+            assert.equal(test.node.name, 'Foobar')
         })
     })
 })

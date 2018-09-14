@@ -254,11 +254,11 @@ describe('AttrAssembler', () => {
         }
         OE1.register()
         OE2.register()
-        const dom = parser.parseFromString('<root><oe1/><oe2/><oe3/><oe4/></root>', 'application/xml')
-        const a1 = new TestAttr1({ ownerElement : dom.querySelector('oe1') })
-        const a2 = new TestAttr1({ ownerElement : dom.querySelector('oe2') })
-        const a3 = new TestAttr2({ ownerElement : dom.querySelector('oe3') })
-        const a4 = new TestAttr2({ ownerElement : dom.querySelector('oe4') })
+        const dom = parser.parseFromString('<root><OE1/><OE2/><OE3/><OE4/></root>', 'application/xml')
+        const a1 = new TestAttr1({ ownerElement : dom.querySelector('OE1') })
+        const a2 = new TestAttr1({ ownerElement : dom.querySelector('OE2') })
+        const a3 = new TestAttr2({ ownerElement : dom.querySelector('OE3') })
+        const a4 = new TestAttr2({ ownerElement : dom.querySelector('OE4') })
         it('ownerElement (registered and the same as elementAssembler)', () => {
             assert.equal(a1.ownerElement.constructor, OE1)
         })

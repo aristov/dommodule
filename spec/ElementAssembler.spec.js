@@ -56,13 +56,13 @@ describe('ElementAssembler', () => {
             assert.isNull(node.prefix)
         })
         it('node.localName', () => {
-            assert.equal(node.localName, 'foobar')
+            assert.equal(node.localName, 'Foobar')
         })
         it('node.tagName', () => {
-            assert.equal(node.tagName, 'foobar')
+            assert.equal(node.tagName, 'Foobar')
         })
         it('serializeToString(node)', () => {
-            assert.match(serializer.serializeToString(node), /^<foobar\s?\/>$/)
+            assert.match(serializer.serializeToString(node), /^<Foobar\s?\/>$/)
         })
     })
     describe('Create element with namespace and prefix', () => {
@@ -83,16 +83,16 @@ describe('ElementAssembler', () => {
             assert.equal(node.prefix, 'foo')
         })
         it('node.localName', () => {
-            assert.equal(node.localName, 'bar')
+            assert.equal(node.localName, 'Bar')
         })
         it('node.tagName', () => {
-            assert.equal(node.tagName, 'foo:bar')
+            assert.equal(node.tagName, 'foo:Bar')
         })
         it('node.hasAttributes()', () => {
             assert.isFalse(node.hasAttributes())
         })
         it('serializeToString(node)', () => {
-            const sample = /^<foo:bar xmlns:foo="http:\/\/example\.com\/namespace"\s?\/>$/
+            const sample = /^<foo:Bar xmlns:foo="http:\/\/example\.com\/namespace"\s?\/>$/
             assert.match(serializer.serializeToString(node), sample)
         })
     })
@@ -705,11 +705,11 @@ describe('ElementAssembler', () => {
             assert.equal(parent.find(Bar), test)
         })
         it('static selector', () => {
-            assert.equal(Bar.selector, 'bar')
+            assert.equal(Bar.selector, 'Bar')
         })
         it('serializeToString(node)', () => {
             const xml = serializer.serializeToString(test.node)
-            assert.equal(xml, '<foo:bar xmlns:foo="http://example.com/ns" class="wiz"/>')
+            assert.equal(xml, '<foo:Bar xmlns:foo="http://example.com/ns" class="wiz"/>')
         })
     })
     describe('new TestElement(new TestElement(), null, new TestElement(), new TestElement())', () => {
@@ -924,7 +924,7 @@ describe('ElementAssembler', () => {
             assert.equal(children[2].node, wiz)
         })
         it('serializeToString(node)', () => {
-            const sample = /^<element><foo\s?\/><bar\s?\/><wiz\s?\/><\/element>$/
+            const sample = /^<element><foo\s?\/><Bar\s?\/><wiz\s?\/><\/element>$/
             assert.match(serializer.serializeToString(test.node), sample)
         })
     })
@@ -937,7 +937,7 @@ describe('ElementAssembler', () => {
         }
         class E1 extends ElementAssembler {}
         class E2 extends ElementAssembler {}
-        const sample = '<test><e1 id="id1"/><e2 id="id2"><e1 id="id3"/></e2><e1 id="id4"><e2 id="id5"/></e1></test>'
+        const sample = '<Test><E1 id="id1"/><E2 id="id2"><E1 id="id3"/></E2><E1 id="id4"><E2 id="id5"/></E1></Test>'
         let doc, res, id1, id2, id3, id4, id5, spy
         beforeEach(() => {
             doc = parser.parseFromString(sample, 'application/xml')
@@ -1021,28 +1021,28 @@ describe('ElementAssembler', () => {
         class E3 extends E2 {}
         E3.register()
         it('localName only', () => {
-            const element = document.createElementNS('', 'e1')
+            const element = document.createElementNS('', 'E1')
             assert.equal(ElementAssembler.getAssemblerOf(element), E1)
         })
         it('unknown localName', () => {
-            const element = document.createElementNS('', 'e0')
+            const element = document.createElementNS('', 'E0')
             assert.equal(ElementAssembler.getAssemblerOf(element), ElementAssembler)
         })
         it('namespace + localName', () => {
-            const element = document.createElementNS(namespace, 'e2')
+            const element = document.createElementNS(namespace, 'E2')
             assert.equal(ElementAssembler.getAssemblerOf(element), E2)
         })
         it('namespace + localName', () => {
-            const element = document.createElementNS(namespace, 'e3')
+            const element = document.createElementNS(namespace, 'E3')
             assert.equal(ElementAssembler.getAssemblerOf(element), E3)
         })
         it('namespace + unknown localName', () => {
-            const element = document.createElementNS(namespace, 'e4')
+            const element = document.createElementNS(namespace, 'E4')
             assert.equal(ElementAssembler.getAssemblerOf(element), Ex)
         })
         it('unknown namespace + any localName', () => {
-            const element1 = document.createElementNS('http://example.org/ns#', 'e1')
-            const element2 = document.createElementNS('http://example.org/ns#', 'e0')
+            const element1 = document.createElementNS('http://example.org/ns#', 'E1')
+            const element2 = document.createElementNS('http://example.org/ns#', 'E0')
             assert.equal(ElementAssembler.getAssemblerOf(element1), ElementAssembler)
             assert.equal(ElementAssembler.getAssemblerOf(element2), ElementAssembler)
         })

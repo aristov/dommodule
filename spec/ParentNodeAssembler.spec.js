@@ -203,7 +203,7 @@ describe('ParentNodeAssembler', () => {
                 ])
         })
         it('serializeToString(node)', () => {
-            const sample = '<test><child/>ts1<e1/><oe1 a1=""/><!--c1--><qs q="1"/><qs q="3"/>t1<e2/>ts2<!--c2-->t2</test>'
+            const sample = '<Test><Child/>ts1<E1/><OE1 a1=""/><!--c1--><qs q="1"/><qs q="3"/>t1<E2/>ts2<!--c2-->t2</Test>'
             assert.equal(serializer.serializeToString(test.node), sample)
         })
     })
@@ -238,7 +238,7 @@ describe('ParentNodeAssembler', () => {
                 ])
         })
         it('serializeToString(node)', () => {
-            const sample = '<test>ts1<e1/><oe1 a1=""/><!--c1--><qs q="1"/><qs s="2"><qs q="3"/></qs>t1<e2/>ts2<!--c2-->t2<child/></test>'
+            const sample = '<Test>ts1<E1/><OE1 a1=""/><!--c1--><qs q="1"/><qs s="2"><qs q="3"/></qs>t1<E2/>ts2<!--c2-->t2<Child/></Test>'
             assert.equal(serializer.serializeToString(test.node), sample)
         })
     })

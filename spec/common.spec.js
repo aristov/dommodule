@@ -66,7 +66,7 @@ describe('Common', () => {
             ])
         ])
         it('serializeToString(dom)', () => {
-            const sample = /^<\!DOCTYPE example>\n?<example role="application"><\!--Version 1\.0\.0-->Hello world\!<\/example>$/
+            const sample = /^<\!DOCTYPE Example>\n?<Example role="application"><\!--Version 1\.0\.0-->Hello world\!<\/Example>$/
             assert.match(serializer.serializeToString($document.node), sample)
         })
         it('index', () => {
