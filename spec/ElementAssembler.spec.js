@@ -620,21 +620,22 @@ describe('ElementAssembler', () => {
         })
     })
     describe('classList = new Array', () => {
-        const test = new TestElement
+        const test = new TestElement({ className : 'wiz' })
         test.classList = ['foo', 'bar']
         it('className', () => {
-            assert.equal(test.className, 'foo bar')
+            assert.equal(test.className, 'wiz foo bar')
         })
         it('classList', () => {
             assert.instanceOf(test.classList, window.DOMTokenList)
         })
         it('classList.contains', () => {
-            assert(test.classList.contains('foo'))
-            assert(test.classList.contains('bar'))
+            assert(test.classList.contains('wiz'), 'contains a first token')
+            assert(test.classList.contains('foo'), 'contains a second token')
+            assert(test.classList.contains('bar'), 'contains a third token')
         })
         it('serializeToString(node)', () => {
             const xml = serializer.serializeToString(test.node)
-            assert.match(xml, /^<element class="foo bar"\s?\/>$/)
+            assert.match(xml, /^<element class="wiz foo bar"\s?\/>$/)
         })
     })
     describe('classList = new Object', () => {
@@ -654,17 +655,17 @@ describe('ElementAssembler', () => {
     })
     describe('classList = new String', () => {
         const test = new TestElement({ className : 'foo' })
-        test.classList = 'bar'
+        test.classList = 'bar wiz'
         it('className', () => {
-            assert.equal(test.className, 'foo bar')
+            assert.equal(test.className, 'bar wiz')
         })
         it('classList.contains', () => {
-            assert(test.classList.contains('foo'))
-            assert(test.classList.contains('bar'))
+            assert(test.classList.contains('bar'), 'contains a first token')
+            assert(test.classList.contains('wiz'), 'contains a second token')
         })
         it('serializeToString(node)', () => {
             const xml = serializer.serializeToString(test.node)
-            assert.match(xml, /^<element class="foo bar"\s?\/>$/)
+            assert.match(xml, /^<element class="bar wiz"\s?\/>$/)
         })
     })
     describe('classList = false', () => {
