@@ -5,8 +5,11 @@ const {
     DocumentFragmentAssembler,
     DocumentTypeAssembler,
     ElementAssembler,
+    NodeAssembler,
     TextAssembler
 } = dommodule
+
+NodeAssembler.debug()
 
 class Example extends ElementAssembler {}
 
