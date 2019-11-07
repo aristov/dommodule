@@ -1,7 +1,4 @@
 {
-  "plugins": [
-    "syntax-object-rest-spread"
-  ],
   "presets": [
     "env"
   ],
@@ -9,6 +6,7 @@
     "test": {
       "plugins": [
         [
+          "syntax-object-rest-spread",
           "istanbul",
           {
             "exclude": [
