@@ -639,18 +639,20 @@ describe('ElementAssembler', () => {
         })
     })
     describe('classList = new Object', () => {
-        const test = new TestElement
+        const test = new TestElement({ className : 'bar xyu' })
         test.classList = { foo : true, bar : false, wiz : true }
         it('className', () => {
-            assert.equal(test.className, 'foo wiz')
+            assert.equal(test.className, 'xyu foo wiz')
         })
         it('classList.contains', () => {
+            assert.isFalse(test.classList.contains('bar'))
+            assert(test.classList.contains('xyu'))
             assert(test.classList.contains('foo'))
             assert(test.classList.contains('wiz'))
         })
         it('serializeToString(node)', () => {
             const xml = serializer.serializeToString(test.node)
-            assert.match(xml, /^<element class="foo wiz"\s?\/>$/)
+            assert.match(xml, /^<element class="xyu foo wiz"\s?\/>$/)
         })
     })
     describe('classList = new String', () => {
