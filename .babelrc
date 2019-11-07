@@ -6,7 +6,6 @@
     "test": {
       "plugins": [
         [
-          "syntax-object-rest-spread",
           "istanbul",
           {
             "exclude": [
