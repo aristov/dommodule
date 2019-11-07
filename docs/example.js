@@ -9,8 +9,6 @@ const {
     TextAssembler
 } = dommodule
 
-NodeAssembler.debug()
-
 class Example extends ElementAssembler {}
 
 class ExampleDocument extends DocumentAssembler {
